@@ -57,5 +57,17 @@ namespace OutOfThisWorld.Debug
             }
 #endif
         }
+
+        public static void HandleWarningIfNoComponentsFoundAmongChildren<TO, TS>(int count, Component source)
+        {
+#if UNITY_EDITOR
+            if (count == 0)
+            {
+                UnityEngine.Debug.LogWarning("Warning: Component of type " + typeof(TS) + " on GameObject " +
+                                 source.gameObject.name + " expected to find at least one component of type " + 
+                                 typeof(TO) + " among children, but none were found");
+            }
+#endif
+        }
     }
 }

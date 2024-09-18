@@ -3,7 +3,7 @@ using OutOfThisWorld.Debug;
 
 namespace OutOfThisWorld.Player
 {
-    [RequireComponent(typeof(Rigidbody), typeof(PlayerInputHandler))]
+    [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour
     {
 
@@ -12,12 +12,12 @@ namespace OutOfThisWorld.Player
         public float MaxSpeed = 1f;
         public float Acceleration = 10f;
         public float Friction = 2f;
-        //public float GravityTimeoutLength = 5f;
+        public float MaxXAxisLook = 90f;
 
     /* ----------| Instance Variables |---------- */
 
         private Vector3 _velocity = Vector3.zero;
-        //private float _gravityTimeout;
+        private Vector3 _eulers = Vector3.zero;
 
         private Rigidbody _rigidbody;
         private PlayerInputHandler _playerInputHandler;
@@ -30,41 +30,22 @@ namespace OutOfThisWorld.Player
             _rigidbody = GetComponent<Rigidbody>();
             DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, DroneController>(_rigidbody,
                 this, gameObject);
-            _playerInputHandler = GetComponent<PlayerInputHandler>();
-            DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, DroneController>(_playerInputHandler,
-                this, gameObject);
-
-            // Set initial values
-            //_gravityTimeout = GravityTimeoutLength;
         }
 
     /* ----------| Movement Functions |---------- */
 
-        void Update()
+        public void HandleMove(Vector3 move_dir, Vector3 look_dir, float delta) 
         {
-            float delta = Time.deltaTime;
-            //_gravityTimeout -= delta;
-            //_rigidbody.useGravity = _gravityTimeout <= 0;
-
-            HandleMove(delta);
-        }
-
-        void HandleMove(float delta) 
-        {
-            Vector3 direction = transform.eulerAngles + _playerInputHandler.GetLookDirection();
-            transform.eulerAngles = direction;
-
-            Vector3 move_dir = _playerInputHandler.GetMoveForce();
-            move_dir = Quaternion.Euler(direction.x, direction.y, direction.z)*move_dir;
+            _eulers += look_dir;
+            _eulers.x = Mathf.Clamp(_eulers.x, -MaxXAxisLook, MaxXAxisLook);
+            transform.eulerAngles = _eulers;
+            move_dir = Quaternion.Euler(_eulers.x, _eulers.y, _eulers.z)*move_dir;
 
             if(move_dir != Vector3.zero)
             {
                 _velocity += Acceleration*delta*move_dir;
                 _velocity = Vector3.ClampMagnitude(_velocity, MaxSpeed);
-
-                //_gravityTimeout = GravityTimeoutLength;
-            } 
-            else if (_velocity.magnitude > 0) { 
+            } else if (_velocity.magnitude > 0) { 
                 _velocity -= Friction*delta*_velocity; 
             } else {
                 _velocity = Vector3.zero;

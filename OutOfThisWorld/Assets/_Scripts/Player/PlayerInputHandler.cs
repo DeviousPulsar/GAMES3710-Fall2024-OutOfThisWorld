@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using OutOfThisWorld.Debug;
 
@@ -22,14 +20,8 @@ namespace OutOfThisWorld.Player
         [Tooltip("Used to flip the horizontal input axis")]
         public bool InvertXAxis = false;
 
-        private DroneController _droneController;
-
         void Start()
         {
-            _droneController = GetComponent<DroneController>();
-            DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerInputHandler>(
-                _droneController, this, gameObject);
-        
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -58,7 +50,7 @@ namespace OutOfThisWorld.Player
             return Vector3.zero;
         }
 
-        public Vector3 GetLookDirection()
+        public Vector3 GetLookAngles()
         {
             if (CanProcessInput())
             {
