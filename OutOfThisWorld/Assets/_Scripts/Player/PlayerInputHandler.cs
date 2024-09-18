@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using OutOfThisWorld.Debug;
@@ -7,11 +6,15 @@ namespace OutOfThisWorld.Player
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        public static readonly string KEYBOARD_X_AXIS = "Strafe";
-        public static readonly string KEYBOARD_Y_AXIS = "Vertical";
-        public static readonly string KEYBOARD_Z_AXIS = "Forwards";
-        public static readonly string MOUSE_X_AXIS = "Mouse X";
-        public static readonly string MOUSE_Y_AXIS = "Mouse Y";
+    /* ----------| Component Properties |---------- */
+
+        public string MoveXAxisName = "Strafe";
+        public string MoveYAxisName = "Vertical";
+        public string MoveZAxisName = "Forwards";
+        public string LookXAxisName = "Mouse Y";
+        public string LookYAxisName = "Mouse X";
+        public string SpawnNewDroneAction = "Interact";
+        public string DroneShiftAction = "Drone Shift";
 
         [Tooltip("Sensitivity multiplier for moving the camera around")]
         public float LookSensitivity = 1f;
@@ -21,18 +24,15 @@ namespace OutOfThisWorld.Player
 
         [Tooltip("Used to flip the horizontal input axis")]
         public bool InvertXAxis = false;
-
-        private DroneController _droneController;
+    /* ----------| Initalization Functions |---------- */
 
         void Start()
         {
-            _droneController = GetComponent<DroneController>();
-            DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerInputHandler>(
-                _droneController, this, gameObject);
-        
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
+    /* ----------| Input Processing |---------- */
 
         public bool CanProcessInput()
         {
@@ -44,9 +44,9 @@ namespace OutOfThisWorld.Player
             if (CanProcessInput())
             {
                 Vector3 move = new Vector3(
-                    Input.GetAxisRaw(KEYBOARD_X_AXIS), 
-                    Input.GetAxisRaw(KEYBOARD_Y_AXIS),
-                    Input.GetAxisRaw(KEYBOARD_Z_AXIS)
+                    Input.GetAxisRaw(MoveXAxisName), 
+                    Input.GetAxisRaw(MoveYAxisName),
+                    Input.GetAxisRaw(MoveZAxisName)
                 );
 
                 // constrain move input to a maximum magnitude of 1, otherwise diagonal movement might exceed the max move speed defined
@@ -58,13 +58,13 @@ namespace OutOfThisWorld.Player
             return Vector3.zero;
         }
 
-        public Vector3 GetLookDirection()
+        public Vector3 GetLookAngles()
         {
             if (CanProcessInput())
             {
                  Vector3 rotation = new Vector3(
-                    Input.GetAxisRaw(MOUSE_Y_AXIS) * (InvertXAxis? -1 : 1),
-                    Input.GetAxisRaw(MOUSE_X_AXIS) * (InvertYAxis? -1 : 1), 
+                    Input.GetAxisRaw(LookXAxisName) * (InvertXAxis? -1 : 1),
+                    Input.GetAxisRaw(LookYAxisName) * (InvertYAxis? -1 : 1), 
                     0f
                 );
 
