@@ -51,10 +51,11 @@ namespace OutOfThisWorld.Player
 
         void HandleMove(float delta) 
         {
-            Vector3 move_dir = _playerInputHandler.GetMoveForce();
-            Vector3 look_dir = _playerInputHandler.GetLookDirection();
+            Vector3 direction = transform.eulerAngles + _playerInputHandler.GetLookDirection();
+            transform.eulerAngles = direction;
 
-            transform.eulerAngles += look_dir;
+            Vector3 move_dir = _playerInputHandler.GetMoveForce();
+            move_dir = Quaternion.Euler(direction.x, direction.y, direction.z)*move_dir;
 
             if(move_dir != Vector3.zero)
             {
