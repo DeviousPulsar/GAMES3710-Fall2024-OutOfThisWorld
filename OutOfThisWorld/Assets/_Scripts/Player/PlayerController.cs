@@ -12,14 +12,15 @@ namespace OutOfThisWorld.Player
 
     /* ----------| Component Properties |---------- */
 
-    public GameObject DronePrefab;
+        public GameObject DronePrefab;
 
     /* ----------| Instance Variables |---------- */
 
-    private PlayerInputHandler _playerInputHandler;
-    private List<DroneController> _drones;
-    private SpawnArea[] _spawnLocations;
-    private int _activeDroneIndex = 0;
+        private PlayerInputHandler _playerInputHandler;
+        private Camera _mainCamera;
+        private List<DroneController> _drones;
+        private SpawnArea[] _spawnLocations;
+        private int _activeDroneIndex = 0;
     
     /* ----------| Initalization Functions |---------- */
 
@@ -29,8 +30,10 @@ namespace OutOfThisWorld.Player
             _playerInputHandler = GetComponent<PlayerInputHandler>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, PlayerController>(_playerInputHandler, this, gameObject);
 
-            // fetch spawn locations from child nodes
-            _spawnLocations = this.GetComponentsInChildren<SpawnArea>();
+            // fetch components from child nodes
+            _mainCamera =  GetComponentInChildren<Camera>();
+            DebugUtility.HandleWarningIfNoComponentsFoundAmongChildren<Camera, PlayerController>(_mainCamera != null ? 1 : 0, this);
+            _spawnLocations = GetComponentsInChildren<SpawnArea>();
             DebugUtility.HandleWarningIfNoComponentsFoundAmongChildren<SpawnArea, PlayerController>(_spawnLocations.Length, this);
 
             // Spawn inital drone
@@ -40,19 +43,24 @@ namespace OutOfThisWorld.Player
 
     /* ----------| Main Update Loop |---------- */
 
-        void FixedUpdate()
+        void Update()
         {
             if (_drones.Count < 1) 
             {
                 SpawnDrone();
                 _activeDroneIndex = 0;
             }
-            else if (_activeDroneIndex >= _drones.Count)
-            {
-                _activeDroneIndex = 0;
-            }
+            
+            if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
+            if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
+            if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
+        }
 
+        void FixedUpdate()
+        {
             _drones[_activeDroneIndex].HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
+            _mainCamera.transform.position = _drones[_activeDroneIndex].transform.position;
+            _mainCamera.transform.rotation = _drones[_activeDroneIndex].transform.rotation;
         }
 
     /* -----------| Drone Spawning and Manipulation |----------- */
