@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 88334362}
   - component: {fileID: 88334364}
   - component: {fileID: 88334363}
+  - component: {fileID: 88334365}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -276,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DronePrefab: {fileID: 7814195169453977645, guid: e555c95e6156949419df42cf8fefee00, type: 3}
+  DroneSpawnCost: 5
 --- !u!114 &88334364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +300,19 @@ MonoBehaviour:
   LookSensitivity: 4
   InvertYAxis: 0
   InvertXAxis: 0
+--- !u!114 &88334365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88334361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 014236f61944992408a45a87864b8a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitalResourceCount: 100
 --- !u!4 &942280603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6115192273848745972, guid: fc2d2e9169e3d37418edc2a6db61a60a, type: 3}
