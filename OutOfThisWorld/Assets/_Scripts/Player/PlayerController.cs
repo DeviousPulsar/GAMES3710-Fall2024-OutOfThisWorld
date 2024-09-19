@@ -6,17 +6,19 @@ using OutOfThisWorld.Debug;
 
 namespace OutOfThisWorld.Player
 {
-    [RequireComponent(typeof(PlayerInputHandler))]
+    [RequireComponent(typeof(PlayerInputHandler)), RequireComponent(typeof(ResourceSystem))]
     public class PlayerController : MonoBehaviour
     {
 
     /* ----------| Component Properties |---------- */
 
         public GameObject DronePrefab;
+        public float DroneSpawnCost = 5f;
 
     /* ----------| Instance Variables |---------- */
 
         private PlayerInputHandler _playerInputHandler;
+        private ResourceSystem _resourceSystem;
         private Camera _mainCamera;
         private List<DroneController> _drones;
         private SpawnArea[] _spawnLocations;
@@ -26,9 +28,11 @@ namespace OutOfThisWorld.Player
 
         void Start()
         {
-            // fetch PlayerInputHandler
+            // fetch components from GameObject
             _playerInputHandler = GetComponent<PlayerInputHandler>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, PlayerController>(_playerInputHandler, this, gameObject);
+            _resourceSystem = GetComponent<ResourceSystem>();
+            DebugUtility.HandleErrorIfNullGetComponent<ResourceSystem, PlayerController>(_resourceSystem, this, gameObject);
 
             // fetch components from child nodes
             _mainCamera =  GetComponentInChildren<Camera>();
@@ -69,7 +73,7 @@ namespace OutOfThisWorld.Player
         {
             foreach (SpawnArea location in _spawnLocations)
             {
-                if (!location.IsOccupied()) {
+                if (!location.IsOccupied() && _resourceSystem.SpendResources(DroneSpawnCost)) {
                     GameObject drone = Instantiate(DronePrefab, location.GetRandomizedSpawnLocation(), location.GetRandomizedSpawnAngle(), transform);
                     DroneController droneController = drone.GetComponent<DroneController>();
                     DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
