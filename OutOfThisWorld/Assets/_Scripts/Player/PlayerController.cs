@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using OutOfThisWorld;
 using OutOfThisWorld.Debug;
+using UnityEngine.UI;
 
 namespace OutOfThisWorld.Player
 {
@@ -59,8 +60,13 @@ namespace OutOfThisWorld.Player
             }
             
             if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
-            if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
+            if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) 
+            {
+                _activeDroneIndex += 1;
+                GameObject.Find("CurrentDroneID").GetComponent<Text>().text = "Drone ID: " + _activeDroneIndex;
+            }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
+
 
             // Added by JB
             if (Input.GetButtonDown(_playerInputHandler.DroneInteraction))
@@ -94,7 +100,10 @@ namespace OutOfThisWorld.Player
             return false;
         }
 
-
+        /// <summary>
+        /// Try to interact with what you are looking at from the currently activated drone.
+        /// </summary>
+        /// <returns></returns> false is there is nothing to interact with.
         bool DroneInteract()
         {
             if (_drones[_activeDroneIndex].IsOccupied() )
@@ -102,7 +111,6 @@ namespace OutOfThisWorld.Player
                 return _drones[_activeDroneIndex].interactWithOccupied();
             }
 
-            
             return false;
         }
 

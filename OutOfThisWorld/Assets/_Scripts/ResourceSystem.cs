@@ -1,5 +1,6 @@
 using UnityEngine;
 using deVoid.Utils;
+using UnityEngine.UI;
 
 namespace OutOfThisWorld
 {
@@ -33,6 +34,9 @@ namespace OutOfThisWorld
 
                 _currentResourceCount += delta;
                 if(DoResourceChangeSignals) { Signals.Get<ResourceCountChanged>().Dispatch(_currentResourceCount); }
+
+                GameObject.Find("ResourcesAmount").GetComponent<Text>().text = "Resources: " + _currentResourceCount.ToString();
+
                 return true;
             }
 

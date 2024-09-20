@@ -39,5 +39,16 @@ namespace OutOfThisWorld
         {
 
         }
+
+        public float getItemCost()
+        {
+            return ItemCost;
+        }
+
+        public void setItemCost(float cost)
+        {
+            ItemCost = cost;
+        }
+
     }
 }

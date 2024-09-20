@@ -1,6 +1,7 @@
 using UnityEngine;
 using OutOfThisWorld.Debug;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace OutOfThisWorld.Player
 {
@@ -28,7 +29,7 @@ namespace OutOfThisWorld.Player
         private CapsuleCollider _interactionRange;
         private ISet<Collider> _occupingBodies;
 
-        private List<GameObject> _droneStorageList;
+        private List<ItemBehavior> _droneStorageList;
 
         /* ----------| Initalization Functions |---------- */
 
@@ -42,7 +43,7 @@ namespace OutOfThisWorld.Player
             // Initialize collider set
             _occupingBodies = new HashSet<Collider>();
 
-            _droneStorageList = new List<GameObject> { };
+            _droneStorageList = new List<ItemBehavior> { };
 
             // fetch components on the same gameObject
             _interactionRange = this.GetComponent<CapsuleCollider>();
@@ -71,26 +72,39 @@ namespace OutOfThisWorld.Player
             return _occupingBodies.Count > 0;
         }
 
+
         public bool interactWithOccupied()
         {
             foreach (Collider collider in _occupingBodies)
             {
-                if (collider.gameObject.GetComponent<ItemBehavior>() != null)
+                if (collider.gameObject.GetComponent<ItemBehavior>() != null && _droneStorageList.Count <= MaxStorageSize)
                 {
-                    GameObject itemWeGot = collider.gameObject;
-                    _droneStorageList.Add(itemWeGot); // Add item to inventory
-                    _occupingBodies.Remove(collider);
-                    Destroy(collider.gameObject); // Remove Item from game world (it is in inventory)
-                    
+                    _droneStorageList.Add((collider.gameObject.GetComponent<ItemBehavior>())); // Add item to inventory
 
+                    _occupingBodies.Remove(collider);
+                    //Destroy(collider.gameObject);
+
+                    Vector3 position = collider.transform.position;
+                    position.y -= 100f;
+                    collider.transform.position = position;
+
+
+                    GameObject.Find("CurrentItemHeld").GetComponent<Text>().text = "Number of Held Items: " + _droneStorageList.Count;
                     return true;
-                } else if(collider.gameObject.GetComponent<DepositBehavior>() != null)
+
+                } else if(collider.gameObject.GetComponent<DepositBehavior>() != null && _droneStorageList.Count > 0)
                 {
-                    
+
+                    collider.gameObject.GetComponent<DepositBehavior>().MakeDeposit(_droneStorageList[0]);
+                    _droneStorageList.RemoveAt(0);
+                    _droneStorageList.Sort();
+                    GameObject.Find("CurrentItemHeld").GetComponent<Text>().text = "Number of Held Items: " + _droneStorageList.Count;
+
                 }
             }
             return false;
         }
+
 
 
         /* ----------| Message Processing |---------- */
