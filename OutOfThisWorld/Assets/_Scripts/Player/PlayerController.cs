@@ -13,6 +13,7 @@ namespace OutOfThisWorld.Player
     /* ----------| Component Properties |---------- */
 
         public GameObject DronePrefab;
+        public int DroneMax = 4;
         public float DroneSpawnCost = 5f;
 
     /* ----------| Instance Variables |---------- */
@@ -48,13 +49,7 @@ namespace OutOfThisWorld.Player
     /* ----------| Main Update Loop |---------- */
 
         void Update()
-        {
-            if (_drones.Count < 1) 
-            {
-                SpawnDrone();
-                _activeDroneIndex = 0;
-            }
-            
+        {         
             if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
             if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
@@ -62,6 +57,12 @@ namespace OutOfThisWorld.Player
 
         void FixedUpdate()
         {
+            if (_drones.Count < 1) 
+            {
+                SpawnDrone();
+                _activeDroneIndex = 0;
+            }
+
             _drones[_activeDroneIndex].HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
             _mainCamera.transform.position = _drones[_activeDroneIndex].transform.position;
             _mainCamera.transform.rotation = _drones[_activeDroneIndex].transform.rotation;
@@ -73,7 +74,7 @@ namespace OutOfThisWorld.Player
         {
             foreach (SpawnArea location in _spawnLocations)
             {
-                if (!location.IsOccupied() && _resourceSystem.SpendResources(DroneSpawnCost)) {
+                if (!location.IsOccupied() && _drones.Count < DroneMax && _resourceSystem.SpendResources(DroneSpawnCost)) {
                     GameObject drone = Instantiate(DronePrefab, location.GetRandomizedSpawnLocation(), location.GetRandomizedSpawnAngle(), transform);
                     DroneController droneController = drone.GetComponent<DroneController>();
                     DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
