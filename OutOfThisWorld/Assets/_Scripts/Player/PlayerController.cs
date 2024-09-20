@@ -23,8 +23,9 @@ namespace OutOfThisWorld.Player
         private List<DroneController> _drones;
         private SpawnArea[] _spawnLocations;
         private int _activeDroneIndex = 0;
-    
-    /* ----------| Initalization Functions |---------- */
+
+
+        /* ----------| Initalization Functions |---------- */
 
         void Start()
         {
@@ -34,6 +35,8 @@ namespace OutOfThisWorld.Player
             _resourceSystem = GetComponent<ResourceSystem>();
             DebugUtility.HandleErrorIfNullGetComponent<ResourceSystem, PlayerController>(_resourceSystem, this, gameObject);
 
+
+            
             // fetch components from child nodes
             _mainCamera =  GetComponentInChildren<Camera>();
             DebugUtility.HandleWarningIfNoComponentsFoundAmongChildren<Camera, PlayerController>(_mainCamera != null ? 1 : 0, this);
@@ -58,6 +61,12 @@ namespace OutOfThisWorld.Player
             if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
             if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
+
+            // Added by JB
+            if (Input.GetButtonDown(_playerInputHandler.DroneInteraction))
+            {
+                DroneInteract();
+            }
         }
 
         void FixedUpdate()
@@ -82,6 +91,18 @@ namespace OutOfThisWorld.Player
                 }
             }
 
+            return false;
+        }
+
+
+        bool DroneInteract()
+        {
+            if (_drones[_activeDroneIndex].IsOccupied() )
+            {
+                return _drones[_activeDroneIndex].interactWithOccupied();
+            }
+
+            
             return false;
         }
 

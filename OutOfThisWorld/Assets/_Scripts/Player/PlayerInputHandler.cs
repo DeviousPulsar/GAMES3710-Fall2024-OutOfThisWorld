@@ -15,6 +15,8 @@ namespace OutOfThisWorld.Player
         public string LookYAxisName = "Mouse X";
         public string SpawnNewDroneAction = "Interact";
         public string DroneShiftAction = "Drone Shift";
+        public string DroneInteraction = "Act With";
+        
 
         [Tooltip("Sensitivity multiplier for moving the camera around")]
         public float LookSensitivity = 1f;

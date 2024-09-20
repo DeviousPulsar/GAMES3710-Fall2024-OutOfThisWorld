@@ -1,9 +1,10 @@
 using UnityEngine;
 using OutOfThisWorld.Debug;
+using System.Collections.Generic;
 
 namespace OutOfThisWorld.Player
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(CapsuleCollider))]
     public class DroneController : MonoBehaviour
     {
         enum DroneMode { ACTIVE, INACTIVE }
@@ -13,6 +14,7 @@ namespace OutOfThisWorld.Player
         public float MaxSpeed = 1f;
         public float Acceleration = 10f;
         public float MaxXAxisLook = 90f;
+        public int MaxStorageSize = 1;
 
     /* ----------| Instance Variables |---------- */
 
@@ -22,17 +24,33 @@ namespace OutOfThisWorld.Player
         private PlayerInputHandler _playerInputHandler;
         private DroneMode _mode;
 
-    /* ----------| Initalization Functions |---------- */
+
+        private CapsuleCollider _interactionRange;
+        private ISet<Collider> _occupingBodies;
+
+        private List<GameObject> _droneStorageList;
+
+        /* ----------| Initalization Functions |---------- */
 
         void Start()
         {
             // fetch components on the same gameObject
             _rigidbody = GetComponent<Rigidbody>();
-            DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, DroneController>(_rigidbody,
-                this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, DroneController>(_rigidbody, this, gameObject);
+
+
+            // Initialize collider set
+            _occupingBodies = new HashSet<Collider>();
+
+            _droneStorageList = new List<GameObject> { };
+
+            // fetch components on the same gameObject
+            _interactionRange = this.GetComponent<CapsuleCollider>();
+            DebugUtility.HandleErrorIfNullGetComponent<CapsuleCollider, PlayerController>(_interactionRange, this, gameObject);
+
         }
 
-    /* ----------| Movement Functions |---------- */
+        /* ----------| Movement Functions |---------- */
 
         public void HandleMove(Vector3 move_dir, Vector3 look_dir, float delta) 
         {
@@ -47,5 +65,45 @@ namespace OutOfThisWorld.Player
                 _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, MaxSpeed);
             }
         }
+
+        public bool IsOccupied()
+        {
+            return _occupingBodies.Count > 0;
+        }
+
+        public bool interactWithOccupied()
+        {
+            foreach (Collider collider in _occupingBodies)
+            {
+                if (collider.gameObject.GetComponent<ItemBehavior>() != null)
+                {
+                    GameObject itemWeGot = collider.gameObject;
+                    _droneStorageList.Add(itemWeGot); // Add item to inventory
+                    _occupingBodies.Remove(collider);
+                    Destroy(collider.gameObject); // Remove Item from game world (it is in inventory)
+                    
+
+                    return true;
+                } else if(collider.gameObject.GetComponent<DepositBehavior>() != null)
+                {
+                    
+                }
+            }
+            return false;
+        }
+
+
+        /* ----------| Message Processing |---------- */
+
+        private void OnTriggerEnter(Collider other)
+        {
+            _occupingBodies.Add(other);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            _occupingBodies.Remove(other);
+        }
+
     }
 }
