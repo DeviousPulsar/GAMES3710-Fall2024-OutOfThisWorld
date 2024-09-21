@@ -29,8 +29,9 @@ namespace OutOfThisWorld.Player
         private List<DroneController> _drones;
         private SpawnArea[] _spawnLocations;
         private int _activeDroneIndex = 0;
-    
-    /* ----------| Initalization Functions |---------- */
+
+
+        /* ----------| Initalization Functions |---------- */
 
         void Start()
         {
@@ -54,6 +55,7 @@ namespace OutOfThisWorld.Player
             if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
             if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
+            if (Input.GetButtonDown(_playerInputHandler.DroneInteraction)) { DroneInteract(); } // Added by JB
 
             _droneUIPanel.SetActiveInfoBar(_drones[_activeDroneIndex]);
         }
@@ -91,5 +93,20 @@ namespace OutOfThisWorld.Player
 
             return false;
         }
+
+        /// <summary>
+        /// Try to interact with what you are looking at from the currently activated drone.
+        /// </summary>
+        /// <returns></returns> false is there is nothing to interact with.
+        bool DroneInteract()
+        {
+            if (_drones[_activeDroneIndex].IsOccupied() )
+            {
+                return _drones[_activeDroneIndex].interactWithOccupied();
+            }
+
+            return false;
+        }
+
     }
 }
