@@ -33,12 +33,11 @@ namespace OutOfThisWorld.Player
 
         /* ----------| Initalization Functions |---------- */
 
-        void Start()
+        void Awake()
         {
             // fetch components on the same gameObject
             _rigidbody = GetComponent<Rigidbody>();
             DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, DroneController>(_rigidbody, this, gameObject);
-
 
             // Initialize collider set
             _occupingBodies = new HashSet<Collider>();
@@ -72,12 +71,11 @@ namespace OutOfThisWorld.Player
             return _occupingBodies.Count > 0;
         }
 
-
         public bool interactWithOccupied()
         {
             foreach (Collider collider in _occupingBodies)
             {
-                if (collider.gameObject.GetComponent<ItemBehavior>() != null && _droneStorageList.Count <= MaxStorageSize)
+                if (collider.gameObject.GetComponent<ItemBehavior>() != null && _droneStorageList.Count < MaxStorageSize)
                 {
                     _droneStorageList.Add((collider.gameObject.GetComponent<ItemBehavior>())); // Add item to inventory
 
@@ -87,9 +85,6 @@ namespace OutOfThisWorld.Player
                     Vector3 position = collider.transform.position;
                     position.y -= 100f;
                     collider.transform.position = position;
-
-
-                    GameObject.Find("CurrentItemHeld").GetComponent<Text>().text = "Number of Held Items: " + _droneStorageList.Count;
                     return true;
 
                 } else if(collider.gameObject.GetComponent<DepositBehavior>() != null && _droneStorageList.Count > 0)
@@ -98,13 +93,10 @@ namespace OutOfThisWorld.Player
                     collider.gameObject.GetComponent<DepositBehavior>().MakeDeposit(_droneStorageList[0]);
                     _droneStorageList.RemoveAt(0);
                     _droneStorageList.Sort();
-                    GameObject.Find("CurrentItemHeld").GetComponent<Text>().text = "Number of Held Items: " + _droneStorageList.Count;
-
                 }
             }
             return false;
         }
-
 
 
         /* ----------| Message Processing |---------- */
@@ -118,6 +110,5 @@ namespace OutOfThisWorld.Player
         {
             _occupingBodies.Remove(other);
         }
-
     }
 }
