@@ -3,14 +3,11 @@ using deVoid.Utils;
 
 namespace OutOfThisWorld
 {
-    public class ResourceCountChanged : ASignal<float> {}
-
     public class ResourceSystem : MonoBehaviour
     {
         /* ----------| Component Properties |---------- */
 
             public float InitalResourceCount = 100f;
-            public bool DoResourceChangeSignals = false;
 
         /* ----------| Instance Variables |---------- */
 
@@ -32,7 +29,6 @@ namespace OutOfThisWorld
                 if (delta <= 0) { return false; }
 
                 _currentResourceCount += delta;
-                if(DoResourceChangeSignals) { Signals.Get<ResourceCountChanged>().Dispatch(_currentResourceCount); }
                 return true;
             }
 
@@ -42,7 +38,6 @@ namespace OutOfThisWorld
                 if (delta > _currentResourceCount) { return false; }
 
                 _currentResourceCount -= delta;
-                if(DoResourceChangeSignals) { Signals.Get<ResourceCountChanged>().Dispatch(_currentResourceCount); }
                 return true;
             }
     }
