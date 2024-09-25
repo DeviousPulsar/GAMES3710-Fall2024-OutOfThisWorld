@@ -100,12 +100,7 @@ namespace OutOfThisWorld.Player
         /// <returns></returns> false is there is nothing to interact with.
         bool DroneInteract()
         {
-            if (_drones[_activeDroneIndex].IsOccupied() )
-            {
-                return _drones[_activeDroneIndex].interactWithOccupied();
-            }
-
-            return false;
+            return _drones[_activeDroneIndex].Interact();
         }
 
     }

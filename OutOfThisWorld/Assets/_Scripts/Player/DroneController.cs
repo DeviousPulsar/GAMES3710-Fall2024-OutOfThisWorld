@@ -5,17 +5,20 @@ using UnityEngine.UI;
 
 namespace OutOfThisWorld.Player
 {
-    [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(CapsuleCollider))]
+    [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour
     {
         enum DroneMode { ACTIVE, INACTIVE }
 
     /* ----------| Component Properties |---------- */
 
+        [Header("Movement")]
         public float MaxSpeed = 1f;
         public float Acceleration = 10f;
         public float MaxXAxisLook = 90f;
+        [Header("Item Pick Up")]
         public int MaxStorageSize = 1;
+        public float InteractionRange = 3;
 
     /* ----------| Instance Variables |---------- */
 
@@ -24,10 +27,6 @@ namespace OutOfThisWorld.Player
         private Rigidbody _rigidbody;
         private PlayerInputHandler _playerInputHandler;
         private DroneMode _mode;
-
-
-        private CapsuleCollider _interactionRange;
-        private ISet<Collider> _occupingBodies;
 
         private List<ItemBehavior> _droneStorageList;
 
@@ -39,15 +38,8 @@ namespace OutOfThisWorld.Player
             _rigidbody = GetComponent<Rigidbody>();
             DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, DroneController>(_rigidbody, this, gameObject);
 
-            // Initialize collider set
-            _occupingBodies = new HashSet<Collider>();
-
+            // Initialize pickup list
             _droneStorageList = new List<ItemBehavior> { };
-
-            // fetch components on the same gameObject
-            _interactionRange = this.GetComponent<CapsuleCollider>();
-            DebugUtility.HandleErrorIfNullGetComponent<CapsuleCollider, PlayerController>(_interactionRange, this, gameObject);
-
         }
 
         /* ----------| Movement Functions |---------- */
@@ -66,49 +58,38 @@ namespace OutOfThisWorld.Player
             }
         }
 
-        public bool IsOccupied()
+        public bool Interact()
         {
-            return _occupingBodies.Count > 0;
-        }
+             // Calculate raycast parameters
+            Vector3 raySrc = transform.position;
+            Vector3 rayDir = transform.TransformDirection(Vector3.forward);
+            //int layermask = 1 << 7;
 
-        public bool interactWithOccupied()
-        {
-            foreach (Collider collider in _occupingBodies)
-            {
-                if (collider.gameObject.GetComponent<ItemBehavior>() != null && _droneStorageList.Count < MaxStorageSize)
+            // Cast ray and update position if there is a hit
+            RaycastHit hit;
+            if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange)) {
+                Collider hitCol = hit.collider;
+                if (hitCol.gameObject.GetComponent<ItemBehavior>() != null && _droneStorageList.Count < MaxStorageSize)
                 {
-                    _droneStorageList.Add((collider.gameObject.GetComponent<ItemBehavior>())); // Add item to inventory
+                    _droneStorageList.Add((hitCol.gameObject.GetComponent<ItemBehavior>())); // Add item to inventory
 
-                    _occupingBodies.Remove(collider);
-                    //Destroy(collider.gameObject);
-
-                    Vector3 position = collider.transform.position;
+                    Vector3 position = hitCol.transform.position;
                     position.y -= 100f;
-                    collider.transform.position = position;
+                    hitCol.transform.position = position;
                     return true;
-
-                } else if(collider.gameObject.GetComponent<DepositBehavior>() != null && _droneStorageList.Count > 0)
+                } else if(hitCol.gameObject.GetComponent<DepositBehavior>() != null && _droneStorageList.Count > 0)
                 {
 
-                    collider.gameObject.GetComponent<DepositBehavior>().MakeDeposit(_droneStorageList[0]);
+                    hitCol.gameObject.GetComponent<DepositBehavior>().MakeDeposit(_droneStorageList[0]);
+                    GameObject desposited = _droneStorageList[0].gameObject;
                     _droneStorageList.RemoveAt(0);
-                    _droneStorageList.Sort();
+                    Destroy(desposited);
+                    return true;
                 }
             }
+
+
             return false;
-        }
-
-
-        /* ----------| Message Processing |---------- */
-
-        private void OnTriggerEnter(Collider other)
-        {
-            _occupingBodies.Add(other);
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            _occupingBodies.Remove(other);
         }
     }
 }
