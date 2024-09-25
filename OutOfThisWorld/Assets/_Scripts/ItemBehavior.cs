@@ -1,54 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using OutOfThisWorld.Debug;
 
 namespace OutOfThisWorld
-{    
+{
+    [RequireComponent(typeof(Rigidbody))]
     public class ItemBehavior : MonoBehaviour
     {
         /* ----------| Component Properties |---------- */
 
         public float ItemCost = 1f;
-
+        public float PickUpMassFactor = 0.1f;
 
         /* ----------| Instance Variables |---------- */
 
+        private bool _isHeld = false;
+        private Rigidbody _rigidbody;
 
+        /* ----------| Initaliazation Functions |----------- */
 
-
-
-
-        /* ----------| Initalization Functions |---------- */
-
-        // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-
-
-
-
-
+            // fetch components on the same gameObject
+            _rigidbody = GetComponent<Rigidbody>();
+            DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, ItemBehavior>(_rigidbody, this, gameObject);
         }
 
+        /* ----------| Getters |-------- */
 
-
-        /* ----------| Main Update Loop |---------- */
-
-        // Update is called once per frame
-        void Update()
+        public bool IsHeld()
         {
-
+            return _isHeld;
         }
 
-        public float getItemCost()
+        public Rigidbody GetRigidbody()
         {
-            return ItemCost;
+            return _rigidbody;
         }
 
-        public void setItemCost(float cost)
+        /* ----------| Pickup and Dropping Functions |----------- */
+
+        public void Grab(Vector3 pos, Quaternion rot, float scale)
         {
-            ItemCost = cost;
+            transform.position = pos;
+            transform.rotation = rot;
+            transform.localScale = transform.localScale*scale;
+            _isHeld = true;
+
+            _rigidbody.useGravity = false;
+            _rigidbody.mass = PickUpMassFactor*_rigidbody.mass;
         }
 
+        public void Drop(float scale)
+        {
+            transform.localScale = transform.localScale/scale;
+            _isHeld = false;
+            _rigidbody.useGravity = true;
+            _rigidbody.mass = PickUpMassFactor/_rigidbody.mass;
+        }
     }
 }

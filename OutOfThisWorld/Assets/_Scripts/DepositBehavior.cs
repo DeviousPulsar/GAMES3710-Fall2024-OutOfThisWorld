@@ -17,7 +17,7 @@ namespace OutOfThisWorld
         {
             if (item != null)
             {
-                resourceSystem.AddResources(item.getItemCost());
+                resourceSystem.AddResources(item.ItemCost);
             }
         }
     }
