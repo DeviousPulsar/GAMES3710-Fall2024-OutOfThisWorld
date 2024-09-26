@@ -300,9 +300,10 @@ MonoBehaviour:
   MoveZAxisName: Forwards
   LookXAxisName: Mouse Y
   LookYAxisName: Mouse X
-  SpawnNewDroneAction: Interact
+  SpawnNewDroneAction: 
   DroneShiftAction: Drone Shift
-  DroneInteraction: Act With
+  DroneInteract1: Interact 1
+  DroneInteract2: Interact 2
   LookSensitivity: 4
   InvertYAxis: 0
   InvertXAxis: 0
