@@ -13,7 +13,6 @@ namespace OutOfThisWorld.Player
         public string MoveZAxisName = "Forwards";
         public string LookXAxisName = "Mouse Y";
         public string LookYAxisName = "Mouse X";
-        public string SpawnNewDroneAction;
         public string DroneShiftAction = "Drone Shift";
         public string DroneInteract1 = "Interact 1";
         public string DroneInteract2 = "Interact 2";

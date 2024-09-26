@@ -26,8 +26,7 @@ namespace OutOfThisWorld
 
             // fetch components on the same gameObject
             _spawnArea = GetComponent<BoxCollider>();
-            DebugUtility.HandleErrorIfNullGetComponent<BoxCollider, SpawnArea>(_spawnArea,
-                this, gameObject);
+            DebugUtility.HandleErrorIfNullGetComponent<BoxCollider, SpawnArea>(_spawnArea, this, gameObject);
         }
 
     /* ----------| Message Processing |---------- */
