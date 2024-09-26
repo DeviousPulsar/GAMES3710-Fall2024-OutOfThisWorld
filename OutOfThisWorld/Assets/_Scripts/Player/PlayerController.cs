@@ -52,10 +52,11 @@ namespace OutOfThisWorld.Player
 
         void Update()
         {         
-            if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
+            //if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
             if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
-            if (Input.GetButtonDown(_playerInputHandler.DroneInteraction)) { DroneInteract(); } // Added by JB
+            if (Input.GetButtonDown(_playerInputHandler.DroneInteract1)) { DroneInteract(); } // Added by JB
+            if (Input.GetButtonDown(_playerInputHandler.DroneInteract2)) { _drones[_activeDroneIndex].DropHeld(); }
 
             _droneUIPanel.SetActiveInfoBar(_drones[_activeDroneIndex]);
         }
@@ -102,6 +103,8 @@ namespace OutOfThisWorld.Player
         {
             return _drones[_activeDroneIndex].Interact();
         }
+
+
 
     }
 }

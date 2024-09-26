@@ -75,7 +75,6 @@ namespace OutOfThisWorld.Player
              // Calculate raycast parameters
             Vector3 raySrc = transform.position;
             Vector3 rayDir = transform.TransformDirection(Vector3.forward);
-            //int layermask = 1 << 7;
 
             // Cast ray and update position if there is a hit
             RaycastHit hit;
@@ -102,6 +101,20 @@ namespace OutOfThisWorld.Player
                 }
             }
 
+
+            return false;
+        }
+
+        public bool DropHeld()
+        {
+            FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
+            if (_droneStorageList.Count > 0 && holdJoint != null)
+            {
+                _droneStorageList[0].Drop(HoldScale);
+                _droneStorageList.RemoveAt(0);
+                Destroy(holdJoint);
+                return true;
+            }
 
             return false;
         }
