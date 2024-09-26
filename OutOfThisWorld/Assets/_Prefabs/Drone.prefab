@@ -300,5 +300,6 @@ MonoBehaviour:
   MaxStorageSize: 1
   InteractionRange: 3
   HoldTransform: {fileID: 7761337032843287279}
-  HoldScale: 1
+  HoldScale: 0.5
   BreakHoldForce: 100
+  ThrowForce: 5

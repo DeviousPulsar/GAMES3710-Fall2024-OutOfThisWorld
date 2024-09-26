@@ -22,6 +22,7 @@ namespace OutOfThisWorld.Player
         public Transform HoldTransform;
         public float HoldScale = 1f;
         public float BreakHoldForce = 100f;
+        public float ThrowForce = 1f;
 
     /* ----------| Instance Variables |---------- */
 
@@ -81,21 +82,15 @@ namespace OutOfThisWorld.Player
             if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange)) {
                 Collider hitCol = hit.collider;
                 ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
+                DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
                 if (hitItem != null && !hitItem.IsHeld() && _droneStorageList.Count < MaxStorageSize)
                 {
-                    _droneStorageList.Add((hitCol.gameObject.GetComponent<ItemBehavior>())); // Add item to inventory
-                    hitCol.gameObject.SetActive(false);
+                    Pickup(hitItem);
                     
                     return true;
-                } else if(hitCol.gameObject.GetComponent<DepositBehavior>() != null && _droneStorageList.Count > 0)
+                } else if(hitDepot != null && _droneStorageList.Count > 0)
                 {
-
-                    hitCol.gameObject.GetComponent<DepositBehavior>().MakeDeposit(_droneStorageList[0]);
-                    
-                    GameObject desposited = _droneStorageList[0].gameObject;
-                    _droneStorageList.RemoveAt(0);
-                    Destroy(desposited);
-                    Destroy(gameObject.GetComponent<FixedJoint>());
+                    Deposit(hitDepot);
                     
                     return true;
                 }
@@ -105,12 +100,29 @@ namespace OutOfThisWorld.Player
             return false;
         }
 
+        public void Pickup(ItemBehavior item)
+        {
+            _droneStorageList.Add(item); // Add item to inventory
+            item.gameObject.SetActive(false);
+        }
+
+        public void Deposit(DepositBehavior depot)
+        {
+            depot.MakeDeposit(_droneStorageList[0]);
+                    
+            GameObject desposited = _droneStorageList[0].gameObject;
+            _droneStorageList.RemoveAt(0);
+            Destroy(desposited);
+            Destroy(gameObject.GetComponent<FixedJoint>());
+        }
+
         public bool DropHeld()
         {
             FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
             if (_droneStorageList.Count > 0 && holdJoint != null)
             {
                 _droneStorageList[0].Drop(HoldScale);
+                _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                 _droneStorageList.RemoveAt(0);
                 Destroy(holdJoint);
                 return true;
