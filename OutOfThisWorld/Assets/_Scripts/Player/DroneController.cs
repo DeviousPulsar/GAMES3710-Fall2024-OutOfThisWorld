@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 using OutOfThisWorld.Debug;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using deVoid.Utils;
 
 namespace OutOfThisWorld.Player
 {
+    public class DroneSpawned : ASignal<DroneController> {}
+
     [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour
     {
@@ -22,6 +25,7 @@ namespace OutOfThisWorld.Player
         public Transform HoldTransform;
         public float HoldScale = 1f;
         public float BreakHoldForce = 100f;
+        public float ThrowForce = 1f;
 
     /* ----------| Instance Variables |---------- */
 
@@ -34,7 +38,7 @@ namespace OutOfThisWorld.Player
 
         /* ----------| Initalization Functions |---------- */
 
-        void Awake()
+        void Start()
         {
             // fetch components on the same gameObject
             _rigidbody = GetComponent<Rigidbody>();
@@ -42,6 +46,8 @@ namespace OutOfThisWorld.Player
 
             // Initialize pickup list
             _droneStorageList = new List<ItemBehavior> { };
+
+            Signals.Get<DroneSpawned>().Dispatch(this);
         }
 
         /* ----------| Main Loop |----------- */
@@ -80,23 +86,48 @@ namespace OutOfThisWorld.Player
             RaycastHit hit;
             if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange)) {
                 Collider hitCol = hit.collider;
+
                 ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
-                if (hitItem != null && !hitItem.IsHeld() && _droneStorageList.Count < MaxStorageSize)
+                DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
+                Spawner hitSpawner = hitCol.gameObject.GetComponent<Spawner>();
+                ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
+
+                UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner);
+                if (_droneStorageList.Count < MaxStorageSize && hitItem != null && !hitItem.IsHeld())
                 {
-                    _droneStorageList.Add((hitCol.gameObject.GetComponent<ItemBehavior>())); // Add item to inventory
-                    hitCol.gameObject.SetActive(false);
+                    _droneStorageList.Add(hitItem); // Add item to inventory
+                    hitItem.gameObject.SetActive(false);
                     
                     return true;
-                } else if(hitCol.gameObject.GetComponent<DepositBehavior>() != null && _droneStorageList.Count > 0)
+                } else if (_droneStorageList.Count > 0)
                 {
+                    if (hitDepot != null) {
+                        hitDepot.MakeDeposit(_droneStorageList[0]);
+                        
+                        GameObject desposited = _droneStorageList[0].gameObject;
+                        _droneStorageList.RemoveAt(0);
+                        Destroy(desposited);
+                        Destroy(gameObject.GetComponent<FixedJoint>());
 
-                    hitCol.gameObject.GetComponent<DepositBehavior>().MakeDeposit(_droneStorageList[0]);
+                        return true;
+                    } else if (hitSocket != null && !hitSocket.HasItem()) {
+                        ItemBehavior item = _droneStorageList[0];
+                        DropHeld();
+                        hitSocket.TakeItem(item);
+
+                        return true;
+                    }
                     
-                    GameObject desposited = _droneStorageList[0].gameObject;
-                    _droneStorageList.RemoveAt(0);
-                    Destroy(desposited);
-                    Destroy(gameObject.GetComponent<FixedJoint>());
+                    return false;
+                } else if (_droneStorageList.Count < MaxStorageSize && hitSocket != null && hitSocket.HasItem()) {
+                    ItemBehavior item = hitSocket.GiveItem();
+                    _droneStorageList.Add(item);
+                    item.gameObject.SetActive(false);
                     
+                    return true;
+                } else if (hitSpawner != null) {
+                    hitSpawner.Spawn();
+
                     return true;
                 }
             }
@@ -111,6 +142,7 @@ namespace OutOfThisWorld.Player
             if (_droneStorageList.Count > 0 && holdJoint != null)
             {
                 _droneStorageList[0].Drop(HoldScale);
+                _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                 _droneStorageList.RemoveAt(0);
                 Destroy(holdJoint);
                 return true;
