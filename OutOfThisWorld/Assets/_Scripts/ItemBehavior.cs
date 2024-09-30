@@ -10,6 +10,7 @@ namespace OutOfThisWorld
 
         public float ItemCost = 1f;
         public float PickUpMassFactor = 0.1f;
+        public string ItemTag;
 
         /* ----------| Instance Variables |---------- */
 

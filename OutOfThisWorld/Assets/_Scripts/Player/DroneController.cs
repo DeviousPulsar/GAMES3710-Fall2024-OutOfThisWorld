@@ -86,24 +86,43 @@ namespace OutOfThisWorld.Player
             RaycastHit hit;
             if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange)) {
                 Collider hitCol = hit.collider;
+
                 ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                 DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
                 Spawner hitSpawner = hitCol.gameObject.GetComponent<Spawner>();
+                ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
+
                 UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner);
-                if (hitItem != null && !hitItem.IsHeld() && _droneStorageList.Count < MaxStorageSize)
+                if (_droneStorageList.Count < MaxStorageSize && hitItem != null && !hitItem.IsHeld())
                 {
                     _droneStorageList.Add(hitItem); // Add item to inventory
                     hitItem.gameObject.SetActive(false);
                     
                     return true;
-                } else if (hitDepot != null && _droneStorageList.Count > 0)
+                } else if (_droneStorageList.Count > 0)
                 {
-                    hitDepot.MakeDeposit(_droneStorageList[0]);
+                    if (hitDepot != null) {
+                        hitDepot.MakeDeposit(_droneStorageList[0]);
+                        
+                        GameObject desposited = _droneStorageList[0].gameObject;
+                        _droneStorageList.RemoveAt(0);
+                        Destroy(desposited);
+                        Destroy(gameObject.GetComponent<FixedJoint>());
+
+                        return true;
+                    } else if (hitSocket != null && !hitSocket.HasItem()) {
+                        ItemBehavior item = _droneStorageList[0];
+                        DropHeld();
+                        hitSocket.TakeItem(item);
+
+                        return true;
+                    }
                     
-                    GameObject desposited = _droneStorageList[0].gameObject;
-                    _droneStorageList.RemoveAt(0);
-                    Destroy(desposited);
-                    Destroy(gameObject.GetComponent<FixedJoint>());
+                    return false;
+                } else if (_droneStorageList.Count < MaxStorageSize && hitSocket != null && hitSocket.HasItem()) {
+                    ItemBehavior item = hitSocket.GiveItem();
+                    _droneStorageList.Add(item);
+                    item.gameObject.SetActive(false);
                     
                     return true;
                 } else if (hitSpawner != null) {
