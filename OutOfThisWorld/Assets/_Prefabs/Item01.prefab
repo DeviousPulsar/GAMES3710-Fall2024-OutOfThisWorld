@@ -150,6 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemCost: 1
+  PickUpMassFactor: 0.1
+  ItemTag: ItemCyl1
 --- !u!65 &3428641640020517473
 BoxCollider:
   m_ObjectHideFlags: 0

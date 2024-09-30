@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using UnityEngine;
 
 namespace OutOfThisWorld {
@@ -7,7 +7,7 @@ namespace OutOfThisWorld {
     {
         /* ----------| Component Properties |---------- */
 
-        public ISet<string> DesiredItemTags;
+        public List<string> DesiredItemTags;
         [Header("Item Hold Information")]
         public Transform HoldTransform;
         public float HoldScale = 1f;
@@ -17,6 +17,14 @@ namespace OutOfThisWorld {
 
         private ItemBehavior _heldItem;
         private FixedJoint _holdJoint;
+        private ISet<string> _fixedDesiredSet;
+
+        /* ----------| Initalizatino Functions |---------- */
+
+        void Start()
+        {
+            _fixedDesiredSet = new HashSet<string>(DesiredItemTags);
+        }
 
         /* ----------| Socket Functions |----------- */
 
@@ -44,6 +52,11 @@ namespace OutOfThisWorld {
         public bool HasItem ()
         {
             return _holdJoint != null;
+        }
+
+        public bool HasCorrectItem ()
+        {
+            return _holdJoint != null && _fixedDesiredSet.Contains(_heldItem.ItemTag);
         }
     }
 }
