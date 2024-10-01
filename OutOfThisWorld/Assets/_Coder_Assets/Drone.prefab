@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 8772208621232165761}
   - component: {fileID: 671986042113961246}
   - component: {fileID: 5479317739284499266}
-  - component: {fileID: 1951335645299917583}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -304,17 +303,3 @@ MonoBehaviour:
   HoldScale: 0.5
   BreakHoldForce: 100
   ThrowForce: 5
---- !u!114 &1951335645299917583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7814195169453977645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4075a38b9243c449e5a2c16db6bd12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCost: 4
-  PickUpMassFactor: 0.1
