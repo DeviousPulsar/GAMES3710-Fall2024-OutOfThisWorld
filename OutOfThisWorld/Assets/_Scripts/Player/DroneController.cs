@@ -81,17 +81,28 @@ namespace OutOfThisWorld.Player {
 
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
-                    Spawner hitSpawner = hitCol.gameObject.GetComponent<Spawner>();
+                    DroneSpawner hitSpawner = hitCol.gameObject.GetComponent<DroneSpawner>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
 
-                    UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner);
-                    if (_droneStorageList.Count < MaxStorageSize && hitItem != null && !hitItem.IsHeld())
-                    {
-                        Pickup(hitItem);
-                        
-                        return true;
-                    } else if (_droneStorageList.Count > 0)
-                    {
+                    UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner + hitSocket);
+                    
+                    // If Inventory not full
+                    if (_droneStorageList.Count < MaxStorageSize) { 
+                        if (hitSocket != null && hitSocket.HasItem()) {
+                            ItemBehavior item = hitSocket.GiveItem();
+                            _droneStorageList.Add(item);
+                            item.gameObject.SetActive(false);
+                            
+                            return true;
+                        } else if (hitItem != null && !hitItem.IsHeld()) {
+                            Pickup(hitItem);
+                            
+                            return true;
+                        }
+                    }
+                    
+                    // If holding at least 1 item
+                    if (_droneStorageList.Count > 0) { 
                         if (hitDepot != null) {
                             hitDepot.MakeDeposit(_droneStorageList[0]);
                             
@@ -108,15 +119,15 @@ namespace OutOfThisWorld.Player {
 
                             return true;
                         }
-                        
-                        return false;
-                    } else if (_droneStorageList.Count < MaxStorageSize && hitSocket != null && hitSocket.HasItem()) {
-                        ItemBehavior item = hitSocket.GiveItem();
-                        _droneStorageList.Add(item);
-                        item.gameObject.SetActive(false);
-                        
+                    }
+                    
+                    if (hitSpawner != null) {
+                        UnityEngine.Debug.Log("Attempt to spawn from spawner " + hitSpawner);
+                        hitSpawner.Spawn();
+
                         return true;
                     }
+                    
                 }
 
 

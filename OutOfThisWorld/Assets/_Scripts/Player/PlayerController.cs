@@ -16,7 +16,7 @@ namespace OutOfThisWorld.Player {
             [SerializeField] DroneInfoPanel _droneUIPanel;
 
             [Header("Drone Information")]
-            public GameObject DronePrefab;
+            public GameObject InitalDronePrefab;
             public Transform InitalDroneSpawn;
             public int DroneMax = 4;
 
@@ -36,7 +36,7 @@ namespace OutOfThisWorld.Player {
 
                 // Spawn inital drone
                 _drones = new List<DroneController>();
-                SpawnDrone(InitalDroneSpawn.position, InitalDroneSpawn.rotation);
+                SpawnDrone(InitalDronePrefab, InitalDroneSpawn.position, InitalDroneSpawn.rotation);
             }
 
         /* ----------| Main Update Loops |---------- */
@@ -55,7 +55,7 @@ namespace OutOfThisWorld.Player {
             {
                 if (_drones.Count < 1) 
                 {
-                    SpawnDrone();
+                    SpawnDrone(InitalDronePrefab, InitalDroneSpawn.position, InitalDroneSpawn.rotation);
                     _activeDroneIndex = 0;
                 }
 
@@ -66,26 +66,22 @@ namespace OutOfThisWorld.Player {
 
         /* -----------| Drone Spawning and Manipulation |----------- */
 
-            public bool SpawnDrone(Vector3 position, Quaternion rotation)
+            public GameObject SpawnDrone(GameObject droneToAdd, Vector3 position, Quaternion rotation)
             {
                 if (_drones.Count < DroneMax) {
-                    GameObject drone = Instantiate(DronePrefab, position, rotation, transform);
+                    GameObject drone = Instantiate(droneToAdd, position, rotation, transform);
                     DroneController droneController = drone.GetComponent<DroneController>();
                     DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
                     
                     _drones.Add(droneController);
                     _droneUIPanel.AddInfoBar(droneController);
 
-                    return true;
+                    return drone;
                 }
 
-                return false;
+                return null;
             }
 
-            /// <summary>
-            /// Try to interact with what you are looking at from the currently activated drone.
-            /// </summary>
-            /// <returns></returns> false is there is nothing to interact with.
             bool DroneInteract()
             {
                 return _drones[_activeDroneIndex].Interact();
