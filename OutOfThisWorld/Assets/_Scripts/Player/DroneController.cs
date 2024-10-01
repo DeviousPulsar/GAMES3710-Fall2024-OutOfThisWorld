@@ -2,12 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using OutOfThisWorld.Debug;
 using System.Collections.Generic;
-using deVoid.Utils;
 
 namespace OutOfThisWorld.Player
 {
-    public class DroneSpawned : ASignal<DroneController> {}
-
     [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour
     {
@@ -38,7 +35,7 @@ namespace OutOfThisWorld.Player
 
         /* ----------| Initalization Functions |---------- */
 
-        void Start()
+        void Awake()
         {
             // fetch components on the same gameObject
             _rigidbody = GetComponent<Rigidbody>();
@@ -46,8 +43,6 @@ namespace OutOfThisWorld.Player
 
             // Initialize pickup list
             _droneStorageList = new List<ItemBehavior> { };
-
-            Signals.Get<DroneSpawned>().Dispatch(this);
         }
 
         /* ----------| Main Loop |----------- */
@@ -95,8 +90,7 @@ namespace OutOfThisWorld.Player
                 UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner);
                 if (_droneStorageList.Count < MaxStorageSize && hitItem != null && !hitItem.IsHeld())
                 {
-                    _droneStorageList.Add(hitItem); // Add item to inventory
-                    hitItem.gameObject.SetActive(false);
+                    Pickup(hitItem);
                     
                     return true;
                 } else if (_droneStorageList.Count > 0)
@@ -125,15 +119,27 @@ namespace OutOfThisWorld.Player
                     item.gameObject.SetActive(false);
                     
                     return true;
-                } else if (hitSpawner != null) {
-                    hitSpawner.Spawn();
-
-                    return true;
                 }
             }
 
 
             return false;
+        }
+
+        public void Pickup(ItemBehavior item)
+        {
+            _droneStorageList.Add(item); // Add item to inventory
+            item.gameObject.SetActive(false);
+        }
+
+        public void Deposit(DepositBehavior depot)
+        {
+            depot.MakeDeposit(_droneStorageList[0]);
+                    
+            GameObject desposited = _droneStorageList[0].gameObject;
+            _droneStorageList.RemoveAt(0);
+            Destroy(desposited);
+            Destroy(gameObject.GetComponent<FixedJoint>());
         }
 
         public bool DropHeld()
