@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 8772208621232165761}
   - component: {fileID: 671986042113961246}
   - component: {fileID: 5479317739284499266}
-  - component: {fileID: 1951335645299917583}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -227,8 +226,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3775, y: 0.3775, z: 0.3775}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6841163563861028284}
   - {fileID: 6100378694711851965}
@@ -298,23 +297,9 @@ MonoBehaviour:
   MaxSpeed: 2
   Acceleration: 10
   MaxXAxisLook: 90
-  MaxStorageSize: 1
   InteractionRange: 3
+  MaxStorageSize: 1
   HoldTransform: {fileID: 7761337032843287279}
   HoldScale: 0.5
   BreakHoldForce: 100
   ThrowForce: 5
---- !u!114 &1951335645299917583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7814195169453977645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4075a38b9243c449e5a2c16db6bd12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCost: 4
-  PickUpMassFactor: 0.1

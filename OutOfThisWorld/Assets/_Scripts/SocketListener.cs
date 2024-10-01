@@ -8,39 +8,39 @@ namespace OutOfThisWorld {
         public abstract void Undo();
     }
 
-    public class SocketListener : MonoBehaviour
-    {
-        /* ----------| Component Properties |---------- */
+    public class SocketListener : MonoBehaviour{
+        
+        /* ----------| Serialized Variables |---------- */
 
-        [SerializeField] List<ItemSocket> Sockets;
-        [SerializeField] List<Triggerable> Triggers;
+            [SerializeField] List<ItemSocket> Sockets;
+            [SerializeField] List<Triggerable> Triggers;
 
         /* ----------| Instance Variables |---------- */
 
-        private bool LastTriggered = false;
+            private bool LastTriggered = false;
 
         /* ----------| Main Loop |----------- */
 
-        void FixedUpdate() 
-        {
-            bool triggered = CheckTriggers();
-            if (triggered && !LastTriggered) {
-                foreach (Triggerable t in Triggers) { t.Trigger(); }
-            } else if (!triggered && LastTriggered) {
-                foreach (Triggerable t in Triggers) { t.Undo(); }
-            }
-            LastTriggered = triggered;
-        }
-
-        bool CheckTriggers() {
-            foreach (ItemSocket sock in Sockets)
+            void FixedUpdate() 
             {
-                if (!sock.HasCorrectItem()) { 
-                    return false; 
+                bool triggered = CheckTriggers();
+                if (triggered && !LastTriggered) {
+                    foreach (Triggerable t in Triggers) { t.Trigger(); }
+                } else if (!triggered && LastTriggered) {
+                    foreach (Triggerable t in Triggers) { t.Undo(); }
                 }
+                LastTriggered = triggered;
             }
 
-            return true;
-        }
+            bool CheckTriggers() {
+                foreach (ItemSocket sock in Sockets)
+                {
+                    if (!sock.HasCorrectItem()) { 
+                        return false; 
+                    }
+                }
+
+                return true;
+            }
     }
 }
