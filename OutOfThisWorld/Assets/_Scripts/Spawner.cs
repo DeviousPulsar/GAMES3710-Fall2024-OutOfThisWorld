@@ -3,25 +3,27 @@ using UnityEngine;
 using OutOfThisWorld.Debug;
 
 namespace OutOfThisWorld {
-    public class Spawner : MonoBehaviour
-    {
-        [SerializeField] List<GameObject> _spawnables;
-        [SerializeField] ResourceSystem _resourceSystem;
-        public float CostMultiplier = 1f;
-        public float SpawnForce = 1f;
+    public class Spawner : MonoBehaviour {
+
+        /* ----------| Serialized Variables |---------- */
+
+            [SerializeField] List<GameObject> _spawnables;
+            [SerializeField] ResourceSystem _resourceSystem;
+            public float CostMultiplier = 1f;
+            public float SpawnForce = 1f;
 
         /* ----------| Private Variables |---------- */
 
-        private SpawnArea[] _spawnLocations;
+            private SpawnArea[] _spawnLocations;
 
         /* ----------| Initalization Functions |---------- */
 
-        void Awake()
-        {
-            // fetch components from child GameObject
-            _spawnLocations = GetComponentsInChildren<SpawnArea>();
-            DebugUtility.HandleWarningIfNoComponentsFoundAmongChildren<SpawnArea, Spawner>(_spawnLocations.Length, this);
-        }
+            void Awake()
+            {
+                // fetch components from child GameObject
+                _spawnLocations = GetComponentsInChildren<SpawnArea>();
+                DebugUtility.HandleWarningIfNoComponentsFoundAmongChildren<SpawnArea, Spawner>(_spawnLocations.Length, this);
+            }
 
         /* ----------| Spawner Functions |---------- */
 

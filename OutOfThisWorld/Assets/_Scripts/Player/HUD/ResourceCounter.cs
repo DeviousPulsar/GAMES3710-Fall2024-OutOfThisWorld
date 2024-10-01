@@ -2,10 +2,8 @@ using UnityEngine;
 using OutOfThisWorld;
 using TMPro;
 
-namespace OutOfThisWorld.Player.HUD
-{
-    public class ResourceCounterPanel : MonoBehaviour
-    {
+namespace OutOfThisWorld.Player.HUD {
+    public class ResourceCounterPanel : MonoBehaviour {
         [SerializeField] TextMeshProUGUI _textObject;
         [SerializeField] ResourceSystem _resourceSystem;
 
