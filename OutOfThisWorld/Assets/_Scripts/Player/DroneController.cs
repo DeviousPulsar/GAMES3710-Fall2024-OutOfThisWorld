@@ -82,7 +82,7 @@ namespace OutOfThisWorld.Player {
 
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
-                    DroneSpawner hitSpawner = hitCol.gameObject.GetComponent<DroneSpawner>();
+                    AbstractSpawner hitSpawner = hitCol.gameObject.GetComponent<AbstractSpawner>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
 
                     UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner + hitSocket);

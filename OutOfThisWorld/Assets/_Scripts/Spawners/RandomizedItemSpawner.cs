@@ -26,7 +26,7 @@ namespace OutOfThisWorld {
                 
                 foreach (SpawnArea area in _spawnLocations)
                 {
-                    if (!area.IsOccupied() && _resourceSystem.SpendResources(Cost))
+                    if (!area.IsOccupied() && (Cost <= 0 || _resourceSystem.SpendResources(Cost)))
                     {
                         return Instantiate(objToSpawn, area.GetRandomizedSpawnLocation(), area.GetRandomizedSpawnAngle());
                     }
