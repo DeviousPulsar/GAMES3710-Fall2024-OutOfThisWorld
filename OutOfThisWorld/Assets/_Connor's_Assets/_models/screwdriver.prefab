@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 2091162616503640944}
   - component: {fileID: 431194044267956764}
   - component: {fileID: 7639155223412852768}
-  - component: {fileID: 4012640637192016634}
-  - component: {fileID: 1206461590359025585}
-  - component: {fileID: 4199564654636673135}
   m_Layer: 0
   m_Name: screwdriver
   m_TagString: Untagged

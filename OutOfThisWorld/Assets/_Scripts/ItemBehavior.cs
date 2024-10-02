@@ -1,39 +1,41 @@
 using UnityEngine;
 using OutOfThisWorld.Debug;
 
-namespace OutOfThisWorld {
+namespace OutOfThisWorld
+{
     [RequireComponent(typeof(Rigidbody))]
-    public class ItemBehavior : MonoBehaviour {
-        /* ----------| Serialized Variables |---------- */
+    public class ItemBehavior : MonoBehaviour
+    {
+        /* ----------| Component Properties |---------- */
 
             public float ItemCost = 1f;
             public string ItemTag;
 
         /* ----------| Instance Variables |---------- */
 
-            private bool _isHeld = false;
-            private Rigidbody _rigidbody;
+        private bool _isHeld = false;
+        private Rigidbody _rigidbody;
 
         /* ----------| Initaliazation Functions |----------- */
 
-            void Awake()
-            {
-                // fetch components on the same gameObject
-                _rigidbody = GetComponent<Rigidbody>();
-                DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, ItemBehavior>(_rigidbody, this, gameObject);
-            }
+        void Awake()
+        {
+            // fetch components on the same gameObject
+            _rigidbody = GetComponent<Rigidbody>();
+            DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, ItemBehavior>(_rigidbody, this, gameObject);
+        }
 
         /* ----------| Getters |-------- */
 
-            public bool IsHeld()
-            {
-                return _isHeld;
-            }
+        public bool IsHeld()
+        {
+            return _isHeld;
+        }
 
-            public Rigidbody GetRigidbody()
-            {
-                return _rigidbody;
-            }
+        public Rigidbody GetRigidbody()
+        {
+            return _rigidbody;
+        }
 
         /* ----------| Pickup and Dropping Functions |----------- */
 

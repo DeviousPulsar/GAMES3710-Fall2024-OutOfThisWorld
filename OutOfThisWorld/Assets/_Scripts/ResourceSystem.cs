@@ -2,10 +2,11 @@ using UnityEngine;
 using deVoid.Utils;
 using UnityEngine.UI;
 
-namespace OutOfThisWorld {
-    public class ResourceSystem : MonoBehaviour {
-        
-        /* ----------| Serialized Variables |---------- */
+namespace OutOfThisWorld
+{
+    public class ResourceSystem : MonoBehaviour
+    {
+        /* ----------| Component Properties |---------- */
 
             public float InitalResourceCount = 100f;
 

@@ -11,9 +11,6 @@ GameObject:
   - component: {fileID: 6881721144218331626}
   - component: {fileID: 391784355063295755}
   - component: {fileID: 5297405738606389328}
-  - component: {fileID: 2946419419644370681}
-  - component: {fileID: 3010715442556903205}
-  - component: {fileID: 5625784567998733372}
   m_Layer: 0
   m_Name: fuel_barrel
   m_TagString: Untagged
