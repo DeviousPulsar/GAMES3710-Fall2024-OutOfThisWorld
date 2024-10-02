@@ -7,7 +7,6 @@ namespace OutOfThisWorld {
         /* ----------| Serialized Variables |---------- */
 
             public float ItemCost = 1f;
-            public float PickUpMassFactor = 0.1f;
             public string ItemTag;
 
         /* ----------| Instance Variables |---------- */
@@ -38,7 +37,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Pickup and Dropping Functions |----------- */
 
-            public void Grab(Vector3 pos, Quaternion rot, float scale)
+            public void Grab(Vector3 pos, Quaternion rot, float scale, float massScale)
             {
                 transform.position = pos;
                 transform.rotation = rot;
@@ -46,15 +45,15 @@ namespace OutOfThisWorld {
                 _isHeld = true;
 
                 _rigidbody.useGravity = false;
-                _rigidbody.mass = PickUpMassFactor*_rigidbody.mass;
+                _rigidbody.mass = massScale*_rigidbody.mass;
             }
 
-            public void Drop(float scale)
+            public void Drop(float scale, float massScale)
             {
                 transform.localScale = transform.localScale/scale;
                 _isHeld = false;
                 _rigidbody.useGravity = true;
-                _rigidbody.mass = PickUpMassFactor/_rigidbody.mass;
+                _rigidbody.mass = massScale/_rigidbody.mass;
             }
     }
 }

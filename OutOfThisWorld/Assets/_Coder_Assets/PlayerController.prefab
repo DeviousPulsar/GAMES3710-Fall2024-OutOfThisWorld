@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 1763170897235873116}
   - {fileID: 8491614006643368109}
-  - {fileID: 4317644963925499579}
+  - {fileID: 3280023279056809244}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4888726000285762265
@@ -75,7 +75,8 @@ MonoBehaviour:
   _resourceSystem: {fileID: 5935674233928808924}
   _mainCamera: {fileID: 8718672310319017005}
   _droneUIPanel: {fileID: 5372131012874717718}
-  DroneSpawner: {fileID: 0}
+  InitalDronePrefab: {fileID: 7814195169453977645, guid: e555c95e6156949419df42cf8fefee00, type: 3}
+  InitalDroneSpawn: {fileID: 3280023279056809244}
   DroneMax: 4
 --- !u!114 &5935674233928808924
 MonoBehaviour:
@@ -89,7 +90,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014236f61944992408a45a87864b8a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitalResourceCount: 100
+  InitalResourceCount: 0
+--- !u!1 &391525814203561106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3280023279056809244}
+  m_Layer: 0
+  m_Name: InitDronePos
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3280023279056809244
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391525814203561106}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 20.197, y: 1.928, z: -1.133}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2515592438880989081}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &2531331086055055144
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +186,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -568,65 +600,3 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!1001 &6989790721157650583
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2515592438880989081}
-    m_Modifications:
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7814195169453977645, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-      propertyPath: m_Name
-      value: InitDrone
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e555c95e6156949419df42cf8fefee00, type: 3}
---- !u!4 &4317644963925499579 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6551579227985331756, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-  m_PrefabInstance: {fileID: 6989790721157650583}
-  m_PrefabAsset: {fileID: 0}
