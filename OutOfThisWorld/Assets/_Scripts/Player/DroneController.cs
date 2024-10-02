@@ -9,6 +9,9 @@ namespace OutOfThisWorld.Player {
         
         /* ----------| Serialized Variables |---------- */
 
+
+            [Header("Camera")]
+            public Transform CameraOffset;
             [Header("Movement")]
             public float MaxSpeed = 1f;
             public float Acceleration = 10f;
@@ -18,6 +21,7 @@ namespace OutOfThisWorld.Player {
             public int MaxStorageSize = 1;
             public Transform HoldTransform;
             public float HoldScale = 1f;
+            public float HeldItemMassFactor = 1f;
             public float BreakHoldForce = 100f;
             public float ThrowForce = 1f;
 
@@ -81,7 +85,7 @@ namespace OutOfThisWorld.Player {
 
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
-                    DroneSpawner hitSpawner = hitCol.gameObject.GetComponent<DroneSpawner>();
+                    AbstractSpawner hitSpawner = hitCol.gameObject.GetComponent<AbstractSpawner>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
 
                     UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner + hitSocket);
@@ -155,7 +159,7 @@ namespace OutOfThisWorld.Player {
                 FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
                 if (_droneStorageList.Count > 0 && holdJoint != null)
                 {
-                    _droneStorageList[0].Drop(HoldScale);
+                    _droneStorageList[0].Drop(HoldScale, HeldItemMassFactor);
                     _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                     _droneStorageList.RemoveAt(0);
                     Destroy(holdJoint);
@@ -168,7 +172,7 @@ namespace OutOfThisWorld.Player {
             void RenderInHand(ItemBehavior item)
             {
                 item.gameObject.SetActive(true);
-                item.Grab(HoldTransform.position, HoldTransform.rotation, HoldScale);
+                item.Grab(HoldTransform.position, HoldTransform.rotation, HoldScale, HeldItemMassFactor);
 
                 FixedJoint holdJoint = gameObject.AddComponent<FixedJoint>();
                 holdJoint.connectedBody = item.GetRigidbody();
@@ -181,7 +185,7 @@ namespace OutOfThisWorld.Player {
             void OnJointBreak(float breakForce)
             {
                 UnityEngine.Debug.Log("A joint has just been broken!, dropping: " + _droneStorageList[0]);
-                _droneStorageList[0].Drop(HoldScale);
+                _droneStorageList[0].Drop(HoldScale, HeldItemMassFactor);
                 _droneStorageList.RemoveAt(0);
             }
     }

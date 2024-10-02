@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.38268343, z: -0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3775, y: 0.3775, z: 0.3775}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6551579227985331756}
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 5547262949407548740}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 1.5}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -141,8 +141,8 @@ Transform:
   m_GameObject: {fileID: 6750559242768520031}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.245}
-  m_LocalScale: {x: 0.75, y: 0.5, z: 0.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalScale: {x: 0.25, y: 0.2, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6551579227985331756}
@@ -226,7 +226,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 0.3775, y: 0.3775, z: 0.3775}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6841163563861028284}
@@ -243,8 +243,8 @@ Rigidbody:
   m_GameObject: {fileID: 7814195169453977645}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 6
-  m_AngularDrag: 10
+  m_Drag: 3
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -280,7 +280,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5479317739284499266
 MonoBehaviour:
@@ -300,6 +300,7 @@ MonoBehaviour:
   InteractionRange: 3
   MaxStorageSize: 1
   HoldTransform: {fileID: 7761337032843287279}
-  HoldScale: 0.5
+  HoldScale: 1
+  HeldItemMassFactor: 0.1
   BreakHoldForce: 100
   ThrowForce: 5
