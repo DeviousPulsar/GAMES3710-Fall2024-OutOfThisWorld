@@ -9,6 +9,9 @@ namespace OutOfThisWorld.Player {
         
         /* ----------| Serialized Variables |---------- */
 
+
+            [Header("Camera")]
+            public Transform CameraOffset;
             [Header("Movement")]
             public float MaxSpeed = 1f;
             public float Acceleration = 10f;
@@ -82,7 +85,7 @@ namespace OutOfThisWorld.Player {
 
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
-                    DroneSpawner hitSpawner = hitCol.gameObject.GetComponent<DroneSpawner>();
+                    AbstractSpawner hitSpawner = hitCol.gameObject.GetComponent<AbstractSpawner>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
 
                     UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner + hitSocket);

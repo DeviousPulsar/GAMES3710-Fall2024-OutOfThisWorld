@@ -27,7 +27,6 @@ namespace OutOfThisWorld.Player
 
         private PlayerInputHandler _playerInputHandler;
         private List<DroneController> _drones;
-        private SpawnArea[] _spawnLocations;
         private int _activeDroneIndex = 0;
 
 
@@ -38,10 +37,6 @@ namespace OutOfThisWorld.Player
             // fetch components from GameObject
             _playerInputHandler = GetComponent<PlayerInputHandler>();
             DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, PlayerController>(_playerInputHandler, this, gameObject);
-
-            // fetch components from child GameObject
-            _spawnLocations = GetComponentsInChildren<SpawnArea>();
-            DebugUtility.HandleWarningIfNoComponentsFoundAmongChildren<SpawnArea, PlayerController>(_spawnLocations.Length, this);
 
             // Spawn inital drone
             _drones = new List<DroneController>();
@@ -68,9 +63,11 @@ namespace OutOfThisWorld.Player
                 _activeDroneIndex = 0;
             }*/
 
-            _drones[_activeDroneIndex].HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
-            _mainCamera.transform.position = _drones[_activeDroneIndex].transform.position;
-            _mainCamera.transform.rotation = _drones[_activeDroneIndex].transform.rotation;
+            DroneController activeDrone = _drones[_activeDroneIndex];
+
+            activeDrone.HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
+            _mainCamera.transform.position = activeDrone.CameraOffset.position;
+            _mainCamera.transform.rotation = activeDrone.CameraOffset.rotation;
         }
 
     /* -----------| Drone Spawning and Manipulation |----------- */
