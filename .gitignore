@@ -70,3 +70,6 @@
 # Temporary auto-generated Android Assets
 /OutOfThisWorld/[Aa]ssets/[Ss]treamingAssets/aa.meta
 /OutOfThisWorld/[Aa]ssets/[Ss]treamingAssets/aa/*
+*.html
+*.txt
+*.txt
