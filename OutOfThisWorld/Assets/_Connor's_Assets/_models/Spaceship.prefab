@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Margin: 0
+  Margin: 0.05
   MaxAngleVariation: 0
 --- !u!1 &2907009477670278324
 GameObject:
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Margin: 0
+  Margin: 0.05
   MaxAngleVariation: 0
 --- !u!1 &3364160005339448922
 GameObject:
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Margin: 0
+  Margin: 0.05
   MaxAngleVariation: 0
 --- !u!1 &3797976826503385504
 GameObject:
@@ -428,10 +428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd942cc7dd4cdf846ac73d8d854e3977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DronePrefab: {fileID: 7814195169453977645, guid: e555c95e6156949419df42cf8fefee00, type: 3}
+  DronePrefab: {fileID: 7814195169453977645, guid: eb8fa63d81d62644981acbd44e86c94f, type: 3}
   _playerControler: {fileID: 0}
   _resourceSystem: {fileID: 0}
-  Cost: 5
+  Cost: 10
 --- !u!1 &4647923374084173912
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Margin: 0
+  Margin: 0.05
   MaxAngleVariation: 0
 --- !u!1 &7463701416346276812
 GameObject:
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Margin: 0
+  Margin: 0.05
   MaxAngleVariation: 0
 --- !u!1 &9159394923738209268
 GameObject:
@@ -718,5 +718,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Margin: 0
+  Margin: 0.05
   MaxAngleVariation: 0
