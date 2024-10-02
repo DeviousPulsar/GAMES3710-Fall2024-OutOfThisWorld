@@ -19,9 +19,9 @@ namespace OutOfThisWorld.Player
         [SerializeField] DroneInfoPanel _droneUIPanel;
 
         [Header("Drone Information")]
-        public GameObject DronePrefab;
-        public int DroneMax = 4;
-        public float DroneSpawnCost = 5f;
+        public GameObject InitalDronePrefab;
+        public Transform InitalDroneLocation;
+        public int DroneMax = 2;
 
     /* ----------| Private Variables |---------- */
 
@@ -45,29 +45,28 @@ namespace OutOfThisWorld.Player
 
             // Spawn inital drone
             _drones = new List<DroneController>();
-            SpawnDrone();
+            SpawnDrone(InitalDronePrefab, InitalDroneLocation.position, InitalDroneLocation.rotation);
         }
 
     /* ----------| Main Update Loop |---------- */
 
         void Update()
-        {         
-            //if (Input.GetButtonDown(_playerInputHandler.SpawnNewDroneAction)) { SpawnDrone(); }
+        {
             if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
-            if (Input.GetButtonDown(_playerInputHandler.DroneInteract1)) { DroneInteract(); } // Added by JB
-            if (Input.GetButtonDown(_playerInputHandler.DroneInteract2)) { _drones[_activeDroneIndex].DropHeld(); }
+            if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
+            if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { _drones[_activeDroneIndex].DropHeld(); }
 
             _droneUIPanel.SetActiveInfoBar(_drones[_activeDroneIndex]);
         }
 
         void FixedUpdate()
         {
-            if (_drones.Count < 1) 
+            /*if (_drones.Count < 1) 
             {
                 SpawnDrone();
                 _activeDroneIndex = 0;
-            }
+            }*/
 
             _drones[_activeDroneIndex].HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
             _mainCamera.transform.position = _drones[_activeDroneIndex].transform.position;
@@ -76,23 +75,20 @@ namespace OutOfThisWorld.Player
 
     /* -----------| Drone Spawning and Manipulation |----------- */
 
-        bool SpawnDrone()
+        public GameObject SpawnDrone(GameObject DronePrefab, Vector3 position, Quaternion rotation)
         {
-            foreach (SpawnArea location in _spawnLocations)
-            {
-                if (!location.IsOccupied() && _drones.Count < DroneMax && _resourceSystem.SpendResources(DroneSpawnCost)) {
-                    GameObject drone = Instantiate(DronePrefab, location.GetRandomizedSpawnLocation(), location.GetRandomizedSpawnAngle(), transform);
-                    DroneController droneController = drone.GetComponent<DroneController>();
-                    DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
-                    
-                    _drones.Add(droneController);
-                    _droneUIPanel.AddInfoBar(droneController);
+            if (_drones.Count < DroneMax) {
+                GameObject drone = Instantiate(DronePrefab, position, rotation, transform);
+                DroneController droneController = drone.GetComponent<DroneController>();
+                DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
+                
+                _drones.Add(droneController);
+                _droneUIPanel.AddInfoBar(droneController);
 
-                    return true;
-                }
+                return drone;
             }
 
-            return false;
+            return null;
         }
 
         /// <summary>

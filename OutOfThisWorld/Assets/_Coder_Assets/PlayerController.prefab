@@ -55,8 +55,8 @@ MonoBehaviour:
   LookXAxisName: Mouse Y
   LookYAxisName: Mouse X
   DroneShiftAction: Drone Shift
-  DroneInteract1: Interact 1
-  DroneInteract2: Interact 2
+  DroneInteract: Interact
+  DroneDrop: Drop
   LookSensitivity: 4
   InvertYAxis: 0
   InvertXAxis: 0
@@ -76,7 +76,7 @@ MonoBehaviour:
   _mainCamera: {fileID: 8718672310319017005}
   _droneUIPanel: {fileID: 5372131012874717718}
   InitalDronePrefab: {fileID: 7814195169453977645, guid: e555c95e6156949419df42cf8fefee00, type: 3}
-  InitalDroneSpawn: {fileID: 3280023279056809244}
+  InitalDroneLocation: {fileID: 3280023279056809244}
   DroneMax: 4
 --- !u!114 &5935674233928808924
 MonoBehaviour:
@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 391525814203561106}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 20.197, y: 1.928, z: -1.133}
+  m_LocalPosition: {x: 20, y: 1.5, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
