@@ -15,7 +15,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Spawning Functions |---------- */
 
-            public override GameObject Spawn()
+            protected override GameObject AbsSpawn()
             {
                 DroneController drone = DronePrefab.GetComponent<DroneController>();
                 DebugUtility.HandleErrorIfNullGetComponent<DroneController, GameObject>(drone, this, DronePrefab);

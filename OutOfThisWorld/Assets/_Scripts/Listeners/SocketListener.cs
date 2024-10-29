@@ -8,7 +8,7 @@ namespace OutOfThisWorld {
         public abstract void Undo();
     }
 
-    public class SocketListener : MonoBehaviour{
+    public class SocketListener : MonoBehaviour {
         
         /* ----------| Serialized Variables |---------- */
 

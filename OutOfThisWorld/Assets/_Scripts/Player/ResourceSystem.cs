@@ -35,7 +35,7 @@ namespace OutOfThisWorld
 
             public bool SpendResources(float delta)
             {
-                if (delta <= 0) { return false; }
+                if (delta < 0) { return false; }
                 if (delta > _currentResourceCount) { return false; }
 
                 _currentResourceCount -= delta;

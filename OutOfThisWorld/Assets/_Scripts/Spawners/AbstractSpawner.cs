@@ -6,6 +6,10 @@ using OutOfThisWorld.Player;
 namespace OutOfThisWorld {
     public class AbstractSpawner : MonoBehaviour {
 
+        /* ----------| Serialized Variables |---------- */
+
+            [SerializeField] List<UseCountListener> Listeners;
+
         /* ----------| Private Variables |---------- */
 
             protected SpawnArea[] _spawnLocations;
@@ -21,7 +25,19 @@ namespace OutOfThisWorld {
         
         /* ----------| Abstract Methods |---------- */
 
-        public virtual GameObject Spawn() {
+        public GameObject Spawn() {
+            GameObject spawned = AbsSpawn();
+
+            if (spawned is not null) {
+                foreach(UseCountListener l in Listeners) {
+                    l.Count();
+                }
+            }
+
+            return spawned; 
+        }
+
+        protected virtual GameObject AbsSpawn() {
             UnityEngine.Debug.Log("AbstractSpawner's Spawn() method is nonfunctional and should not be used!");
 
             return null;

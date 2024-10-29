@@ -14,7 +14,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Spawning Functions |---------- */
 
-            public override GameObject Spawn()
+            protected override GameObject AbsSpawn()
             {
                 GameObject objToSpawn = _spawnables[(int) Random.Range(0, _spawnables.Count - 0.001f)];
                 ItemBehavior itemInfo = objToSpawn.GetComponent<ItemBehavior>();
