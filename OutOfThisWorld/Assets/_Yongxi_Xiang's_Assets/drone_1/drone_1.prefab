@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraOffset: {fileID: 2791570830165348940}
   MaxSpeed: 2
-  Acceleration: 10
+  Acceleration: 5
   MaxXAxisLook: 90
   InteractionRange: 3
   MaxStorageSize: 1
@@ -107,7 +107,7 @@ MonoBehaviour:
   HoldScale: 1
   HeldItemMassFactor: 0.1
   BreakHoldForce: 100
-  ThrowForce: 1
+  ThrowForce: 10
 --- !u!1 &7692544459025945232
 GameObject:
   m_ObjectHideFlags: 0
