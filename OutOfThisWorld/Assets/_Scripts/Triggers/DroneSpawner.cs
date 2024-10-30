@@ -9,8 +9,6 @@ namespace OutOfThisWorld {
 
             public GameObject DronePrefab;
             [SerializeField] PlayerController _playerControler;
-            [SerializeField] ResourceSystem _resourceSystem;
-            public float Cost = 1f;
 
         /* ----------| Spawning Functions |---------- */
 
@@ -18,16 +16,14 @@ namespace OutOfThisWorld {
             {
                 DroneController drone = DronePrefab.GetComponent<DroneController>();
                 DebugUtility.HandleErrorIfNullGetComponent<DroneController, GameObject>(drone, this, DronePrefab);
-
-                UnityEngine.Debug.Log(""+  DronePrefab + drone );
                 
                 if (drone == null) { return null; }
                 
                 foreach (SpawnArea area in _spawnLocations)
                 {
-                    if (!area.IsOccupied() && _resourceSystem.SpendResources(Cost))
+                    if (!area.IsOccupied())
                     {
-                        return _playerControler.SpawnDrone(DronePrefab, area.GetRandomizedSpawnLocation(), area.GetRandomizedSpawnAngle());
+                        return _playerControler.SpawnDrone(DronePrefab, area.GetSpawnLocation(), area.GetSpawnAngle());
                     }
                 }
 
