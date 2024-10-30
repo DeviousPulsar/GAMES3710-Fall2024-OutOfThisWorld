@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using OutOfThisWorld.Debug;
 using OutOfThisWorld.Player;
 
 namespace OutOfThisWorld {
-    public class RandomizedItemSpawner : AbstractSpawner {
+    public class RandomizedSpawner : AbstractSpawner {
 
         /* ----------| Serialized Variables |---------- */
 

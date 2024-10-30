@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using OutOfThisWorld;
-using OutOfThisWorld.Debug;
 using OutOfThisWorld.Player.HUD;
 
 namespace OutOfThisWorld.Player

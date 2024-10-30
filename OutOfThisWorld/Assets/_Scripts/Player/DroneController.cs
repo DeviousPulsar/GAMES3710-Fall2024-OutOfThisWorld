@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using OutOfThisWorld.Debug;
 using System.Collections.Generic;
 
 namespace OutOfThisWorld.Player {

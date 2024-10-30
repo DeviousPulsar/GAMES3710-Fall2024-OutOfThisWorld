@@ -4,7 +4,7 @@
 
 using UnityEngine;
 
-namespace OutOfThisWorld.Debug
+namespace OutOfThisWorld
 {
     public static class DebugUtility
     {

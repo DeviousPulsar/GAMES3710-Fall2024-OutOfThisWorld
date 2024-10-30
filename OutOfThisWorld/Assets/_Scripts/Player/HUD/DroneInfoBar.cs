@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using OutOfThisWorld.Debug;
 
 namespace OutOfThisWorld.Player.HUD
 {
