@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using deVoid.Utils;
 
 namespace OutOfThisWorld.Player.HUD
 {
@@ -17,6 +18,8 @@ namespace OutOfThisWorld.Player.HUD
 
             _defaultInfoBar = InfoBarPrefab.GetComponent<DroneInfoBar>();
             DebugUtility.HandleErrorIfNullGetComponent<DroneInfoBar, GameObject>(_defaultInfoBar, this, InfoBarPrefab);
+
+            Signals.Get<DroneDestroyed>().AddListener(RemoveInfoBarTrigger);
         }
 
         public bool InfoBarPrefabValid() { return _defaultInfoBar; }
@@ -42,9 +45,14 @@ namespace OutOfThisWorld.Player.HUD
             DroneInfoBar infobar = _defaultInfoBar;
             if (!_drones.TryGetValue(drone, out infobar)) { return false; }
             if (!_drones.Remove(drone)) { return false; }
-            Destroy(_defaultInfoBar.gameObject);
+            Destroy(infobar.gameObject);
 
             return true;
+        }
+
+        private void RemoveInfoBarTrigger(DroneController drone) {
+            Debug.Log(this + " received request to remove DroneController " + drone + " from drone list");
+            RemoveInfoBar(drone);
         }
 
         public bool SetActiveInfoBar(DroneController drone)
