@@ -47,7 +47,10 @@ namespace OutOfThisWorld.Player
 
         void Update()
         {
-            if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
+            if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { 
+                _activeDroneIndex += 1;
+                _taskUIPanel.CompleteTask("Switch Drones (Tab)");
+            }
             if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
             if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
             if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { _drones[_activeDroneIndex].DropHeld(); }
@@ -82,6 +85,8 @@ namespace OutOfThisWorld.Player
                 _drones.Add(droneController);
                 _droneUIPanel.AddInfoBar(droneController);
 
+                _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
+                
                 return drone;
             }
 
