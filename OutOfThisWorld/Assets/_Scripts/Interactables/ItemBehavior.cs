@@ -1,10 +1,8 @@
 using UnityEngine;
 
-namespace OutOfThisWorld
-{
+namespace OutOfThisWorld {
     [RequireComponent(typeof(Rigidbody))]
-    public class ItemBehavior : MonoBehaviour
-    {
+    public class ItemBehavior : MonoBehaviour {
         /* ----------| Component Properties |---------- */
 
             public float ItemCost = 1f;
