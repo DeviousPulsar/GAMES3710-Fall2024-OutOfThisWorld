@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8145938936165491524}
   - component: {fileID: 5871881103150957947}
   - component: {fileID: 2610546244412596986}
-  - component: {fileID: 1529092130032611564}
   m_Layer: 0
   m_Name: drone_1
   m_TagString: Untagged
@@ -100,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraOffset: {fileID: 2791570830165348940}
   MaxSpeed: 2
-  Acceleration: 5
+  Acceleration: 10
   MaxXAxisLook: 90
   InteractionRange: 3
   MaxStorageSize: 1
@@ -108,20 +107,7 @@ MonoBehaviour:
   HoldScale: 1
   HeldItemMassFactor: 0.1
   BreakHoldForce: 100
-  ThrowForce: 10
---- !u!114 &1529092130032611564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3744565212062897678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd669686516b5dd4a85ce8c027210188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Value: 3
+  ThrowForce: 1
 --- !u!1 &7692544459025945232
 GameObject:
   m_ObjectHideFlags: 0

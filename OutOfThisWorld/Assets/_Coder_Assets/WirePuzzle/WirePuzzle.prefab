@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 3825356484610314489}
   - component: {fileID: 4377101534623210755}
   - component: {fileID: 2572524142295581956}
-  - component: {fileID: 1542126329764764819}
   m_Layer: 0
   m_Name: Cylinder (2)
   m_TagString: Untagged
@@ -292,22 +291,6 @@ MonoBehaviour:
   HoldTransform: {fileID: 1803531814951631446}
   HoldScale: 1
   BreakHoldForce: Infinity
---- !u!114 &1542126329764764819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030152658383760412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af396e9b7d0bcc7409de07df110969e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnables:
-  - {fileID: 8520301837246948272, guid: edafaa5af4a683b4a9746f6ace05bcf8, type: 3}
-  _resourceSystem: {fileID: 0}
-  Cost: 0
 --- !u!1 &2992869458675745923
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandomizationForSpawnTransform: 1
   Margin: 0
   MaxAngleVariation: 0
 --- !u!1 &4805199717809914798
@@ -890,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandomizationForSpawnTransform: 1
   Margin: 0
   MaxAngleVariation: 0
 --- !u!1 &5124551062431421111
@@ -906,7 +891,6 @@ GameObject:
   - component: {fileID: 337914561420499548}
   - component: {fileID: 8907209293222145935}
   - component: {fileID: 7402893448558747311}
-  - component: {fileID: 1906443664519656639}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -1048,22 +1032,6 @@ MonoBehaviour:
   HoldTransform: {fileID: 491376952457887189}
   HoldScale: 1
   BreakHoldForce: Infinity
---- !u!114 &1906443664519656639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5124551062431421111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af396e9b7d0bcc7409de07df110969e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnables:
-  - {fileID: 9188312229417605502, guid: c7bffa980f7de9549b25f20701e89b65, type: 3}
-  _resourceSystem: {fileID: 0}
-  Cost: 0
 --- !u!1 &5235964887348443893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,6 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandomizationForSpawnTransform: 1
   Margin: 0
   MaxAngleVariation: 0
 --- !u!1 &7171309943634926693
@@ -1705,6 +1674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95e3743cb01e9148a4af6c396d8a817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseRandomizationForSpawnTransform: 1
   Margin: 0
   MaxAngleVariation: 0
 --- !u!1 &7976307752758163199
@@ -1826,7 +1796,6 @@ GameObject:
   - component: {fileID: 1700659099884828043}
   - component: {fileID: 2757975115030752898}
   - component: {fileID: 7972539429533434348}
-  - component: {fileID: 8912209741503611907}
   m_Layer: 0
   m_Name: Cylinder (3)
   m_TagString: Untagged
@@ -1968,22 +1937,6 @@ MonoBehaviour:
   HoldTransform: {fileID: 5154894663408459980}
   HoldScale: 1
   BreakHoldForce: Infinity
---- !u!114 &8912209741503611907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8666911485493502668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af396e9b7d0bcc7409de07df110969e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnables:
-  - {fileID: 808970722299415026, guid: 25ae272c8739227428c35edf5b70ecac, type: 3}
-  _resourceSystem: {fileID: 0}
-  Cost: 0
 --- !u!1 &8850980562341518529
 GameObject:
   m_ObjectHideFlags: 0
@@ -2239,7 +2192,6 @@ GameObject:
   - component: {fileID: 681148820246302771}
   - component: {fileID: 5297218024371987781}
   - component: {fileID: 2770035282212346908}
-  - component: {fileID: 7006505338475269396}
   m_Layer: 0
   m_Name: Cylinder (4)
   m_TagString: Untagged
@@ -2381,19 +2333,3 @@ MonoBehaviour:
   HoldTransform: {fileID: 2552426322460420515}
   HoldScale: 1
   BreakHoldForce: Infinity
---- !u!114 &7006505338475269396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9062000603211614674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af396e9b7d0bcc7409de07df110969e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnables:
-  - {fileID: 2153904365871437619, guid: 379eb559cf2d4114386b8d78c3a80b74, type: 3}
-  _resourceSystem: {fileID: 0}
-  Cost: 0
