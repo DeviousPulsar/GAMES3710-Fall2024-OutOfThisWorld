@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public abstract class Triggerable : MonoBehaviour {
-        public abstract void Trigger();
-        public abstract void Undo();
-    }
-
-    public class SocketListener : MonoBehaviour{
+    public class SocketListener : MonoBehaviour {
         
         /* ----------| Serialized Variables |---------- */
 

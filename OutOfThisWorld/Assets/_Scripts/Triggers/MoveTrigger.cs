@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace OutOfThisWorld {
     public class MoveTrigger : Triggerable {
-        
         /* ----------| Serialized Variables |---------- */
 
             public Transform InitialTransform;

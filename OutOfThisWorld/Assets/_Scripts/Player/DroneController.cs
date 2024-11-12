@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using OutOfThisWorld.Debug;
-using System.Collections.Generic;
+using deVoid.Utils;
 
 namespace OutOfThisWorld.Player {
+    public class DroneDestroyed : ASignal<DroneController> {}
+
     [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour {
         
@@ -36,8 +38,7 @@ namespace OutOfThisWorld.Player {
 
         /* ----------| Initalization Functions |---------- */
 
-            void Awake()
-            {
+            void Awake() {
                 // fetch components on the same gameObject
                 _rigidbody = GetComponent<Rigidbody>();
                 DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, DroneController>(_rigidbody, this, gameObject);
@@ -48,8 +49,7 @@ namespace OutOfThisWorld.Player {
 
         /* ----------| Main Loop |----------- */
 
-            void Update()
-            {
+            void Update() {
                 if (_droneStorageList.Count > 0 && gameObject.GetComponent<FixedJoint>() == null)
                 {
                     RenderInHand(_droneStorageList[0]);
@@ -58,8 +58,7 @@ namespace OutOfThisWorld.Player {
 
         /* ----------| Movement Functions |---------- */
 
-            public void HandleMove(Vector3 move_dir, Vector3 look_dir, float delta) 
-            {
+            public void HandleMove(Vector3 move_dir, Vector3 look_dir, float delta) {
                 _eulers += look_dir;
                 _eulers.x = Mathf.Clamp(_eulers.x, -MaxXAxisLook, MaxXAxisLook);
                 transform.eulerAngles = _eulers;
@@ -72,8 +71,7 @@ namespace OutOfThisWorld.Player {
                 }
             }
 
-            public bool Interact()
-            {
+            public bool Interact() {
                 // Calculate raycast parameters
                 Vector3 raySrc = transform.position;
                 Vector3 rayDir = transform.TransformDirection(Vector3.forward);
@@ -138,14 +136,12 @@ namespace OutOfThisWorld.Player {
                 return false;
             }
 
-            public void Pickup(ItemBehavior item)
-            {
+            public void Pickup(ItemBehavior item) {
                 _droneStorageList.Add(item); // Add item to inventory
                 item.gameObject.SetActive(false);
             }
 
-            public void Deposit(DepositBehavior depot)
-            {
+            public void Deposit(DepositBehavior depot) {
                 depot.MakeDeposit(_droneStorageList[0]);
                         
                 GameObject desposited = _droneStorageList[0].gameObject;
@@ -154,8 +150,7 @@ namespace OutOfThisWorld.Player {
                 Destroy(gameObject.GetComponent<FixedJoint>());
             }
 
-            public bool DropHeld()
-            {
+            public bool DropHeld() {
                 FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
                 if (_droneStorageList.Count > 0 && holdJoint != null)
                 {
@@ -169,8 +164,7 @@ namespace OutOfThisWorld.Player {
                 return false;
             }
 
-            void RenderInHand(ItemBehavior item)
-            {
+            void RenderInHand(ItemBehavior item) {
                 item.gameObject.SetActive(true);
                 item.Grab(HoldTransform.position, HoldTransform.rotation, HoldScale, HeldItemMassFactor);
 
@@ -180,10 +174,16 @@ namespace OutOfThisWorld.Player {
                 holdJoint.breakTorque = BreakHoldForce;
             }
 
+        /* ----------| Finalization Functions |---------- */
+
+            void OnDestroy() {
+                Signals.Get<DroneDestroyed>().Dispatch(this);
+                Debug.Log("DroneController " + this + " destroyed");
+            }
+
         /* ----------| Message Handling |---------- */
 
-            void OnJointBreak(float breakForce)
-            {
+            void OnJointBreak(float breakForce) {
                 UnityEngine.Debug.Log("A joint has just been broken!, dropping: " + _droneStorageList[0]);
                 _droneStorageList[0].Drop(HoldScale, HeldItemMassFactor);
                 _droneStorageList.RemoveAt(0);

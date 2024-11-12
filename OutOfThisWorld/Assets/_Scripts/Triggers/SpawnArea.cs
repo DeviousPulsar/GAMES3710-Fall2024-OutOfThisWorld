@@ -1,13 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OutOfThisWorld.Debug;
 
 namespace OutOfThisWorld {
-    [RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
     public class SpawnArea : MonoBehaviour {
 
         /* ----------| Serialized Variables |---------- */
 
+            public bool UseRandomizationForSpawnTransform = true;
             public float Margin = 0.5f;
             public float MaxAngleVariation = 0f;
 
@@ -47,8 +48,10 @@ namespace OutOfThisWorld {
                 return _occupingBodies.Count > 0;
             }
 
-            public Vector3 GetRandomizedSpawnLocation ()
+            public Vector3 GetSpawnLocation ()
             {
+                if (!UseRandomizationForSpawnTransform) { return transform.position + _spawnArea.center; }
+
                 Vector3 min = _spawnArea.center - 0.5f*_spawnArea.size + Margin*Vector3.one;
                 Vector3 max = _spawnArea.center + 0.5f*_spawnArea.size - Margin*Vector3.one;
                 Vector3 result = new Vector3(Random.Range(min.x, max.x), Random.Range(min.y, max.y), Random.Range(min.z, max.z));
@@ -56,8 +59,10 @@ namespace OutOfThisWorld {
                 return transform.position+result;
             }
 
-            public Quaternion GetRandomizedSpawnAngle()
+            public Quaternion GetSpawnAngle()
             {
+                if (!UseRandomizationForSpawnTransform) { return transform.rotation; }
+
                 Vector3 eulers = new Vector3(Random.Range(-1,1), Random.Range(-1,1), 0);
                 eulers = Random.Range(0,MaxAngleVariation)*Vector3.ClampMagnitude(eulers, 1);
                 return transform.rotation*Quaternion.Euler(eulers.x, eulers.y, eulers.z);
