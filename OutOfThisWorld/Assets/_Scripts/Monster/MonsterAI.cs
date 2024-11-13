@@ -102,6 +102,8 @@ namespace OutOfThisWorld.Monster {
             }
 
             public void Spot(MonsterTarget target) {
+                if (!target) { return; }
+
                 if (_memory.ContainsKey(target)) {
                     MonsterMemUnit mem = _memory[target];
                     float dist = (mem.position - target.transform.position).magnitude;
