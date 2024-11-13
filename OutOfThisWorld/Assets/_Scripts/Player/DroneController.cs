@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using OutOfThisWorld.Player.HUD;
 using deVoid.Utils;
 
 namespace OutOfThisWorld.Player {
@@ -32,7 +33,7 @@ namespace OutOfThisWorld.Player {
             private Vector3 _eulers = Vector3.zero;
 
             private Rigidbody _rigidbody;
-            private PlayerInputHandler _playerInputHandler;
+            private PlayerController _playerController;
 
             private List<ItemBehavior> _droneStorageList;
 
@@ -45,6 +46,10 @@ namespace OutOfThisWorld.Player {
 
                 // Initialize pickup list
                 _droneStorageList = new List<ItemBehavior> { };
+
+                // Fetch nearest PlayerController
+                _playerController = FindObjectOfType<PlayerController>();
+                DebugUtility.HandleErrorIfNullGetComponent<PlayerController, DroneController>(_playerController, this, gameObject);
             }
 
         /* ----------| Main Loop |----------- */
@@ -111,6 +116,8 @@ namespace OutOfThisWorld.Player {
                             Destroy(desposited);
                             Destroy(gameObject.GetComponent<FixedJoint>());
 
+                            _playerController._taskUIPanel.CompleteTask("Deposit item in ship (Left Click anywhere on the ship)");
+
                             return true;
                         } else if (hitSocket != null && !hitSocket.HasItem()) {
                             ItemBehavior item = _droneStorageList[0];
@@ -136,6 +143,8 @@ namespace OutOfThisWorld.Player {
             public void Pickup(ItemBehavior item) {
                 _droneStorageList.Add(item); // Add item to inventory
                 item.gameObject.SetActive(false);
+
+                _playerController._taskUIPanel.CompleteTask("Pick Up an Object (Left Click)");
             }
 
             public void Deposit(DepositBehavior depot) {
@@ -155,6 +164,8 @@ namespace OutOfThisWorld.Player {
                     _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                     _droneStorageList.RemoveAt(0);
                     Destroy(holdJoint);
+
+                    _playerController._taskUIPanel.CompleteTask("Drop an object (Right Click)");
                     return true;
                 }
 
