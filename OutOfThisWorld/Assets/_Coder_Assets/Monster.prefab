@@ -92,9 +92,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7139088136161419876}
-  - component: {fileID: 1442376943941952988}
   - component: {fileID: 8173824202074947234}
   - component: {fileID: 1895567250807726378}
+  - component: {fileID: 4307842726195139512}
   m_Layer: 2
   m_Name: DetectArea
   m_TagString: Untagged
@@ -117,27 +117,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8140468567511041494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1442376943941952988
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5368180917027586350}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4, y: 4, z: 20}
-  m_Center: {x: 0, y: 0, z: 10}
 --- !u!54 &8173824202074947234
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -178,6 +157,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Monster: {fileID: 518066163933556744}
+--- !u!136 &4307842726195139512
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368180917027586350}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Height: 40
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 20}
 --- !u!1 &5806842888105163795
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,10 +386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DespawnTimeout: 1000
-  InaccessableRelogDistance: 1
-  MinRelogDistance: 0.1
-  WanderRange: 2
-  WanderTimeout: 1
+  InaccessableRelogDistance: 0.1
+  MinRelogDistance: 0.01
+  WanderRange: 10
+  WanderTimeout: 12
   EatTimeout: 1
   InaccessableTimeout: 1
   StoppedSpeed: 0.01

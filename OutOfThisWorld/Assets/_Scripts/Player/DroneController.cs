@@ -83,10 +83,8 @@ namespace OutOfThisWorld.Player {
 
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
-                    AbstractSpawner hitSpawner = hitCol.gameObject.GetComponent<AbstractSpawner>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
-
-                    UnityEngine.Debug.Log("" + hitItem + hitDepot + hitSpawner + hitSocket);
+                    Interactable hitTrigger = hitCol.gameObject.GetComponent<Interactable>();
                     
                     // If Inventory not full
                     if (_droneStorageList.Count < MaxStorageSize) { 
@@ -123,9 +121,8 @@ namespace OutOfThisWorld.Player {
                         }
                     }
                     
-                    if (hitSpawner != null) {
-                        UnityEngine.Debug.Log("Attempt to spawn from spawner " + hitSpawner);
-                        hitSpawner.Spawn();
+                    if (hitTrigger != null) {
+                        hitTrigger.Interact();
 
                         return true;
                     }

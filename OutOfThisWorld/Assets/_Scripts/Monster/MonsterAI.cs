@@ -42,6 +42,8 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
+                MonsterTarget closest_target = GetClosestAccessibleTarget();
+
                 if (_eatTimestamp + EatTimeout < Time.fixedTime) {
                     UpdatePath();
                 }
@@ -52,7 +54,7 @@ namespace OutOfThisWorld.Monster {
                     _timeStopped = 0;
                 }
 
-                if (_timeStopped > InaccessableTimeout) {
+                if (closest_target && _timeStopped > InaccessableTimeout) {
                     _memory[GetClosestAccessibleTarget()].accessible = false;
                     _timeStopped = 0;
                 }
