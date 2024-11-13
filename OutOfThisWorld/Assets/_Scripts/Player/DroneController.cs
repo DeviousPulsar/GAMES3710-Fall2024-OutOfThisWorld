@@ -31,7 +31,7 @@ namespace OutOfThisWorld.Player {
             private Vector3 _eulers = Vector3.zero;
 
             private Rigidbody _rigidbody;
-            private PlayerInputHandler _playerInputHandler;
+            private PlayerController _playerController;
 
             private List<ItemBehavior> _droneStorageList;
 
@@ -45,6 +45,10 @@ namespace OutOfThisWorld.Player {
 
                 // Initialize pickup list
                 _droneStorageList = new List<ItemBehavior> { };
+
+                // Fetch nearest PlayerController
+                _playerController = FindObjectOfType<PlayerController>();
+                DebugUtility.HandleErrorIfNullGetComponent<PlayerController, DroneController>(_playerController, this, gameObject);
             }
 
         /* ----------| Main Loop |----------- */
@@ -116,7 +120,7 @@ namespace OutOfThisWorld.Player {
                             Destroy(desposited);
                             Destroy(gameObject.GetComponent<FixedJoint>());
 
-                            _taskUIPanel.CompleteTask("Deposit item in ship (Left Click anywhere on the ship)");
+                            _playerController._taskUIPanel.CompleteTask("Deposit item in ship (Left Click anywhere on the ship)");
 
                             return true;
                         } else if (hitSocket != null && !hitSocket.HasItem()) {
@@ -146,7 +150,7 @@ namespace OutOfThisWorld.Player {
                 _droneStorageList.Add(item); // Add item to inventory
                 item.gameObject.SetActive(false);
 
-                _taskUIPanel.CompleteTask("Pick Up an Object (Left Click)");
+                _playerController._taskUIPanel.CompleteTask("Pick Up an Object (Left Click)");
             }
 
             public void Deposit(DepositBehavior depot)
@@ -169,7 +173,7 @@ namespace OutOfThisWorld.Player {
                     _droneStorageList.RemoveAt(0);
                     Destroy(holdJoint);
 
-                    _taskUIPanel.CompleteTask("Drop an object (Right Click)");
+                    _playerController._taskUIPanel.CompleteTask("Drop an object (Right Click)");
                     return true;
                 }
 
