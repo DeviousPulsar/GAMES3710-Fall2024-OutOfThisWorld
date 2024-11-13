@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public class UseCountListener : MonoBehaviour {
+    public class UseCountListener : OnLoadListener {
+
         /* ----------| Serialized Variables |---------- */
 
-            [SerializeField] List<Triggerable> Triggers;
             public int TriggerOn = 0;
 
         /* ----------| Instance Variables |---------- */
@@ -19,18 +19,7 @@ namespace OutOfThisWorld {
                 _numSpawns += 1;
             }
 
-            void FixedUpdate() 
-            {
-                bool triggered = CheckTriggers();
-                if (triggered) {
-                    foreach (Triggerable t in Triggers) {
-                        t.Trigger();
-                    }
-                    Destroy(this);
-                }
-            }
-
-            bool CheckTriggers() {
+            protected override bool CheckTriggers() {
                 return _numSpawns >= TriggerOn;
             }
     }

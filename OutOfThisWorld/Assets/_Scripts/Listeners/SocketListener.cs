@@ -3,31 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public class SocketListener : MonoBehaviour {
+    public class SocketListener : OnLoadListener {
         
         /* ----------| Serialized Variables |---------- */
 
             [SerializeField] List<ItemSocket> Sockets;
-            [SerializeField] List<Triggerable> Triggers;
-
-        /* ----------| Instance Variables |---------- */
-
-            private bool LastTriggered = false;
 
         /* ----------| Main Loop |----------- */
 
-            void FixedUpdate() 
-            {
-                bool triggered = CheckTriggers();
-                if (triggered && !LastTriggered) {
-                    foreach (Triggerable t in Triggers) { t.Trigger(); }
-                } else if (!triggered && LastTriggered) {
-                    foreach (Triggerable t in Triggers) { t.Undo(); }
-                }
-                LastTriggered = triggered;
-            }
-
-            bool CheckTriggers() {
+            protected override bool CheckTriggers() {
                 foreach (ItemSocket sock in Sockets)
                 {
                     if (!sock.HasCorrectItem()) { 
