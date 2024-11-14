@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/MainMenu.unity
+    guid: 5b9e6b218c12d2a44a3ea1c0e89620b0
+  - enabled: 1
+    path: "Assets/_Scenes/Yongxi\u2018s_vertical_slice_build.unity"
+    guid: ac7240e0141956a438b1cb77ea33528d
   m_configObjects: {}
