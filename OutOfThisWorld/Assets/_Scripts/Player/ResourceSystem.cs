@@ -10,21 +10,19 @@ namespace OutOfThisWorld
         /* ----------| Component Properties |---------- */
 
             public float InitalResourceCount = 100f;
+            [SerializeField] TaskInfoPanel _taskUIPanel;
 
         /* ----------| Instance Variables |---------- */
 
             private float _currentResourceCount = 0;
-            private TaskInfoPanel _taskUIPanel;
+            
 
         /* ----------| Initalization Functions |---------- */
 
             void Start()
             {
                 _currentResourceCount = InitalResourceCount;
-
-                TaskInfoPanel panelObject = FindObjectOfType<TaskInfoPanel>();
-                DebugUtility.HandleErrorIfNullGetComponent<ResourceSystem, TaskInfoPanel>(panelObject, this, gameObject);
-        }
+            }
 
         /* -----------| Resource Count Modification Functions |---------- */
 
