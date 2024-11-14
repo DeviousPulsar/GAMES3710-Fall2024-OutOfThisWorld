@@ -980,6 +980,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2232712759627356727, guid: d62d1f2e37f7f234dacd3d9b50d58134, type: 3}
   m_PrefabInstance: {fileID: 574397127}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &611082353 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4957230558863143264, guid: b78c3fff57157024d82688331a732692, type: 3}
+  m_PrefabInstance: {fileID: 2104842445626439246}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af6005f6bbfdd64c8dde39213f37004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &626110110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1273,6 +1284,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4490065293725060303, guid: 9d872e3fbe434e741b1bd5befe382f34, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1067580065}
+    - targetCorrespondingSourceObject: {fileID: 4490065293725060303, guid: 9d872e3fbe434e741b1bd5befe382f34, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1067580067}
     - targetCorrespondingSourceObject: {fileID: 5124551062431421111, guid: 9d872e3fbe434e741b1bd5befe382f34, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1363559243}
@@ -1615,6 +1629,20 @@ MonoBehaviour:
   - {fileID: 271735739}
   - {fileID: 864791837}
   - {fileID: 1420957123}
+--- !u!114 &1067580067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067580063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734dbe07ce4f2d6498476fe4d35ecfea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TaskPanel: {fileID: 611082353}
+  task: Complete the puzzle in the vents
 --- !u!1001 &1097463442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2298,6 +2326,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnables:
   - {fileID: 9188312229417605502, guid: c7bffa980f7de9549b25f20701e89b65, type: 3}
+--- !u!1 &1365769686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2919846950842224058, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
+  m_PrefabInstance: {fileID: 8955689057291248919}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1365769693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365769686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734dbe07ce4f2d6498476fe4d35ecfea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TaskPanel: {fileID: 611082353}
+  task: Open the Doors (Left Click on the Console in the Blue Room)
 --- !u!1 &1420957121 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9062000603211614674, guid: 9d872e3fbe434e741b1bd5befe382f34, type: 3}
@@ -2844,7 +2891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637168359019206531, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.43400002
+      value: -0.964
       objectReference: {fileID: 0}
     - target: {fileID: 8637168359019206531, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3892,7 +3939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnables:
-  - {fileID: 8708689539352120600, guid: 9e3ffef82c3d88a4dae5ebfdc81f821e, type: 3}
+  - {fileID: 8708689539352120600, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
 --- !u!4 &2145769718
 Transform:
   m_ObjectHideFlags: 0
@@ -3983,10 +4030,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
-    - target: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: InitalDronePrefab
-      value: 
-      objectReference: {fileID: 3744565212062897678, guid: 237963fbdf3419a418dd94f5afc8c810, type: 3}
     - target: {fileID: 2515592438880989081, guid: b78c3fff57157024d82688331a732692, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4026,14 +4069,6 @@ PrefabInstance:
     - target: {fileID: 2515592438880989081, guid: b78c3fff57157024d82688331a732692, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3280023279056809244, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3280023279056809244, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4106,7 +4141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8607136933354452802, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
       propertyPath: Triggers.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8607136933354452802, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
       propertyPath: Triggers.Array.data[0]
@@ -4119,7 +4154,7 @@ PrefabInstance:
     - target: {fileID: 8607136933354452802, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
       propertyPath: Triggers.Array.data[2]
       value: 
-      objectReference: {fileID: 1488649440}
+      objectReference: {fileID: 1365769693}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4072021603826988523, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
@@ -4141,6 +4176,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6003694885933323745, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1874449966}
+    - targetCorrespondingSourceObject: {fileID: 2919846950842224058, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1365769693}
   m_SourcePrefab: {fileID: 100100000, guid: a2e09534aaa80d249a3aa95e635e27b5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
