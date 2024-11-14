@@ -22,11 +22,8 @@ namespace OutOfThisWorld
             {
                 _currentResourceCount = InitalResourceCount;
 
-                GameObject panelObject = GameObject.Find("TaskInfoPanel");
-                if (panelObject != null)
-                {
-                    _taskUIPanel = panelObject.GetComponent<TaskInfoPanel>();
-                }
+                TaskInfoPanel panelObject = FindObjectOfType<TaskInfoPanel>();
+                DebugUtility.HandleErrorIfNullGetComponent<ResourceSystem, TaskInfoPanel>(panelObject, this, gameObject);
         }
 
         /* -----------| Resource Count Modification Functions |---------- */

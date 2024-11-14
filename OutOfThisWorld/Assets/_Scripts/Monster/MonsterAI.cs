@@ -30,7 +30,7 @@ namespace OutOfThisWorld.Monster {
 
         /* ----------| Initialization Functions |---------- */
 
-            void Start()
+            void Awake()
             {
                 _navAgent = GetComponent<NavMeshAgent>();
                 DebugUtility.HandleErrorIfNullGetComponent<MonsterAI, NavMeshAgent>(_navAgent, this, gameObject);
@@ -42,8 +42,6 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
-                MonsterTarget closest_target = GetClosestAccessibleTarget();
-
                 if (_eatTimestamp + EatTimeout < Time.fixedTime) {
                     UpdatePath();
                 }
@@ -54,8 +52,10 @@ namespace OutOfThisWorld.Monster {
                     _timeStopped = 0;
                 }
 
-                if (closest_target && _timeStopped > InaccessableTimeout) {
-                    _memory[GetClosestAccessibleTarget()].accessible = false;
+                if (_timeStopped > InaccessableTimeout) {
+                    if (GetClosestAccessibleTarget()) {
+                        _memory[GetClosestAccessibleTarget()].accessible = false;
+                    }
                     _timeStopped = 0;
                 }
             }

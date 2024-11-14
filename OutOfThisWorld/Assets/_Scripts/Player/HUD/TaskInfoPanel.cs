@@ -1,16 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using OutOfThisWorld.Debug;
 
-namespace OutOfThisWorld.Player.HUD
-{
-
-
-    public class TaskInfoPanel : MonoBehaviour
-    {
+namespace OutOfThisWorld.Player.HUD {
+    public class TaskInfoPanel : MonoBehaviour {
 
         public GameObject InfoWidgetPrefab;
-
 
         private Dictionary<string, TaskInfoWidget> currentTasks;
         private Dictionary<string, TaskNode> taskGraph;

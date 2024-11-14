@@ -13,11 +13,11 @@ namespace OutOfThisWorld.Player {
 
         /* ----------| Serialized Variables |---------- */
 
-        [Header("References")]
-        public ResourceSystem _resourceSystem;
-        public Camera _mainCamera;
-        public DroneInfoPanel _droneUIPanel;
-        public TaskInfoPanel _taskUIPanel;
+            [Header("References")]
+            public ResourceSystem _resourceSystem;
+            public Camera _mainCamera;
+            public DroneInfoPanel _droneUIPanel;
+            public TaskInfoPanel _taskUIPanel;
 
             [Header("Drone Information")]
             public GameObject InitalDronePrefab;
