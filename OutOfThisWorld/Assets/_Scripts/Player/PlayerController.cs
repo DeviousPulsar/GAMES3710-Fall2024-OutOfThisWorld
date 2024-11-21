@@ -14,8 +14,10 @@ namespace OutOfThisWorld.Player {
         /* ----------| Serialized Variables |---------- */
 
             [Header("References")]
-            [SerializeField] Camera _mainCamera;
-            [SerializeField] DroneInfoPanel _droneUIPanel;
+            public ResourceSystem _resourceSystem;
+            public Camera _mainCamera;
+            public DroneInfoPanel _droneUIPanel;
+            public TaskInfoPanel _taskUIPanel;
 
             [Header("Drone Information")]
             public GameObject InitalDronePrefab;
@@ -53,7 +55,10 @@ namespace OutOfThisWorld.Player {
                     Destroy(gameObject);
                 }
 
-                if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { _activeDroneIndex += 1; }
+                if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { 
+                    _activeDroneIndex += 1;
+                    _taskUIPanel.CompleteTask("Switch Drones (Tab)");
+                }
                 if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
                 if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
                 if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { _drones[_activeDroneIndex].DropHeld(); }
@@ -68,8 +73,6 @@ namespace OutOfThisWorld.Player {
                 activeDrone.HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
                 _mainCamera.transform.position = activeDrone.CameraOffset.position;
                 _mainCamera.transform.rotation = activeDrone.CameraOffset.rotation;
-
-                DispatchSingals();
             }
 
             void DispatchSingals () {
@@ -93,6 +96,8 @@ namespace OutOfThisWorld.Player {
                     
                     _drones.Add(droneController);
                     _droneUIPanel.AddInfoBar(droneController);
+
+                    _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
 
                     return drone;
                 }

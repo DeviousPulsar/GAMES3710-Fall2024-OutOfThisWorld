@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 93922766}
   - component: {fileID: 93922772}
   - component: {fileID: 93922771}
+  - component: {fileID: 93922773}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -211,8 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd942cc7dd4cdf846ac73d8d854e3977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Listeners:
-  - {fileID: 93922772}
   DronePrefab: {fileID: 3744565212062897678, guid: 237963fbdf3419a418dd94f5afc8c810, type: 3}
   _playerControler: {fileID: 1476246659}
 --- !u!65 &93922767
@@ -283,6 +282,22 @@ MonoBehaviour:
   - {fileID: 295043638}
   - {fileID: 93922771}
   TriggerOn: 3
+--- !u!114 &93922773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93922765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5053c12ab9871d40a65d245bcfe73a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Triggers:
+  - {fileID: 93922766}
+  Listeners:
+  - {fileID: 93922772}
 --- !u!1 &295043637
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126d5ecb11e6ae540bf581f64281a011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Listeners: []
   _spawnables:
   - {fileID: 8708689539352120600, guid: 9e3ffef82c3d88a4dae5ebfdc81f821e, type: 3}
 --- !u!4 &295043639

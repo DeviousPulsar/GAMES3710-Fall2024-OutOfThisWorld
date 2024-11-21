@@ -5,10 +5,6 @@ using OutOfThisWorld.Player;
 namespace OutOfThisWorld {
     public class AbstractSpawner : Triggerable {
 
-        /* ----------| Serialized Variables |---------- */
-
-            [SerializeField] List<UseCountListener> Listeners;
-
         /* ----------| Private Variables |---------- */
 
             protected SpawnArea[] _spawnLocations;
@@ -26,12 +22,6 @@ namespace OutOfThisWorld {
 
             public GameObject Spawn() {
                 GameObject spawned = AbsSpawn();
-
-                if (spawned is not null) {
-                    foreach(UseCountListener l in Listeners) {
-                        l.Count();
-                    }
-                }
 
                 return spawned; 
             }

@@ -30,7 +30,7 @@ namespace OutOfThisWorld.Monster {
 
         /* ----------| Initialization Functions |---------- */
 
-            void Start()
+            void Awake()
             {
                 _navAgent = GetComponent<NavMeshAgent>();
                 DebugUtility.HandleErrorIfNullGetComponent<MonsterAI, NavMeshAgent>(_navAgent, this, gameObject);
@@ -53,7 +53,9 @@ namespace OutOfThisWorld.Monster {
                 }
 
                 if (_timeStopped > InaccessableTimeout) {
-                    _memory[GetClosestAccessibleTarget()].accessible = false;
+                    if (GetClosestAccessibleTarget()) {
+                        _memory[GetClosestAccessibleTarget()].accessible = false;
+                    }
                     _timeStopped = 0;
                 }
             }
@@ -100,6 +102,8 @@ namespace OutOfThisWorld.Monster {
             }
 
             public void Spot(MonsterTarget target) {
+                if (!target) { return; }
+
                 if (_memory.ContainsKey(target)) {
                     MonsterMemUnit mem = _memory[target];
                     float dist = (mem.position - target.transform.position).magnitude;
