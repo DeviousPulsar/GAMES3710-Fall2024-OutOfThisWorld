@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using OutOfThisWorld;
 using OutOfThisWorld.Player.HUD;
 using deVoid.Utils;
@@ -52,6 +53,7 @@ namespace OutOfThisWorld.Player {
             void Update()
             {
                 if (_drones.Count < 1) {
+                    SceneManager.LoadSceneAsync(0);
                     Destroy(gameObject);
                 }
 
