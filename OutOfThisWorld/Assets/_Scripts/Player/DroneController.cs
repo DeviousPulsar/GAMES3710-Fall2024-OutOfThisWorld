@@ -89,7 +89,7 @@ namespace OutOfThisWorld.Player {
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
-                    Interactable hitTrigger = hitCol.gameObject.GetComponent<Interactable>();
+                    ClickBehavior hitTrigger = hitCol.gameObject.GetComponent<ClickBehavior>();
                     
                     // If Inventory not full
                     if (_droneStorageList.Count < MaxStorageSize) { 
@@ -160,7 +160,7 @@ namespace OutOfThisWorld.Player {
                 FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
                 if (_droneStorageList.Count > 0 && holdJoint != null)
                 {
-                    _droneStorageList[0].Drop(HoldScale, HeldItemMassFactor);
+                    _droneStorageList[0].Drop();
                     _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                     _droneStorageList.RemoveAt(0);
                     Destroy(holdJoint);
@@ -174,12 +174,15 @@ namespace OutOfThisWorld.Player {
 
             void RenderInHand(ItemBehavior item) {
                 item.gameObject.SetActive(true);
-                item.Grab(HoldTransform.position, HoldTransform.rotation, HoldScale, HeldItemMassFactor);
+                item.Grab(HoldTransform, HeldItemMassFactor);
 
                 FixedJoint holdJoint = gameObject.AddComponent<FixedJoint>();
+                //holdJoint.anchor = HoldTransform.localPosition;
                 holdJoint.connectedBody = item.GetRigidbody();
                 holdJoint.breakForce = BreakHoldForce;
                 holdJoint.breakTorque = BreakHoldForce;
+                
+
             }
 
         /* ----------| Finalization Functions |---------- */
@@ -193,7 +196,7 @@ namespace OutOfThisWorld.Player {
 
             void OnJointBreak(float breakForce) {
                 UnityEngine.Debug.Log("A joint has just been broken!, dropping: " + _droneStorageList[0]);
-                _droneStorageList[0].Drop(HoldScale, HeldItemMassFactor);
+                _droneStorageList[0].Drop();
                 _droneStorageList.RemoveAt(0);
             }
     }

@@ -31,7 +31,7 @@ namespace OutOfThisWorld {
             {
                 _heldItem = item;
                 _heldItem.gameObject.SetActive(true);
-                _heldItem.Grab(HoldTransform.position, HoldTransform.rotation, HoldScale, 1f);
+                _heldItem.Grab(HoldTransform, 1f);
 
                 _holdJoint = gameObject.AddComponent<FixedJoint>();
                 _holdJoint.connectedBody = _heldItem.GetRigidbody();
@@ -41,7 +41,7 @@ namespace OutOfThisWorld {
 
             public ItemBehavior GiveItem ()
             {
-                _heldItem.Drop(HoldScale, 1f);
+                _heldItem.Drop();
 
                 Destroy(_holdJoint);
 
