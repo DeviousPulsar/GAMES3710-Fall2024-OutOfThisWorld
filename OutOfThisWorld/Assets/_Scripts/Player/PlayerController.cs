@@ -16,7 +16,7 @@ namespace OutOfThisWorld.Player {
 
             [Header("References")]
             public ResourceSystem _resourceSystem;
-            public Camera _mainCamera;
+            public Transform _cameraTransform;
             public DroneInfoPanel _droneUIPanel;
             public TaskInfoPanel _taskUIPanel;
 
@@ -57,11 +57,7 @@ namespace OutOfThisWorld.Player {
                     Destroy(gameObject);
                 }
 
-                if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { 
-                    _activeDroneIndex += 1;
-                    _taskUIPanel.CompleteTask("Switch Drones (Tab)");
-                }
-                if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
+                if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { SwitchDrone(); }
                 if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
                 if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { _drones[_activeDroneIndex].DropHeld(); }
 
@@ -73,8 +69,8 @@ namespace OutOfThisWorld.Player {
                 DroneController activeDrone = _drones[_activeDroneIndex];
 
                 activeDrone.HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
-                _mainCamera.transform.position = activeDrone.CameraOffset.position;
-                _mainCamera.transform.rotation = activeDrone.CameraOffset.rotation;
+                _cameraTransform.transform.position = activeDrone.CameraOffset.position;
+                _cameraTransform.transform.rotation = activeDrone.CameraOffset.rotation;
             }
 
             void DispatchSingals () {
@@ -118,6 +114,15 @@ namespace OutOfThisWorld.Player {
                 } else {
                     Debug.Log(this + " received request to remove DroneController " + drone + " from drone list. No such drone in drone list");
                 }
+            }
+
+            public void SwitchDrone() {
+                _drones[_activeDroneIndex].DeactivateDrone();
+                _activeDroneIndex += 1;
+                if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
+                _drones[_activeDroneIndex].ActivateDrone();
+
+                _taskUIPanel.CompleteTask("Switch Drones (Tab)");
             }
 
         /* ----------| I/O Functions |---------- */

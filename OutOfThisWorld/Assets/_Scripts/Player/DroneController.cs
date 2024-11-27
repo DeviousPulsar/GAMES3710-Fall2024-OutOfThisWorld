@@ -23,7 +23,7 @@ namespace OutOfThisWorld.Player {
             public float InteractionRange = 3;
             public int MaxStorageSize = 1;
             public Transform HoldTransform;
-            public float HoldScale = 1f;
+            public LayerMask _raycastMask;
             public float HeldItemMassFactor = 1f;
             public float BreakHoldForce = 100f;
             public float ThrowForce = 1f;
@@ -36,6 +36,7 @@ namespace OutOfThisWorld.Player {
             private PlayerController _playerController;
 
             private List<ItemBehavior> _droneStorageList;
+            
 
         /* ----------| Initalization Functions |---------- */
 
@@ -54,10 +55,12 @@ namespace OutOfThisWorld.Player {
 
         /* ----------| Main Loop |----------- */
 
-            void Update() {
-                if (_droneStorageList.Count > 0 && gameObject.GetComponent<FixedJoint>() == null)
-                {
-                    RenderInHand(_droneStorageList[0]);
+            void FixedUpdate() {
+                if (_droneStorageList.Count > 0) {
+                    ItemBehavior item = _droneStorageList[0];
+                    if (gameObject.GetComponent<FixedJoint>() == null) {
+                        RenderInHand(item);
+                    }
                 }
             }
 
@@ -83,7 +86,7 @@ namespace OutOfThisWorld.Player {
 
                 // Cast ray and update position if there is a hit
                 RaycastHit hit;
-                if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange)) {
+                if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange, _raycastMask)) {
                     Collider hitCol = hit.collider;
 
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
@@ -94,14 +97,10 @@ namespace OutOfThisWorld.Player {
                     // If Inventory not full
                     if (_droneStorageList.Count < MaxStorageSize) { 
                         if (hitSocket != null && hitSocket.HasItem()) {
-                            ItemBehavior item = hitSocket.GiveItem();
-                            _droneStorageList.Add(item);
-                            item.gameObject.SetActive(false);
-                            
+                            UnsocketItem(hitSocket);
                             return true;
                         } else if (hitItem != null && !hitItem.IsHeld()) {
                             Pickup(hitItem);
-                            
                             return true;
                         }
                     }
@@ -109,33 +108,19 @@ namespace OutOfThisWorld.Player {
                     // If holding at least 1 item
                     if (_droneStorageList.Count > 0) { 
                         if (hitDepot != null) {
-                            hitDepot.MakeDeposit(_droneStorageList[0]);
-                            
-                            GameObject desposited = _droneStorageList[0].gameObject;
-                            _droneStorageList.RemoveAt(0);
-                            Destroy(desposited);
-                            Destroy(gameObject.GetComponent<FixedJoint>());
-
-                            _playerController._taskUIPanel.CompleteTask("Deposit item in ship (Left Click anywhere on the ship)");
-
+                            DepositHeld(hitDepot);
                             return true;
                         } else if (hitSocket != null && !hitSocket.HasItem()) {
-                            ItemBehavior item = _droneStorageList[0];
-                            DropHeld();
-                            hitSocket.TakeItem(item);
-
+                            SocketItem(hitSocket);
                             return true;
                         }
                     }
                     
                     if (hitTrigger != null) {
                         hitTrigger.Interact();
-
                         return true;
                     }
-                    
                 }
-
 
                 return false;
             }
@@ -147,19 +132,32 @@ namespace OutOfThisWorld.Player {
                 _playerController._taskUIPanel.CompleteTask("Pick Up an Object (Left Click)");
             }
 
-            public void Deposit(DepositBehavior depot) {
+            public void UnsocketItem(ItemSocket socket) {
+                ItemBehavior item = socket.GiveItem();
+                _droneStorageList.Add(item);
+                item.gameObject.SetActive(false);
+            }
+
+            public void SocketItem(ItemSocket socket) {
+                ItemBehavior item = _droneStorageList[0];
+                DropHeld();
+                socket.TakeItem(item);
+            }
+
+            public void DepositHeld(DepositBehavior depot) {
                 depot.MakeDeposit(_droneStorageList[0]);
-                        
+                            
                 GameObject desposited = _droneStorageList[0].gameObject;
                 _droneStorageList.RemoveAt(0);
                 Destroy(desposited);
                 Destroy(gameObject.GetComponent<FixedJoint>());
+
+                _playerController._taskUIPanel.CompleteTask("Deposit item in ship (Left Click anywhere on the ship)");
             }
 
             public bool DropHeld() {
                 FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
-                if (_droneStorageList.Count > 0 && holdJoint != null)
-                {
+                if (_droneStorageList.Count > 0 && holdJoint != null && CanDropCurrentItem()) {
                     _droneStorageList[0].Drop();
                     _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                     _droneStorageList.RemoveAt(0);
@@ -175,14 +173,52 @@ namespace OutOfThisWorld.Player {
             void RenderInHand(ItemBehavior item) {
                 item.gameObject.SetActive(true);
                 item.Grab(HoldTransform, HeldItemMassFactor);
+                item.gameObject.layer = LayerMask.NameToLayer("ActiveHoldLayer");
 
+                // Create a Joint to hold the item in place relative to the drone
                 FixedJoint holdJoint = gameObject.AddComponent<FixedJoint>();
-                //holdJoint.anchor = HoldTransform.localPosition;
                 holdJoint.connectedBody = item.GetRigidbody();
                 holdJoint.breakForce = BreakHoldForce;
                 holdJoint.breakTorque = BreakHoldForce;
-                
+            }
 
+        /* ----------| State Change Functions |---------- */
+
+            public void ActivateDrone() {
+                if (_droneStorageList.Count > 0) {
+                    _droneStorageList[0].gameObject.layer = LayerMask.NameToLayer("ActiveHoldLayer");
+                }
+            }
+
+            public void DeactivateDrone() {
+                if (_droneStorageList.Count > 0) {
+                    _droneStorageList[0].gameObject.layer = LayerMask.NameToLayer("InactiveHoldLayer");
+                }
+            }
+
+        /* ----------| State Check Functions |---------- */
+
+            public bool CanDropCurrentItem() {
+                if (_droneStorageList.Count == 0) { return false; }
+
+                ItemBehavior item = _droneStorageList[0];
+                Vector3[] testPoints = new[]{
+                    new Vector3( 0.5f,  0, 1),
+                    new Vector3(-0.5f,  0, 1),
+                    new Vector3( 0.5f, -1, 1),
+                    new Vector3(-0.5f, -1, 1),
+                };
+
+                Vector3 raySrc = transform.position;
+                Vector3 extents = item.LocalBounds().size;
+                foreach (Vector3 test in testPoints) {
+                    Vector3 rayDir = HoldTransform.position - transform.position + item.transform.rotation*Vector3.Scale(test, extents);
+                    if(Physics.Raycast(raySrc, rayDir.normalized, rayDir.magnitude, _raycastMask)) {
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
         /* ----------| Finalization Functions |---------- */

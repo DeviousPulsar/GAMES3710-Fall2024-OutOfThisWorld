@@ -718,6 +718,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8651318057408894983, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: far clip plane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651318057408894983, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: near clip plane
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718672310319017005, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

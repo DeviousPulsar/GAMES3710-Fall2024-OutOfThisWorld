@@ -42,21 +42,19 @@ namespace OutOfThisWorld {
                 return _rigidbody;
             }
 
-            public Bounds Bounds() {
-                return _renderer.bounds;
+            public Bounds LocalBounds() {
+                return _renderer.localBounds;
             }
 
         /* ----------| Pickup and Dropping Functions |----------- */
 
             public void Grab(Transform holdPos, float massScale)
             {
-                gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-                
                 transform.parent = holdPos;
                 transform.rotation = holdPos.rotation;
                 //transform.LookAt(holdPos);
                 Vector3 extents = _renderer.localBounds.max;
-                transform.localPosition = new Vector3(0, -extents.y*transform.lossyScale.y, extents.z*transform.lossyScale.z);
+                transform.localPosition = new Vector3(0, -extents.y*transform.localScale.y, extents.z*transform.localScale.z);
 
                 _isHeld = true;
 
