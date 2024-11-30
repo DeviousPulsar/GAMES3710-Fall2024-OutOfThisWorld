@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: screwdriver
       objectReference: {fileID: 0}
+    - target: {fileID: 5712464672744555019, guid: ac7b89b970da602459f547926ac30fdb, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -195,7 +199,7 @@ GameObject:
   - component: {fileID: 93922773}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -357,6 +361,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: welding_gun
       objectReference: {fileID: 0}
+    - target: {fileID: 4529543155837372529, guid: a78546a707f6143409c7654951231ed7, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     - target: {fileID: 6090355452355130065, guid: a78546a707f6143409c7654951231ed7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.81339
@@ -507,6 +515,10 @@ PrefabInstance:
     - target: {fileID: 3115181551423603351, guid: 9640660810d620746bdbc2168dba8eb2, type: 3}
       propertyPath: m_Name
       value: fuel_barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115181551423603351, guid: 9640660810d620746bdbc2168dba8eb2, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
       objectReference: {fileID: 0}
     - target: {fileID: 6881721144218331626, guid: 9640660810d620746bdbc2168dba8eb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -706,6 +718,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2531331086055055144, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
     - target: {fileID: 3280023279056809244, guid: b78c3fff57157024d82688331a732692, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -733,8 +749,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8606264715504460, guid: b78c3fff57157024d82688331a732692, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1476246664}
   m_SourcePrefab: {fileID: 100100000, guid: b78c3fff57157024d82688331a732692, type: 3}
+--- !u!1 &651887392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8606264715504460, guid: b78c3fff57157024d82688331a732692, type: 3}
+  m_PrefabInstance: {fileID: 651887391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &805663382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -746,6 +770,10 @@ PrefabInstance:
     - target: {fileID: 851324155513773405, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
       propertyPath: m_Name
       value: spanner (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 851324155513773405, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
       objectReference: {fileID: 0}
     - target: {fileID: 8637168359019206531, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
       propertyPath: m_LocalPosition.x
@@ -803,6 +831,10 @@ PrefabInstance:
     - target: {fileID: 851324155513773405, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
       propertyPath: m_Name
       value: spanner
+      objectReference: {fileID: 0}
+    - target: {fileID: 851324155513773405, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
       objectReference: {fileID: 0}
     - target: {fileID: 8637168359019206531, guid: e5b03b33d3da8b345b0db23049d44e53, type: 3}
       propertyPath: m_LocalPosition.x
@@ -901,6 +933,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: screwdriver (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5712464672744555019, guid: ac7b89b970da602459f547926ac30fdb, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -917,6 +953,10 @@ PrefabInstance:
     - target: {fileID: 79436041547199411, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
       propertyPath: m_Name
       value: battery (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 79436041547199411, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
       objectReference: {fileID: 0}
     - target: {fileID: 2645677717657460784, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
       propertyPath: m_LocalPosition.x
@@ -974,6 +1014,10 @@ PrefabInstance:
     - target: {fileID: 4529543155837372529, guid: a78546a707f6143409c7654951231ed7, type: 3}
       propertyPath: m_Name
       value: welding_gun (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529543155837372529, guid: a78546a707f6143409c7654951231ed7, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
       objectReference: {fileID: 0}
     - target: {fileID: 6090355452355130065, guid: a78546a707f6143409c7654951231ed7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1129,6 +1173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: battery (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 79436041547199411, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     - target: {fileID: 2645677717657460784, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.975
@@ -1179,12 +1227,28 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
   m_PrefabInstance: {fileID: 651887391}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 651887392}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17acf91be7748c642a63fcccc7869b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1476246664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651887392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c6d7b8f9485b843bd808bb20535f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultOutlineColor: {r: 0, g: 0, b: 0, a: 0}
+  hoverOutlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 8
+  outlineRange: 2.5
 --- !u!1 &1554469504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,6 +1358,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: battery
       objectReference: {fileID: 0}
+    - target: {fileID: 79436041547199411, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
+      objectReference: {fileID: 0}
     - target: {fileID: 2645677717657460784, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.665111
@@ -1350,6 +1418,10 @@ PrefabInstance:
     - target: {fileID: 3115181551423603351, guid: 9640660810d620746bdbc2168dba8eb2, type: 3}
       propertyPath: m_Name
       value: fuel_barrel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115181551423603351, guid: 9640660810d620746bdbc2168dba8eb2, type: 3}
+      propertyPath: m_TagString
+      value: Selectable
       objectReference: {fileID: 0}
     - target: {fileID: 6881721144218331626, guid: 9640660810d620746bdbc2168dba8eb2, type: 3}
       propertyPath: m_LocalPosition.x

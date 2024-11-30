@@ -19,7 +19,7 @@ namespace OutOfThisWorld {
                 _numSpawns += 1;
             }
 
-            protected override bool CheckTriggers() {
+            protected override bool CheckTriggered() {
                 return _numSpawns >= TriggerOn;
             }
     }

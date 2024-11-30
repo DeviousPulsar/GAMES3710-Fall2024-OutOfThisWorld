@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Audio
+  - Selectable
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Main Loop |----------- */
 
-            protected override bool CheckTriggers() {
+            protected override bool CheckTriggered() {
                 foreach (ItemSocket sock in Sockets)
                 {
                     if (!sock.HasCorrectItem()) { 

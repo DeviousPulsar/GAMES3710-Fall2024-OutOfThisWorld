@@ -17,7 +17,7 @@ namespace OutOfThisWorld {
 
             void FixedUpdate() 
             {
-                bool triggered = CheckTriggers();
+                bool triggered = CheckTriggered();
                 if (triggered && !_lastTrigged) {
                     foreach (Triggerable t in Triggers) { t.Trigger(); }
                 } else if (!triggered && _lastTrigged) {
@@ -32,7 +32,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Virtual Methods |---------- */
 
-            protected virtual bool CheckTriggers() {
+            protected virtual bool CheckTriggered() {
                 return true;
             }
     }
