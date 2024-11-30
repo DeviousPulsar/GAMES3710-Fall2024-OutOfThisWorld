@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public class Interactable : MonoBehaviour
+    public class ClickBehavior : MonoBehaviour
     {
         /* ----------| Serialized Variables |---------- */
 

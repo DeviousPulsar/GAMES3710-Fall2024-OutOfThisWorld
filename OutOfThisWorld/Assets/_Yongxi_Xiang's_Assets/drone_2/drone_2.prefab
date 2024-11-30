@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5871881103150957947}
   - component: {fileID: 2610546244412596986}
   - component: {fileID: 7574231056250738229}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: drone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,9 +33,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3473017965227683893}
   - {fileID: 1191898445398690616}
   - {fileID: 2791570830165348940}
+  - {fileID: 6324093973165104122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8145938936165491524
@@ -102,10 +102,12 @@ MonoBehaviour:
   MaxSpeed: 3
   Acceleration: 10
   MaxXAxisLook: 90
-  InteractionRange: 3
+  InteractionRange: 2.5
   MaxStorageSize: 1
   HoldTransform: {fileID: 1191898445398690616}
-  HoldScale: 1
+  _raycastMask:
+    serializedVersion: 2
+    m_Bits: 433
   HeldItemMassFactor: 0.1
   BreakHoldForce: 100
   ThrowForce: 5
@@ -131,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1191898445398690616}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HoldPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,13 +148,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7692544459025945232}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0.5}
+  m_LocalRotation: {x: 0.08715652, y: -0, z: -0, w: 0.99619466}
+  m_LocalPosition: {x: 0, y: -0.08, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4605010067165788155}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!1 &9034336372088666008
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2791570830165348940}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CameraOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +186,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4605010067165788155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4014987711966304222
+--- !u!1001 &5785164590267284497
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -261,8 +263,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff8d27b3e05a1a84fac798cf2ed30e28, type: 3}
---- !u!4 &3473017965227683893 stripped
+--- !u!4 &6324093973165104122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff8d27b3e05a1a84fac798cf2ed30e28, type: 3}
-  m_PrefabInstance: {fileID: 4014987711966304222}
+  m_PrefabInstance: {fileID: 5785164590267284497}
   m_PrefabAsset: {fileID: 0}

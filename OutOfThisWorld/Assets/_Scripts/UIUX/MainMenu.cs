@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 

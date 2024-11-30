@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody))]//, RequireComponent(typeof(Renderer))]
     public class ItemBehavior : MonoBehaviour {
         /* ----------| Component Properties |---------- */
 
@@ -12,14 +12,22 @@ namespace OutOfThisWorld {
 
             private bool _isHeld = false;
             private Rigidbody _rigidbody;
+            private float _initMass;
+            private Renderer _renderer;
 
         /* ----------| Initaliazation Functions |----------- */
 
             void Awake()
             {
-                // fetch components on the same gameObject
+                // fetch Rigidbody and MeshRenderer
                 _rigidbody = GetComponent<Rigidbody>();
                 DebugUtility.HandleErrorIfNullGetComponent<Rigidbody, ItemBehavior>(_rigidbody, this, gameObject);
+                _initMass = _rigidbody.mass;
+
+                _renderer = GetComponent<Renderer>();
+                DebugUtility.HandleErrorIfNullGetComponent<Renderer, ItemBehavior>(_renderer, this, gameObject);
+
+                //Debug.Log(gameObject + " has colliders with local bounds with " + _bounds);
             }
 
         /* ----------| Getters |-------- */
@@ -34,25 +42,36 @@ namespace OutOfThisWorld {
                 return _rigidbody;
             }
 
+            public Bounds LocalBounds() {
+                return _renderer.localBounds;
+            }
+
         /* ----------| Pickup and Dropping Functions |----------- */
 
-            public void Grab(Vector3 pos, Quaternion rot, float scale, float massScale)
+            public void Grab(Transform holdPos, float massScale)
             {
-                transform.position = pos;
-                transform.rotation = rot;
-                transform.localScale = transform.localScale*scale;
+                transform.parent = holdPos;
+                transform.rotation = holdPos.rotation;
+                //transform.LookAt(holdPos);
+                Vector3 extents = _renderer.localBounds.max;
+                transform.localPosition = new Vector3(0, -extents.y*transform.localScale.y, extents.z*transform.localScale.z);
+
                 _isHeld = true;
 
                 _rigidbody.useGravity = false;
-                _rigidbody.mass = massScale*_rigidbody.mass;
+                _rigidbody.mass = massScale*_initMass;
             }
 
-            public void Drop(float scale, float massScale)
+            public void Drop()
             {
-                transform.localScale = transform.localScale/scale;
+                gameObject.layer = LayerMask.NameToLayer("Default");
+
+                transform.parent = transform.root;
+
                 _isHeld = false;
                 _rigidbody.useGravity = true;
-                _rigidbody.mass = massScale/_rigidbody.mass;
+
+                _rigidbody.mass = _initMass;
             }
     }
 }
