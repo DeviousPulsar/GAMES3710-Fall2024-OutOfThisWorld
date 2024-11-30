@@ -674,10 +674,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
-    - target: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: InitalDronePrefab
-      value: 
-      objectReference: {fileID: 3744565212062897678, guid: 237963fbdf3419a418dd94f5afc8c810, type: 3}
     - target: {fileID: 2515592438880989081, guid: b78c3fff57157024d82688331a732692, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -718,47 +714,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2531331086055055144, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_TagString
-      value: MainCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3280023279056809244, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3280023279056809244, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3280023279056809244, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8651318057408894983, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: far clip plane
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8651318057408894983, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: near clip plane
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8718672310319017005, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8606264715504460, guid: b78c3fff57157024d82688331a732692, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1476246664}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b78c3fff57157024d82688331a732692, type: 3}
---- !u!1 &651887392 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8606264715504460, guid: b78c3fff57157024d82688331a732692, type: 3}
-  m_PrefabInstance: {fileID: 651887391}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &805663382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1227,28 +1187,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
   m_PrefabInstance: {fileID: 651887391}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651887392}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17acf91be7748c642a63fcccc7869b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1476246664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 651887392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c6d7b8f9485b843bd808bb20535f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultOutlineColor: {r: 0, g: 0, b: 0, a: 0}
-  hoverOutlineColor: {r: 0, g: 1, b: 0, a: 1}
-  outlineWidth: 8
-  outlineRange: 2.5
 --- !u!1 &1554469504
 GameObject:
   m_ObjectHideFlags: 0
