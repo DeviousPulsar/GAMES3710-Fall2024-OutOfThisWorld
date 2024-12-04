@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public class ClickBehavior : MonoBehaviour
+    public class UseBehavior : MonoBehaviour
     {
         /* ----------| Serialized Variables |---------- */
 
@@ -12,7 +12,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Main Functions |---------- */
 
-            public void Interact() {
+            private void OnMouseDown() {
                 foreach (Triggerable t in Triggers) { t.Trigger(); }
                 foreach(UseCountListener l in Listeners) { l.Count(); }
             }

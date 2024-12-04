@@ -9,31 +9,11 @@ namespace OutOfThisWorld {
 
             [SerializeField] List<Triggerable> Triggers;
 
-        /* ----------| Instance Variables |---------- */
-
-            private bool _lastTrigged = false;
-
         /* ----------| Main Functions |----------- */
 
-            void FixedUpdate() 
+            void Start() 
             {
-                bool triggered = CheckTriggered();
-                if (triggered && !_lastTrigged) {
-                    foreach (Triggerable t in Triggers) { t.Trigger(); }
-                } else if (!triggered && _lastTrigged) {
-                    foreach (Triggerable t in Triggers) { t.Undo(); }
-                }
-                _lastTrigged = triggered;
-            }
-
-            public bool Triggered() {
-                return _lastTrigged;
-            }
-
-        /* ----------| Virtual Methods |---------- */
-
-            protected virtual bool CheckTriggered() {
-                return true;
+                foreach (Triggerable t in Triggers) { t.Trigger(); }
             }
     }
 }

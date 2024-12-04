@@ -11,8 +11,14 @@ namespace OutOfThisWorld {
     }
 
     public class DestoryTrigger : Triggerable {
+        public Component ToDestory;
+
         public override void Trigger() {
-            Destroy(gameObject);
+            if (ToDestory is null) {
+                Destroy(gameObject);
+            } else {
+                Destroy(ToDestory);
+            }
         }
     }
 }

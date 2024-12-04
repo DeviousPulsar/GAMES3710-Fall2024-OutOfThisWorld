@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public class ItemSocket : MonoBehaviour {
+    public class ItemSocket : BooleanStateMachine {
         
         /* ----------| Serialized Variables |---------- */
 
+            public bool AcceptAnyItem = false;
             public List<string> DesiredItemTags;
             [Header("Item Hold Information")]
             public Transform HoldTransform;
@@ -56,6 +57,12 @@ namespace OutOfThisWorld {
             public bool HasCorrectItem ()
             {
                 return _holdJoint != null && _fixedDesiredSet.Contains(_heldItem.ItemTag);
+            }
+
+            public override bool GetState()
+            {
+                if (AcceptAnyItem) { return HasItem(); }
+                return HasCorrectItem();
             }
     }
 }

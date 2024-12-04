@@ -92,7 +92,6 @@ namespace OutOfThisWorld.Player {
                     ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
                     DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
                     ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
-                    ClickBehavior hitTrigger = hitCol.gameObject.GetComponent<ClickBehavior>();
                     
                     // If Inventory not full
                     if (_droneStorageList.Count < MaxStorageSize) { 
@@ -114,11 +113,6 @@ namespace OutOfThisWorld.Player {
                             SocketItem(hitSocket);
                             return true;
                         }
-                    }
-                    
-                    if (hitTrigger != null) {
-                        hitTrigger.Interact();
-                        return true;
                     }
                 }
 

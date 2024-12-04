@@ -264,4 +264,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 7218665615280028611}
-  Animation: door_open
+  Animation: Door_open_Animation
+  UndoAnimation: Door_close_Animation
