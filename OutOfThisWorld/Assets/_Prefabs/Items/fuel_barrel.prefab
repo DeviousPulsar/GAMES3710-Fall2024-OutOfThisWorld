@@ -11,9 +11,12 @@ GameObject:
   - component: {fileID: 6881721144218331626}
   - component: {fileID: 391784355063295755}
   - component: {fileID: 5297405738606389328}
+  - component: {fileID: 2946419419644370681}
+  - component: {fileID: 5625784567998733372}
+  - component: {fileID: 3010715442556903205}
   m_Layer: 0
   m_Name: fuel_barrel
-  m_TagString: Untagged
+  m_TagString: Selectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3115181551423603351}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17469192, y: 0.110022984, z: 0.028632773}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -92,8 +95,8 @@ Rigidbody:
   m_GameObject: {fileID: 3115181551423603351}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 3
-  m_AngularDrag: 1
+  m_Drag: 1
+  m_AngularDrag: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -110,20 +113,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3010715442556903205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3115181551423603351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4075a38b9243c449e5a2c16db6bd12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemCost: 1
-  ItemTag: Fuel
 --- !u!65 &5625784567998733372
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -145,3 +134,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.11402198, y: 0.14900894, z: 0.19548444}
   m_Center: {x: 0, y: -0.016228154, z: -0.019649796}
+--- !u!114 &3010715442556903205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115181551423603351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4075a38b9243c449e5a2c16db6bd12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemCost: 1
+  ItemTag: Fuel
