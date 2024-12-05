@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    public class OnLoadListener : MonoBehaviour {
+    public class OnLoad : MonoBehaviour {
 
         /* ----------| Serialized Variables |---------- */
 

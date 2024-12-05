@@ -1,9 +1,9 @@
 using UnityEngine;
 
 namespace OutOfThisWorld {
-    [RequireComponent(typeof(Rigidbody))]//, RequireComponent(typeof(Renderer))]
+    [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Renderer))]
     public class ItemBehavior : MonoBehaviour {
-        /* ----------| Component Properties |---------- */
+        /* ----------| Serialized Variables |---------- */
 
             public float ItemCost = 1f;
             public string ItemTag;
@@ -48,7 +48,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Pickup and Dropping Functions |----------- */
 
-            public void Grab(Transform holdPos, float massScale)
+            public virtual void Grab(Transform holdPos, float massScale)
             {
                 transform.parent = holdPos;
                 transform.rotation = holdPos.rotation;
@@ -62,7 +62,7 @@ namespace OutOfThisWorld {
                 _rigidbody.mass = massScale*_initMass;
             }
 
-            public void Drop()
+            public virtual void Drop()
             {
                 gameObject.layer = LayerMask.NameToLayer("Default");
 
