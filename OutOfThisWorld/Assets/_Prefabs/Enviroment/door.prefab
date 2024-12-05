@@ -61,32 +61,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5323541745382526564, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.9268
-      objectReference: {fileID: 0}
-    - target: {fileID: -5323541745382526564, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.0086
+      propertyPath: m_LocalPosition.x
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 566007475326094786, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.9268
-      objectReference: {fileID: 0}
-    - target: {fileID: 566007475326094786, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.0088
+      propertyPath: m_LocalPosition.x
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
       propertyPath: m_Name
       value: door
-      objectReference: {fileID: 0}
-    - target: {fileID: 5920097387151450713, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 12.662595
-      objectReference: {fileID: 0}
-    - target: {fileID: 5920097387151450713, guid: 8df317b311e566e4d921fa37f29b9d7c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.0086
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
