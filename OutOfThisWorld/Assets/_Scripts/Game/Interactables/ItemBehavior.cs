@@ -50,9 +50,10 @@ namespace OutOfThisWorld {
 
             public virtual void Grab(Transform holdPos, float massScale)
             {
+                gameObject.tag = "Untagged";
+
                 transform.parent = holdPos;
                 transform.rotation = holdPos.rotation;
-                //transform.LookAt(holdPos);
                 Vector3 extents = _renderer.localBounds.max;
                 transform.localPosition = new Vector3(0, -extents.y*transform.localScale.y, extents.z*transform.localScale.z);
 
@@ -65,6 +66,7 @@ namespace OutOfThisWorld {
             public virtual void Drop()
             {
                 gameObject.layer = LayerMask.NameToLayer("Default");
+                gameObject.tag = "Selectable";
 
                 transform.parent = transform.root;
 
