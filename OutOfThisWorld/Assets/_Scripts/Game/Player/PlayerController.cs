@@ -54,13 +54,13 @@ namespace OutOfThisWorld.Player {
                 if (_drones.Count < 1) {
                     SceneManager.LoadSceneAsync(0);
                     Destroy(gameObject);
+                } else {
+                    if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { SwitchDrone(); }
+                    if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
+                    if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { GetActiveDrone().DropHeld(); }
+
+                    _droneUIPanel.SetActiveInfoBar(GetActiveDrone());
                 }
-
-                if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { SwitchDrone(); }
-                if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
-                if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { GetActiveDrone().DropHeld(); }
-
-                _droneUIPanel.SetActiveInfoBar(GetActiveDrone());
             }
 
             void FixedUpdate()

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,37 +5,62 @@ using OutOfThisWorld.Player;
 using deVoid.Utils;
 
 namespace OutOfThisWorld.Monster {
-    [RequireComponent(typeof(NavMeshAgent))]
+    public enum MonsterState {
+        WANDER,
+        PERSUE,
+        RAGE
+    }
+
     public class MonsterAI : MonoBehaviour {
         /* ----------| Serialized Variables |---------- */
 
+            [Header("References")]
+            public NavMeshAgent NavAgent;
+            public List<MonsterDetectionArea> DetectionAreas;
+            public List<Transform> WanderDestinations;
+
+            [Header("Behavior Timeouts")]
             public float DespawnTimeout = 1000f;
-            public float InaccessableRelogDistance = 1f;
-            public float MinRelogDistance = 0.1f;
-            public float WanderRange = 1f;
-            public float WanderTimeout = 1f;
             public float EatTimeout = 1f;
-            public float InaccessableTimeout = 1f;
+            public float StoppedTimeout = 1f;
+            //public float WanderTimeout = 1f;
+            //public float RageTimeout = 30f;
+
             public float StoppedSpeed = 0.01f;
+
+        /* ----------| Properties |---------- */
+
+            public MonsterState CurrentState { get; set; }
 
         /* ----------| Instance Variables |---------- */
 
-            private NavMeshAgent _navAgent;
-            private Dictionary<MonsterTarget, MonsterMemUnit> _memory;
+            private Dictionary<DroneController, bool> _memory;
+            private Transform _wanderDest;
+            private DroneController _target;
+
             private float _spawnTimestamp;
-            private float _wanderTimestamp;
             private float _eatTimestamp;
             private float _timeStopped;
+            private float _rageTimestamp;
+
+            private float _debugPrintTimestamp;
+            private MonsterState _lastState;
+            private Vector3 _lastDest;
 
         /* ----------| Initialization Functions |---------- */
 
-            void Awake()
-            {
-                _navAgent = GetComponent<NavMeshAgent>();
-                DebugUtility.HandleErrorIfNullGetComponent<MonsterAI, NavMeshAgent>(_navAgent, this, gameObject);
-
-                _memory = new Dictionary<MonsterTarget, MonsterMemUnit>();
+            void Awake() {
                 _spawnTimestamp = Time.fixedTime;
+                _memory = new Dictionary<DroneController, bool>();
+
+                CurrentState = MonsterState.WANDER;
+                UpdateWanderDest();
+
+                // Signal Registration
+                Signals.Get<DronePositionUpdate>().AddListener(UpdateMemory);
+                Signals.Get<DroneSpawned>().AddListener(AddDroneToMemory);
+                Signals.Get<DroneDestroyed>().AddListener(RemoveDroneFromMemory);
+                Signals.Get<DroneEnteredDetectionArea>().AddListener(SetTarget);
             }
 
         /* ----------| Main Loop |---------- */
@@ -52,79 +76,117 @@ namespace OutOfThisWorld.Monster {
                     _timeStopped = 0;
                 }
 
-                if (_timeStopped > InaccessableTimeout) {
-                    if (GetClosestAccessibleTarget()) {
-                        _memory[GetClosestAccessibleTarget()].accessible = false;
+                if (_timeStopped > StoppedTimeout) {
+                    if (CurrentState == MonsterState.PERSUE || CurrentState == MonsterState.RAGE) {
+                        _memory[_target] = false;
+                        Debug.Log("Alien memory updates noting that " + _target + " cannot be chased.");
                     }
-                    _timeStopped = 0;
+                    UpdateWanderDest();
                 }
+
+                if(_debugPrintTimestamp + 1000000 < Time.fixedTime) {
+                    Debug.Log(
+                        "Alien in state " + CurrentState + " w/ destination " + NavAgent.destination.ToString() + "\n" +
+                        NavAgent.velocity + " " + _timeStopped + "\n" + 
+                        new System.Func<string>(() => {
+                            string result = "_memory = [";
+                            foreach (DroneController drone in _memory.Keys) {
+                                result += drone + ":" + _memory[drone] + ",";
+                            }
+                            result += "]";
+                            return result;
+                        })()
+                    );
+                    _debugPrintTimestamp = Time.fixedTime;
+                }
+
+                if (_lastState != CurrentState || (_lastDest - NavAgent.destination).magnitude > 1) {
+                    Debug.Log("Alien in moving into state " + CurrentState + " w/ destination " + NavAgent.destination.ToString() + "." );
+                }
+                _lastState = CurrentState;
+                _lastDest = NavAgent.destination;
             }
 
             void UpdatePath() {
-                MonsterTarget closest_target = GetClosestAccessibleTarget();
-                if (closest_target) {
-                    _navAgent.destination = _memory[closest_target].position;
-                } else if (_wanderTimestamp + WanderTimeout < Time.fixedTime) {
-                    _navAgent.destination += WanderRange*Random.onUnitSphere;
+                switch (CurrentState) {
+                    case MonsterState.WANDER:
+                        NavAgent.destination = _wanderDest.position;
+                        break;
+
+                    case MonsterState.RAGE:
+                        float minDist = float.PositiveInfinity;
+                        foreach (DroneController drone in _memory.Keys) {
+                            float dist = (transform.position - drone.transform.position).magnitude;
+                            if (dist < minDist) {
+                                SetTarget(drone);
+                            }
+                        }
+                        NavAgent.destination = _target.transform.position;
+                        break;
+
+                    case MonsterState.PERSUE:
+                        NavAgent.destination = _target.transform.position;
+                        break;
                 }
             }
+
+        /* ----------| State Accessors |---------- */
 
             bool IsStopped() {
-                return _navAgent.velocity.magnitude < StoppedSpeed;
+                return NavAgent.velocity.magnitude < StoppedSpeed;
             }
 
-            MonsterTarget GetClosestAccessibleTarget() {
-                float min_dist = float.PositiveInfinity;
-                MonsterTarget closest_target = null;
-                foreach (MonsterTarget target in _memory.Keys) {
-                    MonsterMemUnit mem = _memory[target];
-                    if (mem.accessible) {
-                        float heu_dist = (mem.position - transform.position).magnitude/target.Value;
-                        if (heu_dist < min_dist) {
-                            closest_target = target;
-                            min_dist = heu_dist;
-                        }
-                    }
+        /* ----------| Memory and Target Update Functions |---------- */
+
+            void UpdateWanderDest() {
+                _wanderDest = WanderDestinations[Random.Range(0, WanderDestinations.Count)];
+                _target = null;
+                if (CurrentState != MonsterState.RAGE) {
+                    CurrentState = MonsterState.WANDER;
+                }
+            }
+
+            void UpdateMemory(DroneController drone) {
+                if (!_memory[drone]) {
+                    _memory[drone] = true;
+                    Debug.Log("Alien memory updates so " + drone + " can be chased.");
                 }
 
-                return closest_target;
+                foreach (MonsterDetectionArea detect in DetectionAreas) {
+                    if (detect.InDetectionArea(drone)) {
+                        SetTarget(drone);
+                        return;
+                    }
+                }
+            }
+
+            void SetTarget(DroneController drone) {
+                if (_memory[drone] && _target != drone) {
+                    _target = drone;
+                    if (CurrentState != MonsterState.RAGE) {
+                        CurrentState = MonsterState.PERSUE;
+                    }
+                }
+            }
+
+            void AddDroneToMemory(DroneController drone) {
+                _memory[drone] = true;
+            }
+
+            void RemoveDroneFromMemory(DroneController drone) {
+                _memory.Remove(drone);
             }
 
         /* ----------| Collision Handling |---------- */
 
             void OnCollisionEnter(Collision coll) {
-                MonsterTarget target = coll.gameObject.GetComponent<MonsterTarget>();
+                DroneController target = coll.gameObject.GetComponent<DroneController>();
                 if (target && _eatTimestamp + EatTimeout < Time.fixedTime) {
-                    _memory.Remove(target);
                     Destroy(coll.gameObject);
                     _eatTimestamp = Time.fixedTime;
-                }
-            }
 
-            public void Spot(MonsterTarget target) {
-                if (!target) { return; }
-
-                if (_memory.ContainsKey(target)) {
-                    MonsterMemUnit mem = _memory[target];
-                    float dist = (mem.position - target.transform.position).magnitude;
-                    if ((mem.accessible && dist > MinRelogDistance) || dist > InaccessableRelogDistance) {
-                        _memory[target] = new MonsterMemUnit(target.transform.position, Time.fixedTime);
-                    }
-                } else {
-                    _memory[target] = new MonsterMemUnit(target.transform.position, Time.fixedTime);
+                    UpdateWanderDest();
                 }
             }
      }
-
-    class MonsterMemUnit {
-        public readonly Vector3 position;
-        public readonly float last_changed;
-        public bool accessible;
-
-        public MonsterMemUnit(Vector3 pos, float timestamp) {
-            position = pos;
-            last_changed = timestamp;
-            accessible = true;
-        }
-    }
 }

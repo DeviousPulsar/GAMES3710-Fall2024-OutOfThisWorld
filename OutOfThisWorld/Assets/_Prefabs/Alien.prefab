@@ -73,7 +73,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2376984b3d0d0a41950b4085ec74217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Monster: {fileID: 518066163933556744}
 --- !u!136 &4307842726195139512
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -218,13 +217,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d3c3651f1005142b6bfb72f9fa6675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NavAgent: {fileID: 5352886434754681793}
+  DetectionAreas:
+  - {fileID: 1895567250807726378}
+  WanderDestinations: []
   DespawnTimeout: 1000
-  InaccessableRelogDistance: 0.1
-  MinRelogDistance: 0.01
-  WanderRange: 10
-  WanderTimeout: 12
   EatTimeout: 1
   InaccessableTimeout: 1
+  WanderTimeout: 12
   StoppedSpeed: 0.01
 --- !u!1001 &172941508357010299
 PrefabInstance:

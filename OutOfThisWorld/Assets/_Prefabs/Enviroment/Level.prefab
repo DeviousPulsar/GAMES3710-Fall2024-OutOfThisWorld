@@ -55177,14 +55177,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6968902999492919387}
     m_Modifications:
-    - target: {fileID: 6078622415202678706, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
-      propertyPath: ItemTag
-      value: RedPlug
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200091020432731531, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: dacb2377f876d2b4f90fcacae2fbdfb0, type: 2}
     - target: {fileID: 8200091020432731531, guid: 0006286547fb24c4f8e203b0b9be4078, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -55233,6 +55225,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plug (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6078622415202678706, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
+      propertyPath: ItemTag
+      value: RedPlug
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200091020432731531, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dacb2377f876d2b4f90fcacae2fbdfb0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -60894,23 +60894,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Triggers:
-  - {fileID: 6584961936053658915}
+  - {fileID: 0}
   MachineValuePairs:
   - machine: {fileID: 5380053645033805143}
     desiredState: 1
   - machine: {fileID: 4262110931406357552}
     desiredState: 1
---- !u!114 &6584961936053658915 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6926291189621378801, guid: 27647a56df53e67418f8fb4ec972510f, type: 3}
-  m_PrefabInstance: {fileID: 4286682329079786450}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6236170545845807119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42328e72b2a1b6e4bb9807e878b9ca5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6755545394871333557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7403317880674736487, guid: 27647a56df53e67418f8fb4ec972510f, type: 3}
@@ -71419,14 +71408,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6968902999492919387}
     m_Modifications:
-    - target: {fileID: 6078622415202678706, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
-      propertyPath: ItemTag
-      value: BluePlug
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200091020432731531, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: beeb09e8ccd0af34b80df77ad557aa36, type: 2}
     - target: {fileID: 8200091020432731531, guid: 0006286547fb24c4f8e203b0b9be4078, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -71475,6 +71456,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plug (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6078622415202678706, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
+      propertyPath: ItemTag
+      value: BluePlug
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200091020432731531, guid: 38896bde69e7aaa4ca961ae3f74e040f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: beeb09e8ccd0af34b80df77ad557aa36, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

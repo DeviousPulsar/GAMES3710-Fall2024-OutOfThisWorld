@@ -5,8 +5,9 @@ using OutOfThisWorld.Player.HUD;
 using deVoid.Utils;
 
 namespace OutOfThisWorld.Player {
+    public class DroneSpawned : ASignal<DroneController> {}
     public class DroneDestroyed : ASignal<DroneController> {}
-    public class DronePositionUpdate : ASignal<DroneController, Vector3> {}
+    public class DronePositionUpdate : ASignal<DroneController> {}
 
     [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour {
@@ -52,6 +53,9 @@ namespace OutOfThisWorld.Player {
                 // Fetch nearest PlayerController
                 _playerController = FindObjectOfType<PlayerController>();
                 DebugUtility.HandleErrorIfNullGetComponent<PlayerController, DroneController>(_playerController, this, gameObject);
+
+                // Signal that the Drone has been spawned
+                Signals.Get<DroneSpawned>().Dispatch(this);
             }
 
         /* ----------| Main Loop |----------- */
@@ -77,9 +81,8 @@ namespace OutOfThisWorld.Player {
                 {
                     _rigidbody.velocity += Acceleration*delta*move_dir;
                     _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, MaxSpeed);
+                    Signals.Get<DronePositionUpdate>().Dispatch(this);
                 }
-
-                Signals.Get<DronePositionUpdate>().Dispatch(this, transform.position);
             }
 
             public bool Interact() {
