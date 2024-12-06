@@ -2284,6 +2284,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7052760173897622332, guid: 5a0bd98a355eb4846bc7673da584dfdf, type: 3}
   m_PrefabInstance: {fileID: 1315947189}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1480441289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8606264715504460, guid: b78c3fff57157024d82688331a732692, type: 3}
+  m_PrefabInstance: {fileID: 2104842445626439246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1480441295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480441289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee3db7f637ca4541ac94f1b0dc4beb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  hoverColor: {r: 1, g: 1, b: 1, a: 1}
+  canDropColor: {r: 1, g: 1, b: 1, a: 1}
+  noDropColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 8
+  outlineRange: 1.2
 --- !u!1001 &1519443909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3402,10 +3425,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
-    - target: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: InitalDronePrefab
-      value: 
-      objectReference: {fileID: 3744565212062897678, guid: 237963fbdf3419a418dd94f5afc8c810, type: 3}
+    - target: {fileID: 1118074068146748269, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: outlineRange
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118074068146748269, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: defaultOutlineColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118074068146748269, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: defaultOutlineColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118074068146748269, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: defaultOutlineColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118074068146748269, guid: b78c3fff57157024d82688331a732692, type: 3}
+      propertyPath: defaultOutlineColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2515592438880989081, guid: b78c3fff57157024d82688331a732692, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3458,10 +3497,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1118074068146748269, guid: b78c3fff57157024d82688331a732692, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8606264715504460, guid: b78c3fff57157024d82688331a732692, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1480441295}
   m_SourcePrefab: {fileID: 100100000, guid: b78c3fff57157024d82688331a732692, type: 3}
 --- !u!136 &2151547982360983647
 CapsuleCollider:

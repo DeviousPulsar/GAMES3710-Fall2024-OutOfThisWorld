@@ -1,6 +1,10 @@
 using UnityEngine;
+using deVoid.Utils;
 
 namespace OutOfThisWorld {
+    public class ItemSpawned : ASignal<ItemBehavior> {}
+    public class ItemDropped : ASignal<ItemBehavior> {}
+
     [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(Renderer))]
     public class ItemBehavior : MonoBehaviour {
         /* ----------| Serialized Variables |---------- */
@@ -74,6 +78,8 @@ namespace OutOfThisWorld {
                 _rigidbody.useGravity = true;
 
                 _rigidbody.mass = _initMass;
+
+                Signals.Get<ItemDropped>().Dispatch(this);
             }
     }
 }

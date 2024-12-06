@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4888726000285762265}
   - component: {fileID: 2365111761804650297}
   - component: {fileID: 5935674233928808924}
-  - component: {fileID: 1118074068146748269}
+  - component: {fileID: 358074416259686051}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitalResourceCount: 0
   _taskUIPanel: {fileID: 4957230558863143264}
---- !u!114 &1118074068146748269
+--- !u!114 &358074416259686051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,13 +103,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8606264715504460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44c6d7b8f9485b843bd808bb20535f46, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ee3db7f637ca4541ac94f1b0dc4beb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultOutlineColor: {r: 0, g: 0, b: 0, a: 0}
-  hoverOutlineColor: {r: 0, g: 1, b: 0, a: 1}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  hoverColor: {r: 1, g: 1, b: 1, a: 1}
+  canDropColor: {r: 1, g: 1, b: 1, a: 1}
+  noDropColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 8
-  outlineRange: 2.5
+  outlineRange: 1.2
 --- !u!1 &391525814203561106
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,7 @@ using OutOfThisWorld.Player.HUD;
 using deVoid.Utils;
 
 namespace OutOfThisWorld.Player {
-
-    public class DronePositionsUpdate : ASignal<List<Vector3>> {}
+    public class DroneSwitched : ASignal<DroneController> {}
 
     [RequireComponent(typeof(PlayerInputHandler))]
     public class PlayerController : MonoBehaviour {
@@ -32,7 +31,7 @@ namespace OutOfThisWorld.Player {
             private int _activeDroneIndex = 0;
 
 
-            /* ----------| Initalization Functions |---------- */
+        /* ----------| Initalization Functions |---------- */
 
             void Start()
             {
@@ -59,29 +58,18 @@ namespace OutOfThisWorld.Player {
 
                 if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { SwitchDrone(); }
                 if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
-                if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { _drones[_activeDroneIndex].DropHeld(); }
+                if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { GetActiveDrone().DropHeld(); }
 
-                _droneUIPanel.SetActiveInfoBar(_drones[_activeDroneIndex]);
+                _droneUIPanel.SetActiveInfoBar(GetActiveDrone());
             }
 
             void FixedUpdate()
             {
-                DroneController activeDrone = _drones[_activeDroneIndex];
+                DroneController activeDrone = GetActiveDrone();
 
                 activeDrone.HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
                 _cameraTransform.transform.position = activeDrone.CameraOffset.position;
                 _cameraTransform.transform.rotation = activeDrone.CameraOffset.rotation;
-            }
-
-            void DispatchSingals () {
-                List<Vector3> positions = new List<Vector3>(_drones.Count);
-                foreach (DroneController drone in _drones) {
-                    if (drone is not null) {
-                        positions.Add(drone.transform.position);
-                    }
-                }
-
-                Signals.Get<DronePositionsUpdate>().Dispatch(positions);
             }
 
         /* -----------| Drone Spawning and Manipulation |----------- */
@@ -117,12 +105,18 @@ namespace OutOfThisWorld.Player {
             }
 
             public void SwitchDrone() {
-                _drones[_activeDroneIndex].DeactivateDrone();
+                Signals.Get<DroneSwitched>().Dispatch(GetActiveDrone());
+
+                GetActiveDrone().DeactivateDrone();
                 _activeDroneIndex += 1;
                 if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
-                _drones[_activeDroneIndex].ActivateDrone();
+                GetActiveDrone().ActivateDrone();
 
                 _taskUIPanel.CompleteTask("Switch Drones (Tab)");
+            }
+
+            public DroneController GetActiveDrone() {
+                return _drones[_activeDroneIndex];
             }
 
         /* ----------| I/O Functions |---------- */
@@ -133,7 +127,7 @@ namespace OutOfThisWorld.Player {
             /// <returns></returns> false is there is nothing to interact with.
             bool DroneInteract()
             {
-                return _drones[_activeDroneIndex].Interact();
+                return GetActiveDrone().Interact();
             }
     }
 }

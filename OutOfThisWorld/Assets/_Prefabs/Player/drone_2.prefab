@@ -102,7 +102,7 @@ MonoBehaviour:
   MaxSpeed: 3
   Acceleration: 10
   MaxXAxisLook: 90
-  InteractionRange: 2.5
+  InteractionRange: 1.5
   MaxStorageSize: 1
   HoldTransform: {fileID: 1191898445398690616}
   _raycastMask:

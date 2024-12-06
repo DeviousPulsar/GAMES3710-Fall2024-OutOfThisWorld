@@ -6,6 +6,7 @@ using deVoid.Utils;
 
 namespace OutOfThisWorld.Player {
     public class DroneDestroyed : ASignal<DroneController> {}
+    public class DronePositionUpdate : ASignal<DroneController, Vector3> {}
 
     [RequireComponent(typeof(Rigidbody))]
     public class DroneController : MonoBehaviour {
@@ -56,15 +57,15 @@ namespace OutOfThisWorld.Player {
         /* ----------| Main Loop |----------- */
 
             void FixedUpdate() {
-                if (_droneStorageList.Count > 0) {
-                    ItemBehavior item = _droneStorageList[0];
+                if (HasHeldItem()) {
+                    ItemBehavior item = GetCurrentHeldItem();
                     if (gameObject.GetComponent<FixedJoint>() == null) {
                         RenderInHand(item);
                     }
                 }
             }
 
-        /* ----------| Movement Functions |---------- */
+        /* ----------| Movement and Interaction Functions |---------- */
 
             public void HandleMove(Vector3 move_dir, Vector3 look_dir, float delta) {
                 _eulers += look_dir;
@@ -77,6 +78,8 @@ namespace OutOfThisWorld.Player {
                     _rigidbody.velocity += Acceleration*delta*move_dir;
                     _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, MaxSpeed);
                 }
+
+                Signals.Get<DronePositionUpdate>().Dispatch(this, transform.position);
             }
 
             public bool Interact() {
@@ -105,7 +108,7 @@ namespace OutOfThisWorld.Player {
                     }
                     
                     // If holding at least 1 item
-                    if (_droneStorageList.Count > 0) { 
+                    if (HasHeldItem()) { 
                         if (hitDepot != null) {
                             DepositHeld(hitDepot);
                             return true;
@@ -133,15 +136,15 @@ namespace OutOfThisWorld.Player {
             }
 
             public void SocketItem(ItemSocket socket) {
-                ItemBehavior item = _droneStorageList[0];
+                ItemBehavior item = GetCurrentHeldItem();
                 DropHeld();
                 socket.TakeItem(item);
             }
 
             public void DepositHeld(DepositBehavior depot) {
-                depot.MakeDeposit(_droneStorageList[0]);
+                depot.MakeDeposit(GetCurrentHeldItem());
                             
-                GameObject desposited = _droneStorageList[0].gameObject;
+                GameObject desposited = GetCurrentHeldItem().gameObject;
                 _droneStorageList.RemoveAt(0);
                 Destroy(desposited);
                 Destroy(gameObject.GetComponent<FixedJoint>());
@@ -151,9 +154,9 @@ namespace OutOfThisWorld.Player {
 
             public bool DropHeld() {
                 FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
-                if (_droneStorageList.Count > 0 && holdJoint != null && CanDropCurrentItem()) {
-                    _droneStorageList[0].Drop();
-                    _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
+                if (HasHeldItem() && holdJoint != null && CanDropCurrentItem()) {
+                    GetCurrentHeldItem().Drop();
+                    GetCurrentHeldItem().GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
                     _droneStorageList.RemoveAt(0);
                     Destroy(holdJoint);
 
@@ -176,26 +179,37 @@ namespace OutOfThisWorld.Player {
                 holdJoint.breakTorque = BreakHoldForce;
             }
 
+        /* ----------| Held Item Information Passing |---------- */
+
+            public bool HasHeldItem() {
+                return _droneStorageList.Count > 0;
+            }
+
+            public ItemBehavior GetCurrentHeldItem() {
+                if (!HasHeldItem()) { return null; }
+                return _droneStorageList[0];
+            }
+
         /* ----------| State Change Functions |---------- */
 
             public void ActivateDrone() {
-                if (_droneStorageList.Count > 0) {
-                    _droneStorageList[0].gameObject.layer = LayerMask.NameToLayer("ActiveHoldLayer");
+                if (HasHeldItem()) {
+                    GetCurrentHeldItem().gameObject.layer = LayerMask.NameToLayer("ActiveHoldLayer");
                 }
             }
 
             public void DeactivateDrone() {
-                if (_droneStorageList.Count > 0) {
-                    _droneStorageList[0].gameObject.layer = LayerMask.NameToLayer("InactiveHoldLayer");
+                if (HasHeldItem()) {
+                    GetCurrentHeldItem().gameObject.layer = LayerMask.NameToLayer("InactiveHoldLayer");
                 }
             }
 
         /* ----------| State Check Functions |---------- */
 
             public bool CanDropCurrentItem() {
-                if (_droneStorageList.Count == 0) { return false; }
+                if (!HasHeldItem()) { return false; }
 
-                ItemBehavior item = _droneStorageList[0];
+                ItemBehavior item = GetCurrentHeldItem();
                 Vector3[] testPoints = new[]{
                     new Vector3( 0.5f,  0, 1),
                     new Vector3(-0.5f,  0, 1),
@@ -225,8 +239,8 @@ namespace OutOfThisWorld.Player {
         /* ----------| Message Handling |---------- */
 
             void OnJointBreak(float breakForce) {
-                UnityEngine.Debug.Log("A joint has just been broken!, dropping: " + _droneStorageList[0]);
-                _droneStorageList[0].Drop();
+                UnityEngine.Debug.Log("A joint has just been broken!, dropping: " + GetCurrentHeldItem());
+                GetCurrentHeldItem().Drop();
                 _droneStorageList.RemoveAt(0);
             }
     }
