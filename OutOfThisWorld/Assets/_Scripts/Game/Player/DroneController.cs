@@ -21,6 +21,9 @@ namespace OutOfThisWorld.Player {
             public float MaxSpeed = 1f;
             public float Acceleration = 10f;
             public float MaxXAxisLook = 90f;
+            public float DroneGravityMultiple = 1f;
+            public float MaxHoverTime = 1f;
+            public float HoverDistance = 1f;
             [Header("Item Pick Up")]
             public float InteractionRange = 3;
             public int MaxStorageSize = 1;
@@ -38,6 +41,8 @@ namespace OutOfThisWorld.Player {
             private PlayerController _playerController;
 
             private List<ItemBehavior> _droneStorageList;
+
+            private float _hoverTime;
             
 
         /* ----------| Initalization Functions |---------- */
@@ -67,6 +72,18 @@ namespace OutOfThisWorld.Player {
                         RenderInHand(item);
                     }
                 }
+
+                if (IsHovering()) {
+                    _hoverTime += Time.fixedDeltaTime;
+                    if (_hoverTime >= MaxHoverTime) {
+                        _rigidbody.velocity += DroneGravityMultiple*Physics.gravity;
+                        _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, MaxSpeed);
+                        _hoverTime = MaxHoverTime;
+                    }
+                } else if (_hoverTime > 0) {
+                    _hoverTime -= Time.fixedDeltaTime;
+                    _hoverTime = Mathf.Clamp(_hoverTime, 0, MaxHoverTime);
+                }
             }
 
         /* ----------| Movement and Interaction Functions |---------- */
@@ -90,7 +107,7 @@ namespace OutOfThisWorld.Player {
                 Vector3 raySrc = transform.position;
                 Vector3 rayDir = transform.TransformDirection(Vector3.forward);
 
-                // Cast ray and update position if there is a hit
+                // Cast ray and get hit object Components if there is a hit
                 RaycastHit hit;
                 if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange, _raycastMask)) {
                     Collider hitCol = hit.collider;
@@ -230,6 +247,16 @@ namespace OutOfThisWorld.Player {
                 }
 
                 return true;
+            }
+
+            public bool IsHovering() {
+                Vector3 raySrc = transform.position;
+                Vector3 rayDir = Physics.gravity.normalized;
+                return !Physics.Raycast(raySrc, rayDir, HoverDistance, _raycastMask);
+            }
+
+            public float GetFuelPercentage() {
+                return Mathf.Clamp(1 - _hoverTime/MaxHoverTime, 0, 1);
             }
 
         /* ----------| Finalization Functions |---------- */

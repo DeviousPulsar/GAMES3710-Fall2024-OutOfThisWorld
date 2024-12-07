@@ -102,6 +102,9 @@ MonoBehaviour:
   MaxSpeed: 3
   Acceleration: 10
   MaxXAxisLook: 90
+  DroneGravityMultiple: 0.05
+  MaxHoverTime: 1
+  HoverDistance: 1
   InteractionRange: 1.5
   MaxStorageSize: 1
   HoldTransform: {fileID: 1191898445398690616}
