@@ -142,8 +142,8 @@ Rigidbody:
   m_GameObject: {fileID: 8708689539352120600}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -223,8 +223,7 @@ MonoBehaviour:
   WanderDestinations: []
   DespawnTimeout: 1000
   EatTimeout: 1
-  InaccessableTimeout: 1
-  WanderTimeout: 12
+  StoppedTimeout: 1
   StoppedSpeed: 0.01
 --- !u!1001 &172941508357010299
 PrefabInstance:

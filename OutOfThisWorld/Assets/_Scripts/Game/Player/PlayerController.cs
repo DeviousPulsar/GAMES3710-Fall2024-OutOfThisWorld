@@ -14,7 +14,6 @@ namespace OutOfThisWorld.Player {
         /* ----------| Serialized Variables |---------- */
 
             [Header("References")]
-            public ResourceSystem _resourceSystem;
             public Transform _cameraTransform;
             public DroneInfoPanel _droneUIPanel;
             public TaskInfoPanel _taskUIPanel;
@@ -79,13 +78,14 @@ namespace OutOfThisWorld.Player {
                     GameObject drone = Instantiate(DronePrefab, position, rotation, transform);
                     DroneController droneController = drone.GetComponent<DroneController>();
                     DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
-                    
-                    _drones.Add(droneController);
-                    _droneUIPanel.AddInfoBar(droneController);
+                    if (droneController) {
+                        _drones.Add(droneController);
+                        _droneUIPanel.AddInfoBar(droneController);
 
-                    _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
+                        _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
 
-                    return drone;
+                        return drone;
+                    }
                 }
 
                 return null;

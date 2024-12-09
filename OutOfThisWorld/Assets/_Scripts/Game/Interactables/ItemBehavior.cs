@@ -21,7 +21,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Initaliazation Functions |----------- */
 
-            void Awake()
+            void Start()
             {
                 // fetch Rigidbody and MeshRenderer
                 _rigidbody = GetComponent<Rigidbody>();
@@ -32,6 +32,8 @@ namespace OutOfThisWorld {
                 DebugUtility.HandleErrorIfNullGetComponent<Renderer, ItemBehavior>(_renderer, this, gameObject);
 
                 //Debug.Log(gameObject + " has colliders with local bounds with " + _bounds);
+
+                Signals.Get<ItemSpawned>().Dispatch(this);
             }
 
         /* ----------| Getters |-------- */

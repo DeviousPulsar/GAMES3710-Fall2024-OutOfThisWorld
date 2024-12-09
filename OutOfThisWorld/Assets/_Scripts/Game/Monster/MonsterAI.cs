@@ -182,7 +182,7 @@ namespace OutOfThisWorld.Monster {
             void OnCollisionEnter(Collision coll) {
                 DroneController target = coll.gameObject.GetComponent<DroneController>();
                 if (target && _eatTimestamp + EatTimeout < Time.fixedTime) {
-                    Destroy(coll.gameObject);
+                    target.AttemptDestroy();
                     _eatTimestamp = Time.fixedTime;
 
                     UpdateWanderDest();

@@ -7,23 +7,29 @@ namespace OutOfThisWorld {
 
         /* ----------| Serialized Variables |---------- */
 
+            [Header("Drone Spawn Information")]
             public GameObject DronePrefab;
-            [SerializeField] PlayerController _playerControler;
+            [SerializeField] PlayerController PlayerControler;
+            public float SpawnForce;
+            [Header("Payment Information")]
+            [SerializeField] ResourceSystem ResourceSystem;
+            public float UseCost = 1f;
 
         /* ----------| Spawning Functions |---------- */
 
             protected override GameObject AbsSpawn()
-            {
-                DroneController drone = DronePrefab.GetComponent<DroneController>();
-                DebugUtility.HandleErrorIfNullGetComponent<DroneController, GameObject>(drone, this, DronePrefab);
-                
-                if (drone == null) { return null; }
-                
+            {              
                 foreach (SpawnArea area in _spawnLocations)
                 {
-                    if (!area.IsOccupied())
+                    if (!area.IsOccupied() && ResourceSystem.SpendResources(UseCost))
                     {
-                        return _playerControler.SpawnDrone(DronePrefab, area.GetSpawnLocation(), area.GetSpawnAngle());
+                        Quaternion spawnAngle = area.GetSpawnAngle();
+                        GameObject obj = PlayerControler.SpawnDrone(DronePrefab, area.GetSpawnLocation(), area.GetSpawnAngle());
+                        Rigidbody body = obj.GetComponent<Rigidbody>();
+                        if (body) {
+                            body.AddForce(SpawnForce*(spawnAngle*Vector3.forward), ForceMode.Impulse);
+                        }
+                        return obj;
                     }
                 }
 

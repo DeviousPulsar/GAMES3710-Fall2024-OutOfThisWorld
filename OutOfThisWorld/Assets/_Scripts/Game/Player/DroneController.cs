@@ -32,6 +32,10 @@ namespace OutOfThisWorld.Player {
             public float HeldItemMassFactor = 1f;
             public float BreakHoldForce = 100f;
             public float ThrowForce = 1f;
+            [Header("Death")]
+            public List<GameObject> DronePeices;
+            public float ExplosionForce = 1f;
+            public float ItemSpawnVarience = 1f;
 
         /* ----------| Private Variables |---------- */
 
@@ -265,6 +269,18 @@ namespace OutOfThisWorld.Player {
                 Signals.Get<DroneDestroyed>().Dispatch(this);
                 Debug.Log("DroneController " + this + " destroyed");
             }
+
+            public void AttemptDestroy() {
+                foreach(GameObject prefab in DronePeices) {
+                    GameObject obj = Instantiate(prefab, transform.position + ItemSpawnVarience*Random.insideUnitSphere, transform.rotation);
+                    Rigidbody body = obj.GetComponent<Rigidbody>();
+                    if (body) {
+                        body.AddExplosionForce(ExplosionForce, transform.position, ItemSpawnVarience, 0f, ForceMode.Impulse);
+                    }
+                }
+                Destroy(gameObject);
+            }
+
 
         /* ----------| Message Handling |---------- */
 

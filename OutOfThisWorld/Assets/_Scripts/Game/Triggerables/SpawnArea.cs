@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace OutOfThisWorld {
-[RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
     public class SpawnArea : MonoBehaviour {
 
         /* ----------| Serialized Variables |---------- */

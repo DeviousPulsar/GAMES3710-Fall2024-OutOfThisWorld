@@ -7,7 +7,12 @@ namespace OutOfThisWorld {
 
         /* ----------| Serialized Variables |---------- */
 
+            [Header("Item Spawn Information")]
             [SerializeField] List<GameObject> _spawnables;
+            public float SpawnForce;
+            [Header("Payment Information")]
+            [SerializeField] ResourceSystem ResourceSystem;
+            public float UseCost = 1f;
 
         /* ----------| Spawning Functions |---------- */
 
@@ -17,9 +22,15 @@ namespace OutOfThisWorld {
                 
                 foreach (SpawnArea area in _spawnLocations)
                 {
-                    if (!area.IsOccupied())
+                    if (!area.IsOccupied() && ResourceSystem.SpendResources(UseCost))
                     {
-                        return Instantiate(objToSpawn, area.GetSpawnLocation(), area.GetSpawnAngle());
+                        Quaternion spawnAngle = area.GetSpawnAngle();
+                        GameObject obj = Instantiate(objToSpawn, area.GetSpawnLocation(), spawnAngle);
+                        Rigidbody body = obj.GetComponent<Rigidbody>();
+                        if (body) {
+                            body.AddForce(SpawnForce*(spawnAngle*Vector3.forward), ForceMode.Impulse);
+                        }
+                        return obj;
                     }
                 }
 
