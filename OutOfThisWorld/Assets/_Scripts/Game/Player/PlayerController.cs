@@ -15,7 +15,6 @@ namespace OutOfThisWorld.Player {
 
             [Header("References")]
             public Transform _cameraTransform;
-            public DroneInfoPanel _droneUIPanel;
             public TaskInfoPanel _taskUIPanel;
 
             [Header("Drone Information")]
@@ -45,6 +44,7 @@ namespace OutOfThisWorld.Player {
                 // Spawn inital drone
                 _drones = new List<DroneController>();
                 SpawnDrone(InitalDronePrefab, InitalDroneLocation.position, InitalDroneLocation.rotation);
+                GetActiveDrone().Active = true;
 
                 // Set up drone death handling
                 Signals.Get<DroneDestroyed>().AddListener(RemoveDrone);
@@ -64,8 +64,6 @@ namespace OutOfThisWorld.Player {
                     if (Input.GetButtonDown(_playerInputHandler.DroneModeAction)) { 
                         GetActiveDrone().Follow = !GetActiveDrone().Follow; 
                     }
-
-                    _droneUIPanel.SetActiveInfoBar(GetActiveDrone());
                 }
             }
 
@@ -101,7 +99,6 @@ namespace OutOfThisWorld.Player {
                     DebugUtility.HandleErrorIfNullGetComponent<DroneController, PlayerController>(droneController, this, drone);
                     if (droneController) {
                         _drones.Add(droneController);
-                        _droneUIPanel.AddInfoBar(droneController);
 
                         _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
 

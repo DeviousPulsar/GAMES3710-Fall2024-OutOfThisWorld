@@ -64,7 +64,7 @@ namespace OutOfThisWorld {
                 }
 
                 DroneController activeDrone = _playerController.GetActiveDrone();
-                if (activeDrone.HasHeldItem()) {
+                if (activeDrone != null && activeDrone.HasHeldItem()) {
                     Outline outline = activeDrone.GetCurrentHeldItem().GetComponent<Outline>();
 
                     if (outline != null) {

@@ -4288,10 +4288,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
-      propertyPath: PullMaxDist
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2365111761804650297, guid: b78c3fff57157024d82688331a732692, type: 3}
       propertyPath: DronePullMaxDist
       value: 100
       objectReference: {fileID: 0}

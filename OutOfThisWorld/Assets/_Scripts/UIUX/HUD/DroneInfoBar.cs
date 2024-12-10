@@ -1,35 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace OutOfThisWorld.Player.HUD
-{
-    [RequireComponent(typeof(Image))]
-    public class DroneInfoBar : MonoBehaviour
-    {
-        public Color ActiveColor;
-        public Color InactiveColor;
-        private Image _image;
-
-        void Start()
-        {
-            _image = GetComponent<Image>();
-            //DebugUtility.HandleErrorIfNullGetComponent<Image, DroneInfoBar>(_image, this, gameObject);
+namespace OutOfThisWorld.Player.HUD {
+    //[RequireComponent(typeof(Image))]
+    public class DroneInfoBar : MonoBehaviour {
+        private DroneController _drone;
+        public DroneController Drone {
+            get => _drone;
+            set {
+                if (_drone == null) {
+                    _drone = value;
+                }
+            }
         }
 
-        public void SetAsActive()
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = 1.25f;
-            transform.localScale = scale;
-            _image.color = ActiveColor;
-        }
+        public FuelGauge FuelGauge;
+        public GameObject Paused;
+        public GameObject Active;
+        public GameObject Alarm;
+        public GameObject Warning;
 
-        public void SetAsInactive()
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = 1f;
-            transform.localScale = scale;
-            _image.color = InactiveColor;
+        void Update() {
+            if(Drone != null) {
+                FuelGauge.UpdateGauge(Drone.GetFuelPercentage());
+                Paused.SetActive(!Drone.Follow);
+                Active.SetActive(Drone.Active);
+            }
         }
     }
 }

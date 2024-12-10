@@ -58,6 +58,8 @@ MonoBehaviour:
   DroneShiftAction: Drone Shift
   DroneInteract: Interact
   DroneDrop: Drop
+  DroneModeAction: Mode Shift
+  Pause: Pause
   LookSensitivity: 4
   InvertYAxis: 0
   InvertXAxis: 1
@@ -74,11 +76,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraTransform: {fileID: 3957624973532860645}
-  _droneUIPanel: {fileID: 5372131012874717718}
   _taskUIPanel: {fileID: 4957230558863143264}
   InitalDronePrefab: {fileID: 3744565212062897678, guid: 237963fbdf3419a418dd94f5afc8c810, type: 3}
   InitalDroneLocation: {fileID: 3280023279056809244}
   DroneMax: 4
+  PullDistMult: 1
+  PullMaxDist: 6
 --- !u!114 &5935674233928808924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,7 +803,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 200, y: 400}
-  m_SizeDelta: {x: 400, y: 800}
+  m_SizeDelta: {x: 500, y: 800}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &7271241799304379505
 MonoBehaviour:
@@ -820,7 +823,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 6
-  m_Spacing: 5
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0

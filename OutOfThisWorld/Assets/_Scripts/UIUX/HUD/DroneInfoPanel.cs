@@ -19,58 +19,32 @@ namespace OutOfThisWorld.Player.HUD
             _defaultInfoBar = InfoBarPrefab.GetComponent<DroneInfoBar>();
             DebugUtility.HandleErrorIfNullGetComponent<DroneInfoBar, GameObject>(_defaultInfoBar, this, InfoBarPrefab);
 
-            Signals.Get<DroneDestroyed>().AddListener(RemoveInfoBarTrigger);
+            Signals.Get<DroneSpawned>().AddListener(AddInfoBar);
+            Signals.Get<DroneDestroyed>().AddListener(RemoveInfoBar);
         }
 
-        public bool InfoBarPrefabValid() { return _defaultInfoBar; }
+        public bool InfoBarPrefabValid() { return _defaultInfoBar != null; }
 
-        public bool AddInfoBar(DroneController drone)
+        public void AddInfoBar(DroneController drone)
         {
-            if (!InfoBarPrefabValid()) { return false; }
+            if (!InfoBarPrefabValid()) { return; }
 
             GameObject obj = Instantiate(InfoBarPrefab, transform);
             DroneInfoBar infobar = obj.GetComponent<DroneInfoBar>();
             DebugUtility.HandleErrorIfNullGetComponent<DroneInfoBar, GameObject>(infobar, this, obj);
-            if(!infobar || !_drones.TryAdd(drone, infobar)) 
-            { 
+            if(!infobar || !_drones.TryAdd(drone, infobar)) { 
                 Destroy(obj);
-                return false;
+            } else {
+                infobar.Drone = drone;
             }
-
-            return true;
         }
 
-        public bool RemoveInfoBar(DroneController drone)
+        public void RemoveInfoBar(DroneController drone)
         {
             DroneInfoBar infobar = _defaultInfoBar;
-            if (!_drones.TryGetValue(drone, out infobar)) { return false; }
-            if (!_drones.Remove(drone)) { return false; }
+            if (!_drones.TryGetValue(drone, out infobar)) { return; }
+            if (!_drones.Remove(drone)) { return; }
             Destroy(infobar.gameObject);
-
-            return true;
-        }
-
-        private void RemoveInfoBarTrigger(DroneController drone) {
-            Debug.Log(this + " received request to remove DroneController " + drone + " from drone list");
-            RemoveInfoBar(drone);
-        }
-
-        public bool SetActiveInfoBar(DroneController drone)
-        {
-            if (drone == _activeDrone) { return false; }
-            if (!_drones.ContainsKey(drone)) { return false; }
-
-            foreach(DroneController d in _drones.Keys)
-            {
-                if (d != drone) {
-                    _drones[d].SetAsInactive();
-                } else {
-                    _drones[d].SetAsActive();
-                }
-            }
-
-            _activeDrone = drone;
-            return true;
         }
     }
 }
