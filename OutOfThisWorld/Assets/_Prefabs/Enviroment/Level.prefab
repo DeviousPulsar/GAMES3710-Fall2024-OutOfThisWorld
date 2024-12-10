@@ -17680,6 +17680,7 @@ GameObject:
   - component: {fileID: 3070949841454073043}
   - component: {fileID: 8953590687393526658}
   - component: {fileID: 6947207673259452252}
+  - component: {fileID: 4797287285766395601}
   m_Layer: 0
   m_Name: FurnaceRoomOnEnter
   m_TagString: Untagged
@@ -17737,7 +17738,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Triggers:
   - {fileID: 1080880773307660993}
+  - {fileID: 4797287285766395601}
   UndoTriggersOnLeave: 0
+--- !u!114 &4797287285766395601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487963903902571837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a183c16fd1bfa514786cf8600efb6432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ToDestory: {fileID: 0}
+  DestroyGameObject: 1
 --- !u!1 &4492486875420613674
 GameObject:
   m_ObjectHideFlags: 0
@@ -40143,6 +40159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDestory: {fileID: 2149637229391887356}
+  DestroyGameObject: 0
 --- !u!1001 &4130251973052924409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40879,6 +40896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDestory: {fileID: 1482477853375233837}
+  DestroyGameObject: 0
 --- !u!4 &5431651512115885338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 81a2abfd9a74fa04898054bd2fba89af, type: 3}

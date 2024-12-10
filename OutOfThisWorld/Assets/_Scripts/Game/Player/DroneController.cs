@@ -115,13 +115,11 @@ namespace OutOfThisWorld.Player {
                 RaycastHit hit;
                 if (Physics.Raycast(raySrc, rayDir, out hit, InteractionRange, _raycastMask)) {
                     Collider hitCol = hit.collider;
-
-                    ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
-                    DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
-                    ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
                     
                     // If Inventory not full
-                    if (_droneStorageList.Count < MaxStorageSize) { 
+                    if (_droneStorageList.Count < MaxStorageSize) {
+                        ItemBehavior hitItem = hitCol.gameObject.GetComponent<ItemBehavior>();
+                        ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
                         if (hitSocket != null && hitSocket.HasItem()) {
                             UnsocketItem(hitSocket);
                             return true;
@@ -131,8 +129,9 @@ namespace OutOfThisWorld.Player {
                         }
                     }
                     
-                    // If holding at least 1 item
                     if (HasHeldItem()) { 
+                        DepositBehavior hitDepot = hitCol.gameObject.GetComponent<DepositBehavior>();
+                        ItemSocket hitSocket = hitCol.gameObject.GetComponent<ItemSocket>();
                         if (hitDepot != null) {
                             DepositHeld(hitDepot);
                             return true;
@@ -140,6 +139,16 @@ namespace OutOfThisWorld.Player {
                             SocketItem(hitSocket);
                             return true;
                         }
+                    }
+
+                    UseBehavior hitUse = hitCol.gameObject.GetComponent<UseBehavior>();
+                    ToggleSwitch hitToggle = hitCol.gameObject.GetComponent<ToggleSwitch>();
+                    if(hitUse != null) {
+                        hitUse.Use();
+                        return true;
+                    } else if(hitToggle != null) {
+                        hitToggle.Toggle();
+                        return true;
                     }
                 }
 

@@ -14,7 +14,7 @@ namespace OutOfThisWorld {
 
         /* ----------| Interaction Functions |---------- */
 
-            private void OnMouseDown()
+            public void Toggle()
             {
                 _state = !_state;
                 if (_state) {

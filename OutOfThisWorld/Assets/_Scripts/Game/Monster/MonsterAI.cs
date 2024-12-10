@@ -6,9 +6,10 @@ using deVoid.Utils;
 
 namespace OutOfThisWorld.Monster {
     public enum MonsterState {
-        WANDER,
-        PERSUE,
-        RAGE
+        Disabled,
+        Wander,
+        Persue,
+        Rage
     }
 
     public class MonsterAI : MonoBehaviour {
@@ -53,7 +54,7 @@ namespace OutOfThisWorld.Monster {
                 _spawnTimestamp = Time.fixedTime;
                 _memory = new Dictionary<DroneController, bool>();
 
-                CurrentState = MonsterState.WANDER;
+                CurrentState = MonsterState.Disabled;
                 UpdateWanderDest();
 
                 // Signal Registration
@@ -66,38 +67,24 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
-                if (_eatTimestamp + EatTimeout < Time.fixedTime) {
-                    UpdatePath();
-                }
-
-                if (IsStopped()) {
-                    _timeStopped += Time.fixedDeltaTime;
-                } else {
-                    _timeStopped = 0;
-                }
-
-                if (_timeStopped > StoppedTimeout) {
-                    if (CurrentState == MonsterState.PERSUE || CurrentState == MonsterState.RAGE) {
-                        _memory[_target] = false;
-                        Debug.Log("Alien memory updates noting that " + _target + " cannot be chased.");
+                if (CurrentState != MonsterState.Disabled) {
+                    if (_eatTimestamp + EatTimeout < Time.fixedTime) {
+                        UpdatePath();
                     }
-                    UpdateWanderDest();
-                }
 
-                if(_debugPrintTimestamp + 1000000 < Time.fixedTime) {
-                    Debug.Log(
-                        "Alien in state " + CurrentState + " w/ destination " + NavAgent.destination.ToString() + "\n" +
-                        NavAgent.velocity + " " + _timeStopped + "\n" + 
-                        new System.Func<string>(() => {
-                            string result = "_memory = [";
-                            foreach (DroneController drone in _memory.Keys) {
-                                result += drone + ":" + _memory[drone] + ",";
-                            }
-                            result += "]";
-                            return result;
-                        })()
-                    );
-                    _debugPrintTimestamp = Time.fixedTime;
+                    if (IsStopped()) {
+                        _timeStopped += Time.fixedDeltaTime;
+                    } else {
+                        _timeStopped = 0;
+                    }
+
+                    if (_timeStopped > StoppedTimeout) {
+                        if (CurrentState == MonsterState.Persue || CurrentState == MonsterState.Rage) {
+                            _memory[_target] = false;
+                            Debug.Log("Alien memory updates noting that " + _target + " cannot be chased.");
+                        }
+                        UpdateWanderDest();
+                    }
                 }
 
                 if (_lastState != CurrentState || (_lastDest - NavAgent.destination).magnitude > 1) {
@@ -109,11 +96,11 @@ namespace OutOfThisWorld.Monster {
 
             void UpdatePath() {
                 switch (CurrentState) {
-                    case MonsterState.WANDER:
+                    case MonsterState.Wander:
                         NavAgent.destination = _wanderDest.position;
                         break;
 
-                    case MonsterState.RAGE:
+                    case MonsterState.Rage:
                         float minDist = float.PositiveInfinity;
                         foreach (DroneController drone in _memory.Keys) {
                             float dist = (transform.position - drone.transform.position).magnitude;
@@ -124,7 +111,7 @@ namespace OutOfThisWorld.Monster {
                         NavAgent.destination = _target.transform.position;
                         break;
 
-                    case MonsterState.PERSUE:
+                    case MonsterState.Persue:
                         NavAgent.destination = _target.transform.position;
                         break;
                 }
@@ -141,8 +128,8 @@ namespace OutOfThisWorld.Monster {
             void UpdateWanderDest() {
                 _wanderDest = WanderDestinations[Random.Range(0, WanderDestinations.Count)];
                 _target = null;
-                if (CurrentState != MonsterState.RAGE) {
-                    CurrentState = MonsterState.WANDER;
+                if (CurrentState == MonsterState.Persue) {
+                    CurrentState = MonsterState.Wander;
                 }
             }
 
@@ -163,8 +150,8 @@ namespace OutOfThisWorld.Monster {
             void SetTarget(DroneController drone) {
                 if (_memory[drone] && _target != drone) {
                     _target = drone;
-                    if (CurrentState != MonsterState.RAGE) {
-                        CurrentState = MonsterState.PERSUE;
+                    if (CurrentState != MonsterState.Rage) {
+                        CurrentState = MonsterState.Persue;
                     }
                 }
             }
