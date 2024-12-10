@@ -15,6 +15,8 @@ namespace OutOfThisWorld.Player
         public string DroneShiftAction = "Drone Shift";
         public string DroneInteract = "Interact";
         public string DroneDrop = "Drop";
+        public string DroneModeAction = "Mode Shift";
+        public string Pause = "Pause";
         
 
         [Tooltip("Sensitivity multiplier for moving the camera around")]

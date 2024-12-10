@@ -37,6 +37,26 @@ namespace OutOfThisWorld.Player {
             public float ExplosionForce = 1f;
             public float ItemSpawnVarience = 1f;
 
+        /* ----------| Properties |--------- */
+
+            public bool Follow { get; set; } = true;
+
+            private bool _active;
+            public bool Active { 
+                get => _active; 
+                set {
+                    _active = value;
+
+                    if (HasHeldItem()) {
+                        if (_active) {
+                            GetCurrentHeldItem().gameObject.layer = LayerMask.NameToLayer("ActiveHoldLayer");
+                        } else {
+                            GetCurrentHeldItem().gameObject.layer = LayerMask.NameToLayer("InactiveHoldLayer");
+                        }
+                    }
+                }
+            }
+
         /* ----------| Private Variables |---------- */
 
             private Vector3 _eulers = Vector3.zero;
@@ -90,7 +110,7 @@ namespace OutOfThisWorld.Player {
                 }
             }
 
-        /* ----------| Movement and Interaction Functions |---------- */
+        /* ----------| Movement Functions |---------- */
 
             public void HandleMove(Vector3 move_dir, Vector3 look_dir, float delta) {
                 _eulers += look_dir;
@@ -105,6 +125,17 @@ namespace OutOfThisWorld.Player {
                     Signals.Get<DronePositionUpdate>().Dispatch(this);
                 }
             }
+
+            public void HandleMove(Vector3 move_dir, float delta) {
+                if(move_dir != Vector3.zero)
+                {
+                    _rigidbody.velocity += Acceleration*delta*move_dir;
+                    _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, MaxSpeed);
+                    Signals.Get<DronePositionUpdate>().Dispatch(this);
+                }
+            }
+
+         /* ----------| Interaction Functions |---------- */
 
             public bool Interact() {
                 // Calculate raycast parameters
@@ -221,20 +252,6 @@ namespace OutOfThisWorld.Player {
             public ItemBehavior GetCurrentHeldItem() {
                 if (!HasHeldItem()) { return null; }
                 return _droneStorageList[0];
-            }
-
-        /* ----------| State Change Functions |---------- */
-
-            public void ActivateDrone() {
-                if (HasHeldItem()) {
-                    GetCurrentHeldItem().gameObject.layer = LayerMask.NameToLayer("ActiveHoldLayer");
-                }
-            }
-
-            public void DeactivateDrone() {
-                if (HasHeldItem()) {
-                    GetCurrentHeldItem().gameObject.layer = LayerMask.NameToLayer("InactiveHoldLayer");
-                }
             }
 
         /* ----------| State Check Functions |---------- */

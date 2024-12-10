@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8145938936165491524}
   - component: {fileID: 5871881103150957947}
   - component: {fileID: 2610546244412596986}
-  - component: {fileID: 7574231056250738229}
   m_Layer: 8
   m_Name: drone_yellow
   m_TagString: Untagged
@@ -102,9 +101,10 @@ MonoBehaviour:
   MaxSpeed: 3
   Acceleration: 10
   MaxXAxisLook: 90
-  DroneGravityMultiple: 0.05
+  DroneGravityMultiple: 0.025
   MaxHoverTime: 1
   HoverDistance: 1
+  FollowAgent: {fileID: 0}
   InteractionRange: 1.5
   MaxStorageSize: 1
   HoldTransform: {fileID: 1191898445398690616}
@@ -120,19 +120,6 @@ MonoBehaviour:
   - {fileID: 4200086805673058624, guid: 90c065a5c8cf46147b723fe3f1d18984, type: 3}
   ExplosionForce: 1
   ItemSpawnVarience: 1
---- !u!114 &7574231056250738229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3744565212062897678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd669686516b5dd4a85ce8c027210188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Value: 3
 --- !u!1 &3757711119743832036
 GameObject:
   m_ObjectHideFlags: 0

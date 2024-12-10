@@ -23,6 +23,10 @@ namespace OutOfThisWorld.Player {
             public Transform InitalDroneLocation;
             public int DroneMax = 2;
 
+            [Header("Drone Follow Settings")]
+            public float PullDistMult = 1f;
+            public float PullMaxDist = 10f;
+
         /* ----------| Private Variables |---------- */
 
             private PlayerInputHandler _playerInputHandler;
@@ -55,8 +59,11 @@ namespace OutOfThisWorld.Player {
                     Destroy(gameObject);
                 } else {
                     if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { SwitchDrone(); }
-                    if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); } // Added by JB
+                    if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); }
                     if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { GetActiveDrone().DropHeld(); }
+                    if (Input.GetButtonDown(_playerInputHandler.DroneModeAction)) { 
+                        GetActiveDrone().Follow = !GetActiveDrone().Follow; 
+                    }
 
                     _droneUIPanel.SetActiveInfoBar(GetActiveDrone());
                 }
@@ -64,11 +71,25 @@ namespace OutOfThisWorld.Player {
 
             void FixedUpdate()
             {
-                DroneController activeDrone = GetActiveDrone();
-
-                activeDrone.HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
-                _cameraTransform.transform.position = activeDrone.CameraOffset.position;
-                _cameraTransform.transform.rotation = activeDrone.CameraOffset.rotation;
+                for(int i = _drones.Count - 1; i >= 0; i--) {
+                    DroneController drone = _drones[i];
+                    if (drone is null) {
+                        _drones.RemoveAt(i);
+                    } else if (i == _activeDroneIndex) {
+                        drone.HandleMove(_playerInputHandler.GetMoveForce(), _playerInputHandler.GetLookAngles(), Time.fixedDeltaTime);
+                        _cameraTransform.transform.position = drone.CameraOffset.position;
+                        _cameraTransform.transform.rotation = drone.CameraOffset.rotation;
+                    }  else if (drone.Follow) {
+                        DroneController activeDrone = GetActiveDrone();
+                        Vector3 dist = activeDrone.transform.position - drone.transform.position;
+                        if (dist.magnitude > PullMaxDist) {
+                            drone.Follow = false;
+                        } else if (dist.magnitude > PullDistMult*(i+_drones.Count-_activeDroneIndex)%_drones.Count) {
+                            drone.HandleMove(dist.normalized, Time.fixedDeltaTime);
+                        }
+                        drone.transform.LookAt(activeDrone.transform);
+                    }
+                }
             }
 
         /* -----------| Drone Spawning and Manipulation |----------- */
@@ -107,10 +128,10 @@ namespace OutOfThisWorld.Player {
             public void SwitchDrone() {
                 Signals.Get<DroneSwitched>().Dispatch(GetActiveDrone());
 
-                GetActiveDrone().DeactivateDrone();
+                GetActiveDrone().Active = false;
                 _activeDroneIndex += 1;
                 if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
-                GetActiveDrone().ActivateDrone();
+                GetActiveDrone().Active = true;
 
                 _taskUIPanel.CompleteTask("Switch Drones (Tab)");
             }

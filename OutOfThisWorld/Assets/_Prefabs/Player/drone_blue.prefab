@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8145938936165491524}
   - component: {fileID: 5871881103150957947}
   - component: {fileID: 2610546244412596986}
-  - component: {fileID: 7574231056250738229}
   m_Layer: 8
   m_Name: drone_blue
   m_TagString: Untagged
@@ -105,6 +104,7 @@ MonoBehaviour:
   DroneGravityMultiple: 0.025
   MaxHoverTime: 1
   HoverDistance: 1
+  FollowAgent: {fileID: 0}
   InteractionRange: 1.5
   MaxStorageSize: 1
   HoldTransform: {fileID: 1191898445398690616}
@@ -120,19 +120,6 @@ MonoBehaviour:
   - {fileID: 4804490824127214692, guid: 42e832b2980efc9458633ea223490a78, type: 3}
   ExplosionForce: 1
   ItemSpawnVarience: 1
---- !u!114 &7574231056250738229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3744565212062897678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd669686516b5dd4a85ce8c027210188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Value: 3
 --- !u!1 &7692544459025945232
 GameObject:
   m_ObjectHideFlags: 0
