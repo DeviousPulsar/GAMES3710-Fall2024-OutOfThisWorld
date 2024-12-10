@@ -6,21 +6,24 @@ namespace OutOfThisWorld {
     public class MoveTrigger : Triggerable {
         /* ----------| Serialized Variables |---------- */
 
-            public Transform InitialTransform;
+            public GameObject ObjectToMove;
             public Transform DestinationTransform;
+            public Transform UndoTransform;
 
         /* ----------| Trigger Functions |---------- */
 
             public override void Trigger() {
-                transform.position = DestinationTransform.position;
-                transform.rotation = DestinationTransform.rotation;
-                transform.localScale = DestinationTransform.localScale;
+                ObjectToMove.transform.position = DestinationTransform.position;
+                ObjectToMove.transform.rotation = DestinationTransform.rotation;
+                ObjectToMove.transform.localScale = DestinationTransform.localScale;
             }
 
             public override void Undo() {
-                transform.position = InitialTransform.position;
-                transform.rotation = InitialTransform.rotation;
-                transform.localScale = InitialTransform.localScale;
+                if (UndoTransform) {
+                    ObjectToMove.transform.position = UndoTransform.position;
+                    ObjectToMove.transform.rotation = UndoTransform.rotation;
+                    ObjectToMove.transform.localScale = UndoTransform.localScale;
+                }
             }
     }
 }
