@@ -111,6 +111,9 @@ namespace OutOfThisWorld.Player {
                     if (_activeDroneIndex > indexToRemove) {
                         _activeDroneIndex -= 1;
                     }
+                    if (_drones.Count > 0 && _activeDroneIndex >= _drones.Count) {
+                        _activeDroneIndex %= _drones.Count;
+                    }
                 } else {
                     Debug.Log(this + " received request to remove DroneController " + drone + " from drone list. No such drone in drone list");
                 }

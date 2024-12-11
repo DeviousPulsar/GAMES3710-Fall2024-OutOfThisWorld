@@ -1,22 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using OutOfThisWorld.Audio;
 
 namespace OutOfThisWorld {
     public class MainMenu : MonoBehaviour {
-        public AudioManager audioManager;
+        public AudioClip startBGM;
+        public AudioClip buttonClick;
 
-        private void Awake()
-        {
+        private SingletonAudioManager _audioManager;
+
+        void Awake() {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-            audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        }
+
+        void Start() {
+            _audioManager = SingletonAudioManager.Get();
+            if (_audioManager == null) { Destroy(this); }
+            _audioManager.PlayBackgroundMusic(startBGM);
         }
 
         public void PlayGame()
         {
-            audioManager.StopMusic();
+            _audioManager.StopMusic();
             SceneManager.LoadSceneAsync(1);
         }
 
@@ -27,7 +33,7 @@ namespace OutOfThisWorld {
 
         public void ClickEffect()
         {
-            audioManager.PlaySFX(audioManager.iconClick);
+            _audioManager.PlaySFX(buttonClick);
         }
     }
 }

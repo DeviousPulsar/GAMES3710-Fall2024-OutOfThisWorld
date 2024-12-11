@@ -56,8 +56,8 @@ namespace OutOfThisWorld.Monster {
                 _spawnTimestamp = Time.fixedTime;
                 _memory = new Dictionary<DroneController, bool>();
 
-                CurrentState = MonsterState.Disabled;
                 UpdateWanderDest();
+                CurrentState = MonsterState.Disabled;
 
                 // Signal Registration
                 Signals.Get<DronePositionUpdate>().AddListener(UpdateMemory);
@@ -69,7 +69,7 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
-                if (CurrentState != MonsterState.Disabled & _eatTimestamp + EatTimeout < Time.fixedTime) {
+                if (CurrentState != MonsterState.Disabled && _eatTimestamp + EatTimeout < Time.fixedTime) {
                     UpdatePath();
 
                     if (IsStopped()) {
@@ -103,6 +103,11 @@ namespace OutOfThisWorld.Monster {
                         break;
 
                     case MonsterState.Rage:
+                        if (_memory.Keys.Count == 0) {
+                            UpdateWanderDest();
+                            break;
+                        }
+
                         float minDist = float.PositiveInfinity;
                         foreach (DroneController drone in _memory.Keys) {
                             float dist = (transform.position - drone.transform.position).magnitude;
@@ -110,6 +115,7 @@ namespace OutOfThisWorld.Monster {
                                 SetTarget(drone);
                             }
                         }
+
                         SetDestinationToTargetPos();
                         break;
 
@@ -139,9 +145,8 @@ namespace OutOfThisWorld.Monster {
             void UpdateWanderDest() {
                 _wanderDest = WanderDestinations[Random.Range(0, WanderDestinations.Count)];
                 _target = null;
-                if (CurrentState == MonsterState.Persue) {
-                    CurrentState = MonsterState.Wander;
-                }
+                CurrentState = MonsterState.Wander;
+
             }
 
             void UpdateMemory(DroneController drone) {
@@ -183,7 +188,9 @@ namespace OutOfThisWorld.Monster {
                     target.AttemptDestroy();
                     _eatTimestamp = Time.fixedTime;
 
-                    UpdateWanderDest();
+                    if(CurrentState != MonsterState.Rage) {
+                        UpdateWanderDest();
+                    }
                 }
             }
         

@@ -357,7 +357,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -765,6 +765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4696765095337310730}
   - component: {fileID: 5665057840321303008}
+  - component: {fileID: 2294361571536740850}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Audio
@@ -811,15 +812,29 @@ MonoBehaviour:
   walk: {fileID: 8300000, guid: 2e8f166b4e02c3644b3490ad1e6133d0, type: 3}
   boom: {fileID: 8300000, guid: 1d7a12d751c07d949835c5a09b5dce4f, type: 3}
   doorLocked: {fileID: 8300000, guid: 42f8f3f8cffd1b945acaacb90ab627e9, type: 3}
-  Switch: {fileID: 8300000, guid: 5e17ad593f86eb949b21e89532d04b65, type: 3}
+  switch_pull: {fileID: 0}
   collection_ship: {fileID: 8300000, guid: 70c233255bcef25438b773b46e72cbbe, type: 3}
   collection_drone: {fileID: 8300000, guid: 249104b7423551246b28a29f5090dc20, type: 3}
   drone_build: {fileID: 8300000, guid: eb5e8f2d52ae64742bb9598cd5e467ed, type: 3}
   drone_wreck: {fileID: 8300000, guid: a563074470a17e54fb5ef6d293fe085b, type: 3}
+  item_pickup: {fileID: 8300000, guid: 630ba64137ffc4244ab73dd5d6c81a97, type: 3}
   item_drop: {fileID: 8300000, guid: 25ef34ad77db55a43a84bba19e1611ff, type: 3}
   endingBGM: {fileID: 8300000, guid: 5ee9f5f22fb6a404d9ae4a25f6610b66, type: 3}
   doorOpen: {fileID: 8300000, guid: affa075d82a1ea24293d658cfb443d0d, type: 3}
   doorClose: {fileID: 8300000, guid: 776c66c4623112940a55b4b1a86dc196, type: 3}
+--- !u!114 &2294361571536740850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709173424997080994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c5818b9a54f664cafcc6a47763775d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGM: {fileID: 8300000, guid: 630622d3f1631b5459ea294a06270701, type: 3}
 --- !u!1 &7604520313981869621
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using OutOfThisWorld.Player.HUD;
+using OutOfThisWorld.Audio;
 using deVoid.Utils;
 
 namespace OutOfThisWorld.Player {
@@ -63,6 +64,7 @@ namespace OutOfThisWorld.Player {
 
             private Rigidbody _rigidbody;
             private PlayerController _playerController;
+            private SingletonAudioManager _audioManager;
 
             private List<ItemBehavior> _droneStorageList;
 
@@ -82,6 +84,9 @@ namespace OutOfThisWorld.Player {
                 // Fetch nearest PlayerController
                 _playerController = FindObjectOfType<PlayerController>();
                 DebugUtility.HandleErrorIfNullGetComponent<PlayerController, DroneController>(_playerController, this, gameObject);
+
+                // Fetch AudioManager
+                _audioManager = SingletonAudioManager.Get();
 
                 // Signal that the Drone has been spawned
                 Signals.Get<DroneSpawned>().Dispatch(this);
@@ -189,6 +194,8 @@ namespace OutOfThisWorld.Player {
             public void Pickup(ItemBehavior item) {
                 _droneStorageList.Add(item); // Add item to inventory
                 item.gameObject.SetActive(false);
+                
+                //_audioManager.PlaySFX(_audioManager.item_pickup);
 
                 //_playerController._taskUIPanel.CompleteTask("Pick Up an Object (Left Click)");
             }
@@ -197,6 +204,8 @@ namespace OutOfThisWorld.Player {
                 ItemBehavior item = socket.GiveItem();
                 _droneStorageList.Add(item);
                 item.gameObject.SetActive(false);
+
+                _audioManager.PlaySFX(_audioManager.item_pickup);
             }
 
             public void SocketItem(ItemSocket socket) {
@@ -304,6 +313,7 @@ namespace OutOfThisWorld.Player {
                         body.AddExplosionForce(ExplosionForce, transform.position, ItemSpawnVarience, 0f, ForceMode.Impulse);
                     }
                 }
+                _audioManager.PlaySFX(_audioManager.drone_wreck);
                 Destroy(gameObject);
             }
 

@@ -475,7 +475,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59a1d58412564a41a653cee34d1df9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 1131591643}
+  startBGM: {fileID: 8300000, guid: 797d1d728cd573e45ae202503417d243, type: 3}
+  buttonClick: {fileID: 8300000, guid: a944e4e180ecd8a4182475ba586603e6, type: 3}
 --- !u!1 &818592808
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +718,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1131591644}
-  - component: {fileID: 1131591643}
+  - component: {fileID: 1131591645}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Audio
@@ -725,24 +726,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1131591643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1131591642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c96081ca717c49d4b857e05e35b6c044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 993761102}
-  SFXSource: {fileID: 1589742691}
-  background: {fileID: 8300000, guid: 630622d3f1631b5459ea294a06270701, type: 3}
-  iconClick: {fileID: 8300000, guid: a944e4e180ecd8a4182475ba586603e6, type: 3}
-  itemInteract: {fileID: 8300000, guid: 66f0bd2ecdddc5a40a038414faf413c3, type: 3}
-  startInterface: {fileID: 8300000, guid: 797d1d728cd573e45ae202503417d243, type: 3}
 --- !u!4 &1131591644
 Transform:
   m_ObjectHideFlags: 0
@@ -760,6 +743,39 @@ Transform:
   - {fileID: 1589742692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1131591645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131591642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d73c7cd5f5e7bf42b35d9752d2660d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 993761102}
+  SFXSource: {fileID: 1589742691}
+  background: {fileID: 0}
+  iconClick: {fileID: 0}
+  itemInteract: {fileID: 0}
+  startInterface: {fileID: 0}
+  breath: {fileID: 0}
+  jumpScare1: {fileID: 0}
+  jumpScare2: {fileID: 0}
+  walk: {fileID: 0}
+  boom: {fileID: 0}
+  doorLocked: {fileID: 0}
+  Switch: {fileID: 0}
+  collection_ship: {fileID: 0}
+  collection_drone: {fileID: 0}
+  drone_build: {fileID: 0}
+  drone_wreck: {fileID: 0}
+  item_drop: {fileID: 0}
+  endingBGM: {fileID: 0}
+  doorOpen: {fileID: 0}
+  doorClose: {fileID: 0}
 --- !u!1 &1589742690
 GameObject:
   m_ObjectHideFlags: 0
