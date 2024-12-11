@@ -708,12 +708,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1793140573}
     m_Modifications:
     - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
+      propertyPath: RelogDist
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: StoppedSpeed
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: WanderDestinations.Array.size
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: WanderDestinations.Array.data[0]
@@ -727,6 +731,22 @@ PrefabInstance:
       propertyPath: WanderDestinations.Array.data[2]
       value: 
       objectReference: {fileID: 1411528507}
+    - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
+      propertyPath: WanderDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1021623313}
+    - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
+      propertyPath: WanderDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1921601472}
+    - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
+      propertyPath: WanderDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 2002111121}
+    - target: {fileID: 5352886434754681793, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8140468567511041494, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20
@@ -766,6 +786,10 @@ PrefabInstance:
     - target: {fileID: 8140468567511041494, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416664679020687100, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
+      propertyPath: WalkAnimMult
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8708689539352120600, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: m_Name
@@ -1994,18 +2018,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4049236623421810244, guid: cf327453929cd3940b5a9458bd66e80e, type: 3}
-      propertyPath: InvertXAxis
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4049236623421810244, guid: cf327453929cd3940b5a9458bd66e80e, type: 3}
-      propertyPath: InvertYAxis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4049236623421810244, guid: cf327453929cd3940b5a9458bd66e80e, type: 3}
-      propertyPath: LookSensitivity
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4430141694802719559, guid: cf327453929cd3940b5a9458bd66e80e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -2773,7 +2785,7 @@ Transform:
   m_GameObject: {fileID: 1411528506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: -1.5, z: 15}
+  m_LocalPosition: {x: -27.25, y: -1.5, z: 3.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4657,6 +4669,10 @@ PrefabInstance:
     - target: {fileID: 6372253011826442909, guid: 55442eedddbe261488d57b9ebdcff9de, type: 3}
       propertyPath: m_Name
       value: Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983622007402199389, guid: 55442eedddbe261488d57b9ebdcff9de, type: 3}
+      propertyPath: m_LayerMask.m_Bits
+      value: 823
       objectReference: {fileID: 0}
     - target: {fileID: 8016010126085332454, guid: 55442eedddbe261488d57b9ebdcff9de, type: 3}
       propertyPath: ResourceSystem

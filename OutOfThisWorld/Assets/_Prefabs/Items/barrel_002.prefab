@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5898005480769130795}
   - component: {fileID: 6299137229517399538}
   - component: {fileID: 3522464642135786910}
+  - component: {fileID: 1245168398306436717}
   m_Layer: 0
   m_Name: barrel_002
   m_TagString: Selectable
@@ -172,3 +173,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016, y: 0.027161269, z: 0.016}
   m_Center: {x: -9.313228e-10, y: 0.013588768, z: 0}
+--- !u!208 &1245168398306436717
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8650411753778909009}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.011000001, y: 0.014, z: 0.011000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.014, z: 0}
+  m_TimeToStationary: 0.5

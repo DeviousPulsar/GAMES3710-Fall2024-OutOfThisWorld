@@ -27,7 +27,9 @@ namespace OutOfThisWorld.Monster {
             //public float WanderTimeout = 1f;
             //public float RageTimeout = 30f;
 
+            [Header("Behavior Thresholds")]
             public float StoppedSpeed = 0.01f;
+            public float RelogDist = 0.1f;
 
         /* ----------| Properties |---------- */
 
@@ -67,10 +69,8 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
-                if (CurrentState != MonsterState.Disabled) {
-                    if (_eatTimestamp + EatTimeout < Time.fixedTime) {
-                        UpdatePath();
-                    }
+                if (CurrentState != MonsterState.Disabled & _eatTimestamp + EatTimeout < Time.fixedTime) {
+                    UpdatePath();
 
                     if (IsStopped()) {
                         _timeStopped += Time.fixedDeltaTime;
@@ -83,7 +83,9 @@ namespace OutOfThisWorld.Monster {
                             _memory[_target] = false;
                             Debug.Log("Alien memory updates noting that " + _target + " cannot be chased.");
                         }
-                        UpdateWanderDest();
+                        if (CurrentState != MonsterState.Rage) {
+                            UpdateWanderDest();
+                        }
                     }
                 }
 
@@ -108,12 +110,21 @@ namespace OutOfThisWorld.Monster {
                                 SetTarget(drone);
                             }
                         }
-                        NavAgent.destination = _target.transform.position;
+                        SetDestinationToTargetPos();
                         break;
 
                     case MonsterState.Persue:
-                        NavAgent.destination = _target.transform.position;
+                        SetDestinationToTargetPos();
                         break;
+                }
+            }
+
+            void SetDestinationToTargetPos() {
+                Vector3 currentDest = NavAgent.destination;
+                Vector3 targetDest = _target.transform.position;
+                if (Mathf.Pow(currentDest.x - targetDest.x, 2) + Mathf.Pow(currentDest.y - targetDest.y, 2) 
+                        > Mathf.Pow(RelogDist, 2)) {
+                    NavAgent.destination = _target.transform.position;
                 }
             }
 
