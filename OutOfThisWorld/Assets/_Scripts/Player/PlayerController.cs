@@ -97,6 +97,8 @@ namespace OutOfThisWorld.Player {
                     _drones.Add(droneController);
                     _droneUIPanel.AddInfoBar(droneController);
 
+                _resourceSystem.SpendResources(5);
+
                     _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
 
                     return drone;

@@ -96,7 +96,8 @@ namespace OutOfThisWorld.Monster {
                 MonsterTarget target = coll.gameObject.GetComponent<MonsterTarget>();
                 if (target && _eatTimestamp + EatTimeout < Time.fixedTime) {
                     _memory.Remove(target);
-                    Destroy(coll.gameObject);
+
+                    Destroy(coll.gameObject); // Should not destroy game object
                     _eatTimestamp = Time.fixedTime;
                 }
             }

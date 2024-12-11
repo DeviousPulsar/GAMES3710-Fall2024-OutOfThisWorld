@@ -59,6 +59,13 @@ namespace OutOfThisWorld.Player {
                 {
                     RenderInHand(_droneStorageList[0]);
                 }
+
+                if (_droneStorageList.Count > 0 && _droneStorageList[0] == null)
+                {
+                    FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
+                    _droneStorageList.RemoveAt(0);
+                    Destroy(holdJoint);
+                }
             }
 
         /* ----------| Movement Functions |---------- */
@@ -108,8 +115,8 @@ namespace OutOfThisWorld.Player {
                     
                     // If holding at least 1 item
                     if (_droneStorageList.Count > 0) { 
-                        if (hitDepot != null) {
-                            hitDepot.MakeDeposit(_droneStorageList[0]);
+                        if (hitDepot != null) { 
+                            hitDepot.MakeDeposit(_droneStorageList[0]); // Depositing!
                             
                             GameObject desposited = _droneStorageList[0].gameObject;
                             _droneStorageList.RemoveAt(0);
@@ -158,7 +165,7 @@ namespace OutOfThisWorld.Player {
 
             public bool DropHeld() {
                 FixedJoint holdJoint = gameObject.GetComponent<FixedJoint>();
-                if (_droneStorageList.Count > 0 && holdJoint != null)
+                if ((_droneStorageList.Count > 0 && holdJoint != null))
                 {
                     _droneStorageList[0].Drop(HoldScale, HeldItemMassFactor);
                     _droneStorageList[0].GetComponent<Rigidbody>().AddForce(transform.rotation*(ThrowForce*Vector3.forward), ForceMode.Impulse);
