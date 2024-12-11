@@ -10,8 +10,8 @@ namespace OutOfThisWorld.Player
         public string MoveXAxisName = "Strafe";
         public string MoveYAxisName = "Vertical";
         public string MoveZAxisName = "Forwards";
-        public string LookXAxisName = "Mouse Y";
-        public string LookYAxisName = "Mouse X";
+        public string LookXAxisName = "Mouse X";
+        public string LookYAxisName = "Mouse Y";
         public string DroneShiftAction = "Drone Shift";
         public string DroneInteract = "Interact";
         public string DroneDrop = "Drop";
@@ -22,11 +22,10 @@ namespace OutOfThisWorld.Player
         [Tooltip("Sensitivity multiplier for moving the camera around")]
         public float LookSensitivity = 1f;
 
-        [Tooltip("Used to flip the vertical input axis")]
-        public bool InvertYAxis = false;
-
         [Tooltip("Used to flip the horizontal input axis")]
         public bool InvertXAxis = false;
+        [Tooltip("Used to flip the vertical input axis")]
+        public bool InvertYAxis = false;
     /* ----------| Initalization Functions |---------- */
 
         void Start()
@@ -66,8 +65,8 @@ namespace OutOfThisWorld.Player
             if (CanProcessInput())
             {
                  Vector3 rotation = new Vector3(
-                    Input.GetAxisRaw(LookXAxisName) * (InvertXAxis? -1 : 1),
-                    Input.GetAxisRaw(LookYAxisName) * (InvertYAxis? -1 : 1), 
+                    Input.GetAxisRaw(LookXAxisName) * (InvertYAxis? -1 : 1), 
+                    Input.GetAxisRaw(LookYAxisName) * (InvertXAxis? -1 : 1),
                     0f
                 );
 

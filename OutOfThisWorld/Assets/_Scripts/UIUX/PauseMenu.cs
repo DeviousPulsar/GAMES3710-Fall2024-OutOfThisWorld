@@ -5,26 +5,41 @@ using UnityEngine.SceneManagement;
 
 namespace OutOfThisWorld {
     public class PauseMenu : MonoBehaviour {
-        [SerializeField] GameObject pauseMenu;
+        [SerializeField] GameObject ContinueButton;
 
-        private bool isPaused = false;
+        public bool CanContinue {
+            get => ContinueButton.activeSelf;
+            set => ContinueButton.SetActive(value);
+        }
 
-        void Update()
+        private bool _isPaused = false;
+        public bool IsPaused {
+            get => _isPaused;
+        }
+
+        public void TogglePause()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                if (isPaused) {
-                    Continue();
-                } else {
-                    PauseGame();
-                }
+            if (_isPaused && CanContinue) {
+                Continue();
+            } else {
+                Pause();
             }
         }
 
-        public void PauseGame()
+        public void Pause()
         {
-            isPaused = true;
-            pauseMenu.gameObject.SetActive(true);
+            _isPaused = true;
+            gameObject.SetActive(true);
             Time.timeScale = 0;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        public void NoStopPause()
+        {
+            _isPaused = true;
+            gameObject.SetActive(true);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -32,8 +47,8 @@ namespace OutOfThisWorld {
 
         public void Continue()
         {
-            isPaused = false;
-            pauseMenu.gameObject.SetActive(false);
+            _isPaused = false;
+            gameObject.SetActive(false);
             Time.timeScale = 1;
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -49,8 +64,8 @@ namespace OutOfThisWorld {
 
         public void Quit()
         {
-            Debug.Log("Quit");
-            Application.Quit();
+            Debug.Log("Quit to Main Menu");
+            SceneManager.LoadScene(0);
         }
     }
 }

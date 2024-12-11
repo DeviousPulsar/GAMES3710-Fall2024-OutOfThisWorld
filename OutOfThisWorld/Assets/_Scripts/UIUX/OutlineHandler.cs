@@ -112,6 +112,14 @@ namespace OutOfThisWorld {
             void ResetHeldItemOutline(DroneController drone) {
                 ResetOutline(drone.GetCurrentHeldItem());
             }
+        
+        /* ----------| Finalization Functions |---------- */
+
+            void OnDestory() {
+                Signals.Get<ItemSpawned>().RemoveListener(InitializeOutline);
+                Signals.Get<ItemDropped>().RemoveListener(ResetOutline);
+                Signals.Get<DroneSwitched>().RemoveListener(ResetHeldItemOutline);
+            }
     }
 }
 

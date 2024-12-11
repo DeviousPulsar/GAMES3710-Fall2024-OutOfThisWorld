@@ -175,5 +175,14 @@ namespace OutOfThisWorld.Monster {
                     UpdateWanderDest();
                 }
             }
+        
+        /* ----------| Finalization Functions |---------- */
+        
+            void OnDestory() {
+                Signals.Get<DronePositionUpdate>().RemoveListener(UpdateMemory);
+                Signals.Get<DroneSpawned>().RemoveListener(AddDroneToMemory);
+                Signals.Get<DroneDestroyed>().RemoveListener(RemoveDroneFromMemory);
+                Signals.Get<DroneEnteredDetectionArea>().RemoveListener(SetTarget);
+            }
      }
 }

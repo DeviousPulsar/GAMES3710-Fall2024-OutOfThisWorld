@@ -12,7 +12,7 @@ namespace OutOfThisWorld.Player.HUD
         private DroneController _activeDrone;
         private DroneInfoBar _defaultInfoBar;
 
-        void Start() 
+        void Awake() 
         {
             _drones = new Dictionary<DroneController,DroneInfoBar>();
 
@@ -45,6 +45,11 @@ namespace OutOfThisWorld.Player.HUD
             if (!_drones.TryGetValue(drone, out infobar)) { return; }
             if (!_drones.Remove(drone)) { return; }
             Destroy(infobar.gameObject);
+        }
+
+        void OnDestroy() {
+            Signals.Get<DroneSpawned>().RemoveListener(AddInfoBar);
+            Signals.Get<DroneDestroyed>().RemoveListener(RemoveInfoBar);
         }
     }
 }

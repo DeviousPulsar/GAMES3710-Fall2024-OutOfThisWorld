@@ -8,14 +8,15 @@ using deVoid.Utils;
 namespace OutOfThisWorld.Player {
     public class DroneSwitched : ASignal<DroneController> {}
 
-    [RequireComponent(typeof(PlayerInputHandler))]
     public class PlayerController : MonoBehaviour {
 
         /* ----------| Serialized Variables |---------- */
 
             [Header("References")]
             public Transform _cameraTransform;
-            public TaskInfoPanel _taskUIPanel;
+            //public TaskInfoPanel _taskUIPanel;
+            public PlayerInputHandler _playerInputHandler;
+            public GameFlowManager _gameFlowManager;
 
             [Header("Drone Information")]
             public GameObject InitalDronePrefab;
@@ -28,19 +29,14 @@ namespace OutOfThisWorld.Player {
 
         /* ----------| Private Variables |---------- */
 
-            private PlayerInputHandler _playerInputHandler;
+            
             private List<DroneController> _drones;
             private int _activeDroneIndex = 0;
 
 
         /* ----------| Initalization Functions |---------- */
 
-            void Start()
-            {
-                // fetch components from GameObject
-                _playerInputHandler = GetComponent<PlayerInputHandler>();
-                DebugUtility.HandleErrorIfNullGetComponent<PlayerInputHandler, PlayerController>(_playerInputHandler, this, gameObject);
-
+            void Start() {
                 // Spawn inital drone
                 _drones = new List<DroneController>();
                 SpawnDrone(InitalDronePrefab, InitalDroneLocation.position, InitalDroneLocation.rotation);
@@ -55,11 +51,11 @@ namespace OutOfThisWorld.Player {
             void Update()
             {
                 if (_drones.Count < 1) {
-                    SceneManager.LoadSceneAsync(0);
+                    _gameFlowManager.Lose();
                     Destroy(gameObject);
                 } else {
                     if (Input.GetButtonDown(_playerInputHandler.DroneShiftAction)) { SwitchDrone(); }
-                    if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { DroneInteract(); }
+                    if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { GetActiveDrone().Interact(); }
                     if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { GetActiveDrone().DropHeld(); }
                     if (Input.GetButtonDown(_playerInputHandler.DroneModeAction)) { 
                         GetActiveDrone().Follow = !GetActiveDrone().Follow; 
@@ -100,8 +96,6 @@ namespace OutOfThisWorld.Player {
                     if (droneController) {
                         _drones.Add(droneController);
 
-                        _taskUIPanel.CompleteTask("Create Second Drone (Left Click the ship to spend 5 RP)");
-
                         return drone;
                     }
                 }
@@ -130,22 +124,17 @@ namespace OutOfThisWorld.Player {
                 if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
                 GetActiveDrone().Active = true;
 
-                _taskUIPanel.CompleteTask("Switch Drones (Tab)");
+                //_taskUIPanel.CompleteTask("Switch Drones (Tab)");
             }
 
             public DroneController GetActiveDrone() {
                 return _drones[_activeDroneIndex];
             }
 
-        /* ----------| I/O Functions |---------- */
+        /* ----------| Finalization Functions |---------- */
 
-            /// <summary>
-            /// Try to interact with what you are looking at from the currently activated drone.
-            /// </summary>
-            /// <returns></returns> false is there is nothing to interact with.
-            bool DroneInteract()
-            {
-                return GetActiveDrone().Interact();
-            }
+        void OnDestroy() {
+            Signals.Get<DroneDestroyed>().RemoveListener(RemoveDrone);
+        }
     }
 }

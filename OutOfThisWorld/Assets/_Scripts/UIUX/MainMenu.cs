@@ -16,8 +16,6 @@ namespace OutOfThisWorld {
 
         public void PlayGame()
         {
-
-
             audioManager.StopMusic();
             SceneManager.LoadSceneAsync(1);
         }
