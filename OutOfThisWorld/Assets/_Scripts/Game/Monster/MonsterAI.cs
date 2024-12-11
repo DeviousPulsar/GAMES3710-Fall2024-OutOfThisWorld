@@ -17,6 +17,7 @@ namespace OutOfThisWorld.Monster {
 
             [Header("References")]
             public NavMeshAgent NavAgent;
+            public AlienAnimationController Animator;
             public List<MonsterDetectionArea> DetectionAreas;
             public List<Transform> WanderDestinations;
 
@@ -187,6 +188,7 @@ namespace OutOfThisWorld.Monster {
                 if (target && _eatTimestamp + EatTimeout < Time.fixedTime) {
                     target.AttemptDestroy();
                     _eatTimestamp = Time.fixedTime;
+                    Animator.TriggerAttack();
 
                     if(CurrentState != MonsterState.Rage) {
                         UpdateWanderDest();
