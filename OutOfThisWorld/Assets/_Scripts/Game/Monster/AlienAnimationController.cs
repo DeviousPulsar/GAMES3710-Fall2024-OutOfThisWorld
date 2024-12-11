@@ -11,7 +11,7 @@ namespace OutOfThisWorld.Monster {
             Animations.SetFloat("Speed", WalkAnimMult*NavAgent.velocity.magnitude);
         }
 
-        void TriggerAttack() {
+        public void TriggerAttack() {
             Animations.SetTrigger("Attack");
         }
     }
