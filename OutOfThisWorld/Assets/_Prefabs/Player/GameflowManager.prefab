@@ -93,11 +93,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraTransform: {fileID: 2743733809639427774}
+  _taskUIPanel: {fileID: 1928440482885015834}
   _playerInputHandler: {fileID: 4049236623421810244}
   _gameFlowManager: {fileID: 1695808626751337391}
   InitalDronePrefab: {fileID: 3744565212062897678, guid: 237963fbdf3419a418dd94f5afc8c810, type: 3}
   InitalDroneLocation: {fileID: 4430141694802719559}
-  DroneMax: 4
+  DroneMax: 10
   PullDistMult: 1
   PullMaxDist: 6
 --- !u!114 &4800905275385997191
@@ -534,7 +535,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1960, y: 1080}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

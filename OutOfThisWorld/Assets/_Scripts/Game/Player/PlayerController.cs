@@ -14,7 +14,7 @@ namespace OutOfThisWorld.Player {
 
             [Header("References")]
             public Transform _cameraTransform;
-            //public TaskInfoPanel _taskUIPanel;
+            public TaskInfoPanel _taskUIPanel;
             public PlayerInputHandler _playerInputHandler;
             public GameFlowManager _gameFlowManager;
 
@@ -58,6 +58,7 @@ namespace OutOfThisWorld.Player {
                     if (Input.GetButtonDown(_playerInputHandler.DroneInteract)) { GetActiveDrone().Interact(); }
                     if (Input.GetButtonDown(_playerInputHandler.DroneDrop)) { GetActiveDrone().DropHeld(); }
                     if (Input.GetButtonDown(_playerInputHandler.DroneModeAction)) { 
+                        _taskUIPanel.CompleteTask("Pause a Drone\n(Q)");
                         GetActiveDrone().Follow = !GetActiveDrone().Follow; 
                     }
                 }
@@ -96,6 +97,8 @@ namespace OutOfThisWorld.Player {
                     if (droneController) {
                         _drones.Add(droneController);
 
+                        _taskUIPanel.CompleteTask("Create Second Drone\n(Left Click the cabinet)");
+
                         return drone;
                     }
                 }
@@ -127,7 +130,7 @@ namespace OutOfThisWorld.Player {
                 if (_activeDroneIndex >= _drones.Count) { _activeDroneIndex = 0; }
                 GetActiveDrone().Active = true;
 
-                //_taskUIPanel.CompleteTask("Switch Drones (Tab)");
+                _taskUIPanel.CompleteTask("Switch Drones\n(Tab)");
             }
 
             public DroneController GetActiveDrone() {

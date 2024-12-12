@@ -23,8 +23,8 @@ namespace OutOfThisWorld.Player.HUD {
             _defaultInfoWidget = InfoWidgetPrefab.GetComponent<TaskInfoWidget>();
             DebugUtility.HandleErrorIfNullGetComponent<TaskInfoWidget, GameObject>(_defaultInfoWidget, this, InfoWidgetPrefab);
             
-            AddTaskInfo("Pick Up an Object (Left Click)");
-            AddTaskInfo("Open the Doors (Left Click on the Console in the Blue Room)");
+            AddTaskInfo("Pick up an object\n(Left Click)");
+            AddTaskInfo("Open the doors");
         }
 
         // Update is called once per frame
@@ -73,15 +73,16 @@ namespace OutOfThisWorld.Player.HUD {
         private void InitializeTaskGraph()
         {
             // Create Task
-            TaskNode getObject = new TaskNode("Pick Up an Object (Left Click)");
-            TaskNode dropObject = new TaskNode("Drop an object (Right Click)");
-            TaskNode depositInShip = new TaskNode("Deposit item in ship (Left Click anywhere on the ship)");
-            TaskNode accumulate5RP = new TaskNode("Accumulate 5 RP (Deposit items into the ship)");
-            TaskNode createSecondDrone = new TaskNode("Create Second Drone (Left Click the ship to spend 5 RP)");
-            TaskNode switchDrones = new TaskNode("Switch Drones (Tab)");
-            TaskNode accumulate10RP = new TaskNode("Accumulate 10 RP");
-            TaskNode openFirstDoors = new TaskNode("Open the Doors (Left Click on the Console in the Blue Room)");
-            TaskNode openSecondDoors = new TaskNode("Complete the puzzle in the vents");
+            TaskNode getObject = new TaskNode("Pick up an object\n(Left Click)");
+            TaskNode dropObject = new TaskNode("Drop an object\n(Right Click)");
+            TaskNode depositInShip = new TaskNode("Deposit item in blue cabinets\n(Left Click anywhere on the cabinet)");
+            TaskNode accumulate5RP = new TaskNode("Accumulate 5 RP");
+            TaskNode createSecondDrone = new TaskNode("Create Second Drone\n(Left Click the cabinet)");
+            TaskNode switchDrones = new TaskNode("Switch Drones\n(Tab)");
+            TaskNode pauseDrone = new TaskNode("Pause a Drone\n(Q)");
+            TaskNode openFirstDoors = new TaskNode("Open the doors");
+            TaskNode openSecondDoors = new TaskNode("Open the hangar doors");
+            TaskNode launchSpaceShip = new TaskNode("Launch your spaceship! Escape!");
 
             // Establish dependencies (what task will come after this task)
             getObject.AddNextTask(depositInShip);
@@ -89,8 +90,9 @@ namespace OutOfThisWorld.Player.HUD {
             depositInShip.AddNextTask(accumulate5RP);
             accumulate5RP.AddNextTask(createSecondDrone);
             createSecondDrone.AddNextTask(switchDrones);
-            createSecondDrone.AddNextTask(accumulate10RP);
+            createSecondDrone.AddNextTask(pauseDrone);
             openFirstDoors.AddNextTask(openSecondDoors);
+            openSecondDoors.AddNextTask(launchSpaceShip);
 
             // Add nodes to the graph
             taskGraph.Add(getObject.TaskText, getObject);
@@ -99,9 +101,10 @@ namespace OutOfThisWorld.Player.HUD {
             taskGraph.Add(accumulate5RP.TaskText, accumulate5RP);
             taskGraph.Add(createSecondDrone.TaskText, createSecondDrone);
             taskGraph.Add(switchDrones.TaskText, switchDrones);
-            taskGraph.Add(accumulate10RP.TaskText, accumulate10RP);
+            taskGraph.Add(pauseDrone.TaskText, pauseDrone);
             taskGraph.Add(openFirstDoors.TaskText, openFirstDoors);
             taskGraph.Add(openSecondDoors.TaskText, openSecondDoors);
+            taskGraph.Add(launchSpaceShip.TaskText, launchSpaceShip);
         }
 
 

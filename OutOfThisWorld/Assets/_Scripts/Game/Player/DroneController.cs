@@ -197,7 +197,7 @@ namespace OutOfThisWorld.Player {
                 
                 //_audioManager.PlaySFX(_audioManager.item_pickup);
 
-                //_playerController._taskUIPanel.CompleteTask("Pick Up an Object (Left Click)");
+                _playerController._taskUIPanel.CompleteTask("Pick up an object\n(Left Click)");
             }
 
             public void UnsocketItem(ItemSocket socket) {
@@ -222,7 +222,7 @@ namespace OutOfThisWorld.Player {
                 Destroy(desposited);
                 Destroy(gameObject.GetComponent<FixedJoint>());
 
-                //_playerController._taskUIPanel.CompleteTask("Deposit item in ship (Left Click anywhere on the ship)");
+                _playerController._taskUIPanel.CompleteTask("Deposit item in blue cabinets\n(Left Click anywhere on the cabinet)");
             }
 
             public bool DropHeld() {
@@ -233,7 +233,7 @@ namespace OutOfThisWorld.Player {
                     _droneStorageList.RemoveAt(0);
                     Destroy(holdJoint);
 
-                    //_playerController._taskUIPanel.CompleteTask("Drop an object (Right Click)");
+                    _playerController._taskUIPanel.CompleteTask("Drop an object\n(Right Click)");
                     return true;
                 }
 

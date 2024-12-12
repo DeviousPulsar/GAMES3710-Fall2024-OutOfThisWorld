@@ -33,8 +33,7 @@ namespace OutOfThisWorld
                 if (delta <= 0) { return false; }
 
                 _currentResourceCount += delta;
-                if(_currentResourceCount >= 5) { _taskUIPanel.CompleteTask("Accumulate 5 RP (Deposit items into the ship)"); }
-                else if(_currentResourceCount >= 10) { _taskUIPanel.CompleteTask("Accumulate 10 RP"); }
+                if(_currentResourceCount >= 5) { _taskUIPanel.CompleteTask("Accumulate 5 RP"); }
                 return true;
             }
 
