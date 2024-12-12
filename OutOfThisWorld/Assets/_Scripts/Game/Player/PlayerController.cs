@@ -97,7 +97,9 @@ namespace OutOfThisWorld.Player {
                     if (droneController) {
                         _drones.Add(droneController);
 
-                        _taskUIPanel.CompleteTask("Create Second Drone\n(Left Click the cabinet)");
+                        if(_drones.Count >= 2) {
+                            _taskUIPanel.CompleteTask("Create Second Drone\n(Left Click the cabinet)");
+                        }
 
                         return drone;
                     }

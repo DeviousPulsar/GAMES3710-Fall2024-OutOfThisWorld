@@ -7,6 +7,7 @@ using deVoid.Utils;
 namespace OutOfThisWorld.Monster {
     public enum MonsterState {
         Disabled,
+        Idle,
         Wander,
         Persue,
         Rage
@@ -18,19 +19,21 @@ namespace OutOfThisWorld.Monster {
             [Header("References")]
             public NavMeshAgent NavAgent;
             public AlienAnimationController Animator;
+            public CapsuleCollider Collider;
             public List<MonsterDetectionArea> DetectionAreas;
             public List<Transform> WanderDestinations;
 
             [Header("Behavior Timeouts")]
             public float DespawnTimeout = 1000f;
             public float EatTimeout = 1f;
-            public float StoppedTimeout = 1f;
-            //public float WanderTimeout = 1f;
+            public float PersueTimeout = 1f;
+            public float WanderTimeout = 1f;
             //public float RageTimeout = 30f;
 
             [Header("Behavior Thresholds")]
             public float StoppedSpeed = 0.01f;
             public float RelogDist = 0.1f;
+            public float PersueWaitDist = 1f;
 
         /* ----------| Properties |---------- */
 
@@ -43,8 +46,7 @@ namespace OutOfThisWorld.Monster {
             private DroneController _target;
 
             private float _spawnTimestamp;
-            private float _eatTimestamp;
-            private float _timeStopped;
+            private float _waitUntilTimestamp;
             private float _rageTimestamp;
 
             private float _debugPrintTimestamp;
@@ -70,24 +72,14 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
-                if (CurrentState != MonsterState.Disabled && _eatTimestamp + EatTimeout < Time.fixedTime) {
+                if (CurrentState != MonsterState.Disabled && _waitUntilTimestamp < Time.fixedTime) {
+                    if (CurrentState == MonsterState.Idle) {
+                        UpdateWanderDest();
+                    } else if (CurrentState == MonsterState.Persue && InWaitRange() && !IsTargetAccessable()) {
+                        StartWaitState(PersueTimeout);
+                    }
+
                     UpdatePath();
-
-                    if (IsStopped()) {
-                        _timeStopped += Time.fixedDeltaTime;
-                    } else {
-                        _timeStopped = 0;
-                    }
-
-                    if (_timeStopped > StoppedTimeout) {
-                        if (CurrentState == MonsterState.Persue || CurrentState == MonsterState.Rage) {
-                            _memory[_target] = false;
-                            Debug.Log("Alien memory updates noting that " + _target + " cannot be chased.");
-                        }
-                        if (CurrentState != MonsterState.Rage) {
-                            UpdateWanderDest();
-                        }
-                    }
                 }
 
                 if (_lastState != CurrentState || (_lastDest - NavAgent.destination).magnitude > 1) {
@@ -135,10 +127,37 @@ namespace OutOfThisWorld.Monster {
                 }
             }
 
-        /* ----------| State Accessors |---------- */
+        /* ----------| State Updators |---------- */
 
-            bool IsStopped() {
-                return NavAgent.velocity.magnitude < StoppedSpeed;
+            public void ReachedWanderDest(Transform dest) {
+                if (CurrentState == MonsterState.Wander && _wanderDest == dest) {
+                    StartWaitState(WanderTimeout);
+                }
+            }
+
+            bool IsTargetAccessable() {
+                Vector3 dest = NavAgent.destination;
+                Vector3 targetPos = _target.transform.position;
+                return targetPos.z >= dest.z && targetPos.z <= dest.z + Collider.height &&
+                    Mathf.Pow(dest.x - targetPos.x, 2) + Mathf.Pow(dest.y - targetPos.y, 2) <= Collider.radius;
+
+            }
+
+            bool InWaitRange() {
+                if (!NavAgent.hasPath) { return false; }
+
+                float dist = 0;
+                Vector3 _lastPoint = NavAgent.path.corners[0];
+                foreach(Vector3 point in NavAgent.path.corners) {
+                    dist += (_lastPoint - point).magnitude;
+                    _lastPoint = point;
+                }
+                return dist < PersueWaitDist;
+            }
+
+            public void StartWaitState(float deltaTime) {
+                CurrentState = MonsterState.Idle;
+                _waitUntilTimestamp = Time.fixedTime + deltaTime;
             }
 
         /* ----------| Memory and Target Update Functions |---------- */
@@ -165,7 +184,7 @@ namespace OutOfThisWorld.Monster {
             }
 
             void SetTarget(DroneController drone) {
-                if (_memory[drone] && _target != drone) {
+                if (_waitUntilTimestamp < Time.fixedTime && _memory[drone] && _target != drone) {
                     _target = drone;
                     if (CurrentState != MonsterState.Rage) {
                         CurrentState = MonsterState.Persue;
@@ -185,13 +204,13 @@ namespace OutOfThisWorld.Monster {
 
             void OnCollisionEnter(Collision coll) {
                 DroneController target = coll.gameObject.GetComponent<DroneController>();
-                if (target && _eatTimestamp + EatTimeout < Time.fixedTime) {
+                if (target && _waitUntilTimestamp < Time.fixedTime) {
                     target.AttemptDestroy();
-                    _eatTimestamp = Time.fixedTime;
+                    _waitUntilTimestamp = Time.fixedTime + EatTimeout;
                     Animator.TriggerAttack();
 
                     if(CurrentState != MonsterState.Rage) {
-                        UpdateWanderDest();
+                        CurrentState = MonsterState.Idle;
                     }
                 }
             }
