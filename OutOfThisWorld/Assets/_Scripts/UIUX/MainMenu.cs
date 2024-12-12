@@ -23,7 +23,7 @@ namespace OutOfThisWorld {
         public void PlayGame()
         {
             _audioManager.StopMusic();
-            SceneManager.LoadSceneAsync(1);
+            SceneManager.LoadScene(1);
         }
 
         public void QuitGame()

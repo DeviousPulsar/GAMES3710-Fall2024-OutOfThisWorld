@@ -46,7 +46,6 @@ namespace OutOfThisWorld.Audio {
             else
             {
                 instance = this;
-                DontDestroyOnLoad(this.gameObject);
             }
         }
 

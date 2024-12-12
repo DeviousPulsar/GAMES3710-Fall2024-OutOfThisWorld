@@ -610,7 +610,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -767,11 +767,12 @@ MonoBehaviour:
   walk: {fileID: 0}
   boom: {fileID: 0}
   doorLocked: {fileID: 0}
-  Switch: {fileID: 0}
+  switch_pull: {fileID: 0}
   collection_ship: {fileID: 0}
   collection_drone: {fileID: 0}
   drone_build: {fileID: 0}
   drone_wreck: {fileID: 0}
+  item_pickup: {fileID: 0}
   item_drop: {fileID: 0}
   endingBGM: {fileID: 0}
   doorOpen: {fileID: 0}
@@ -805,7 +806,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

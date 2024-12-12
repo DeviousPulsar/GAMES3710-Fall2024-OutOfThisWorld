@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using OutOfThisWorld.Player;
 
 namespace OutOfThisWorld {
-    public class GameFlowManager : MonoBehaviour {
+    public class GameFlowManager : Triggerable {
         [SerializeField] GameObject HUD;
         [SerializeField] PauseMenu PauseMenu;
         [SerializeField] PlayerInputHandler PlayerIn;
@@ -10,9 +11,8 @@ namespace OutOfThisWorld {
         void Update() {
             if (PauseMenu.CanContinue && Input.GetButtonDown(PlayerIn.Pause)) {
                 PauseMenu.TogglePause();
+                HUD.SetActive(!PauseMenu.IsPaused);
             }
-
-            HUD.SetActive(!PauseMenu.IsPaused);
         }
 
         public void Lose() {
@@ -22,9 +22,11 @@ namespace OutOfThisWorld {
         }
 
         public void Win() {
-            PauseMenu.CanContinue = false;
-            PauseMenu.Pause();
-            HUD.SetActive(false);
+            SceneManager.LoadScene(2);
+        }
+
+        public override void Trigger() {
+            Win();
         }
     }
 }
