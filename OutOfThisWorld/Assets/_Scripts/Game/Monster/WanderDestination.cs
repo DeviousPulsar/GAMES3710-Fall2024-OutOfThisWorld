@@ -5,7 +5,7 @@ namespace OutOfThisWorld.Monster {
     public class WanderDestination : MonoBehaviour {
         public MonsterAI Monster;
 
-        void OnTiggerEnter() {
+        void OnTriggerEnter() {
             Monster.ReachedWanderDest(transform);
         }
     }

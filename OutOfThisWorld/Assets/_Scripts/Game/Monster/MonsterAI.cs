@@ -72,10 +72,11 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Main Loop |---------- */
 
             void FixedUpdate() {
-                if (CurrentState != MonsterState.Disabled && _waitUntilTimestamp < Time.fixedTime) {
+                if (CurrentState != MonsterState.Disabled && Time.fixedTime >_waitUntilTimestamp) {
                     if (CurrentState == MonsterState.Idle) {
                         UpdateWanderDest();
                     } else if (CurrentState == MonsterState.Persue && InWaitRange() && !IsTargetAccessable()) {
+                        _memory[_target] = false;
                         StartWaitState(PersueTimeout);
                     }
 
@@ -83,7 +84,9 @@ namespace OutOfThisWorld.Monster {
                 }
 
                 if (_lastState != CurrentState || (_lastDest - NavAgent.destination).magnitude > 1) {
-                    Debug.Log("Alien in moving into state " + CurrentState + " w/ destination " + NavAgent.destination.ToString() + "." );
+                    Debug.Log("Alien in moving into state " + CurrentState + " w/ destination " + 
+                            NavAgent.destination.ToString() + " at t=" + Time.fixedTime + "."  + 
+                            (CurrentState == MonsterState.Idle? " Idling until " + _waitUntilTimestamp : ""));
                 }
                 _lastState = CurrentState;
                 _lastDest = NavAgent.destination;
@@ -163,7 +166,11 @@ namespace OutOfThisWorld.Monster {
         /* ----------| Memory and Target Update Functions |---------- */
 
             void UpdateWanderDest() {
-                _wanderDest = WanderDestinations[Random.Range(0, WanderDestinations.Count)];
+                Transform newDest = null;
+                while (newDest == null || newDest == _wanderDest) {
+                    newDest = WanderDestinations[Random.Range(0, WanderDestinations.Count)];
+                }
+                _wanderDest = newDest;
                 _target = null;
                 CurrentState = MonsterState.Wander;
 
