@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 namespace OutOfThisWorld {
     public class PauseMenu : MonoBehaviour {
         [SerializeField] GameObject ContinueButton;
+        [SerializeField] GameObject HUD;
 
         public bool CanContinue {
             get => ContinueButton.activeSelf;
@@ -34,6 +35,7 @@ namespace OutOfThisWorld {
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            HUD.SetActive(false);
         }
 
         public void NoStopPause()
@@ -43,6 +45,7 @@ namespace OutOfThisWorld {
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            HUD.SetActive(false);
         }
 
         public void Continue()
@@ -53,7 +56,7 @@ namespace OutOfThisWorld {
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-
+            HUD.SetActive(true);
         }
 
         public void Restart()

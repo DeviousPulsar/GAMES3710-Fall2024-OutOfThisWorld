@@ -38873,7 +38873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a611a32e1ece0e4d93e0f8d9e758b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX: {fileID: 0}
+  SFX: {fileID: 8300000, guid: 1df1c436e5527e34aba7eda3e89f7503, type: 3}
   Source: {fileID: 2600702297250665015}
   PlaySFXOnUndo: 0
 --- !u!82 &2600702297250665015
@@ -41210,6 +41210,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81a2abfd9a74fa04898054bd2fba89af, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7636791205339343530}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81a2abfd9a74fa04898054bd2fba89af, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4601969665770239907}
   m_SourcePrefab: {fileID: 100100000, guid: 81a2abfd9a74fa04898054bd2fba89af, type: 3}
 --- !u!4 &3499484094582335458 stripped
 Transform:
@@ -41255,8 +41258,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Triggers:
-  - {fileID: 7636791205339343530}
-  - {fileID: 2961821944271445488}
+  - {fileID: 3317851037830924432}
+  - {fileID: 0}
+  - {fileID: 4601969665770239907}
   Listeners: []
 --- !u!114 &7636791205339343530
 MonoBehaviour:
@@ -41272,6 +41276,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ToDestory: {fileID: 2149637229391887356}
   DestroyGameObject: 0
+--- !u!114 &4601969665770239907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4313175838440160600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788cd0bc419218c49b562bab7cac3ef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerController: {fileID: 0}
 --- !u!1001 &4130251973052924409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41446,9 +41463,9 @@ MonoBehaviour:
   - {fileID: 4831817762979677}
   - {fileID: 4870058498699932709}
   - {fileID: 7983166776655124354}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 9158823083281907166}
+  - {fileID: 0}
+  - {fileID: 0}
   MachineValuePairs:
   - machine: {fileID: 5380053645033805143}
     desiredState: 1
@@ -42036,7 +42053,7 @@ MonoBehaviour:
   Triggers:
   - {fileID: 2961821944271445488}
   - {fileID: 7636791205339343530}
-  - {fileID: 7636791205339343530}
+  - {fileID: 2334162602506472113}
   Listeners:
   - {fileID: 5380053645033805143}
 --- !u!114 &2961821944271445488
