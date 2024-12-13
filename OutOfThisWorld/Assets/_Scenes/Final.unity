@@ -870,7 +870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: PersueWaitDist
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 518066163933556744, guid: 78ca6f9a267a3414eb5e45e1495745d1, type: 3}
       propertyPath: WanderDestinations.Array.size
@@ -2454,7 +2454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2645677717657460784, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.266
+      value: -16.741001
       objectReference: {fileID: 0}
     - target: {fileID: 2645677717657460784, guid: 87c2edc1119854a4eadb4585a0059984, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4215,7 +4215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Monster: {fileID: 754601124}
-  State: 3
+  State: 4
 --- !u!1 &1921601471
 GameObject:
   m_ObjectHideFlags: 0

@@ -104,11 +104,13 @@ namespace OutOfThisWorld.Monster {
                             break;
                         }
 
-                        float minDist = float.PositiveInfinity;
-                        foreach (DroneController drone in _memory.Keys) {
-                            float dist = (transform.position - drone.transform.position).magnitude;
-                            if (dist < minDist) {
-                                SetTarget(drone);
+                        if (_target == null) {
+                            float minDist = float.PositiveInfinity;
+                            foreach (DroneController drone in _memory.Keys) {
+                                float dist = (transform.position - drone.transform.position).magnitude;
+                                if (dist < minDist) {
+                                    SetTarget(drone);
+                                }
                             }
                         }
 
@@ -182,16 +184,20 @@ namespace OutOfThisWorld.Monster {
                     Debug.Log("Alien memory updates so " + drone + " can be chased.");
                 }
 
-                foreach (MonsterDetectionArea detect in DetectionAreas) {
-                    if (detect.InDetectionArea(drone)) {
-                        SetTarget(drone);
-                        return;
+                if (CurrentState == MonsterState.Rage) {
+                    SetTarget(drone);
+                } else {
+                    foreach (MonsterDetectionArea detect in DetectionAreas) {
+                        if (detect.InDetectionArea(drone)) {
+                            SetTarget(drone);
+                            return;
+                        }
                     }
                 }
             }
 
             void SetTarget(DroneController drone) {
-                if (_waitUntilTimestamp < Time.fixedTime && _memory[drone] && _target != drone) {
+                if (_memory[drone] && _target != drone) {
                     _target = drone;
                     if (CurrentState != MonsterState.Rage) {
                         CurrentState = MonsterState.Persue;
@@ -211,7 +217,7 @@ namespace OutOfThisWorld.Monster {
 
             void OnCollisionEnter(Collision coll) {
                 DroneController target = coll.gameObject.GetComponent<DroneController>();
-                if (target && _waitUntilTimestamp < Time.fixedTime) {
+                if (target){ //&& _waitUntilTimestamp < Time.fixedTime) {
                     target.AttemptDestroy();
                     _waitUntilTimestamp = Time.fixedTime + EatTimeout;
                     Animator.TriggerAttack();
